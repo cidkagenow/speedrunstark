@@ -3,7 +3,7 @@ const allChallenges = [
     challenge: "Challenge #0",
     title: "🎟 Simple NFT Example",
     description:
-      "🎫 Create a simple NFT to learn basics of scaffold-Stark. You'll use 👷‍♀️ HardHat to compile and deploy smart contracts. Then, you'll use a template React app full of important Ethereum components and hooks. Finally, you'll deploy an NFT to a public network to share with friends! 🚀",
+      "🎫 Create a simple NFT to learn basics of 🏗 Scaffold-Stark. You'll use Scarb to compile and Starknet.js to deploy smart contracts. Then, you'll use a template React app full of important Starknet components and hooks. Finally, you'll deploy an NFT to a public network to share with friends! 🚀",
     imageUrl: "/simpleNFT.png",
     end: true,
     id: "challenge0",
