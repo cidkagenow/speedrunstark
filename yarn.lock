@@ -1811,21 +1811,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.29.0":
-  version: 5.29.0
-  resolution: "@tanstack/query-core@npm:5.29.0"
-  checksum: 79d1033411842f289489afb721add7593cd0181411aab72c39a70615e437c577d53c290d0afa699fe9c6637597051195e03a7ef0eebaf03a9a83c943a46782d9
+"@tanstack/query-core@npm:5.32.0":
+  version: 5.32.0
+  resolution: "@tanstack/query-core@npm:5.32.0"
+  checksum: e2f5292ad7160ecadf8f9d027991274e3baee95fb89cf3f47e7e58fe9ba5c3ce5528f669586d2a091fad0e12c5cc1c0bb1975fb4cffa551deb58b055a96189c6
   languageName: node
   linkType: hard
 
 "@tanstack/react-query@npm:^5.0.1":
-  version: 5.29.2
-  resolution: "@tanstack/react-query@npm:5.29.2"
+  version: 5.32.0
+  resolution: "@tanstack/react-query@npm:5.32.0"
   dependencies:
-    "@tanstack/query-core": 5.29.0
+    "@tanstack/query-core": 5.32.0
   peerDependencies:
     react: ^18.0.0
-  checksum: f2ffb2298cd19617e2002a721f426f75c2cf954b9ec73750c59e71481e8a18f11936e48dbd2caeb702beaf328a2b8375f2de228d489f307d86239d17f4f5f324
+  checksum: 71dca267653c3d1d8b0fe336e4c607f4cd36ab749d5e615e2451174c2d70f5e1478497907a247ad2c8d7e065180fb635f5c271eb968a13c2b8e8fba480e322ca
   languageName: node
   linkType: hard
 
@@ -3551,9 +3551,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.745
-  resolution: "electron-to-chromium@npm:1.4.745"
-  checksum: f73b576108863cad160deb22b8e8c6754a8b16b22cda90cfce038a755f886be9c03fb8360bbd7c9d28ddd184800d0d6bd430a11f9289316145f0b28321dfe71d
+  version: 1.4.746
+  resolution: "electron-to-chromium@npm:1.4.746"
+  checksum: 1fa8fad55ddf94ac8d7aa53b451ced4eec08cee0b765fe37fd70d2c560e4c4eff8bbd0ccf64bc6aa069484243c14ddda512974f770206a0b5e858b66cdd16768
   languageName: node
   linkType: hard
 
@@ -5844,8 +5844,8 @@ __metadata:
   linkType: hard
 
 "kubo-rpc-client@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "kubo-rpc-client@npm:4.0.1"
+  version: 4.1.1
+  resolution: "kubo-rpc-client@npm:4.1.1"
   dependencies:
     "@ipld/dag-cbor": ^9.0.0
     "@ipld/dag-json": ^10.0.0
@@ -5879,7 +5879,7 @@ __metadata:
     stream-to-it: ^1.0.1
     uint8arrays: ^5.0.3
     wherearewe: ^2.0.1
-  checksum: f1ca6e0ba02f83cc59cddda9c7397f6f09b550098be30a0711d00bcba923de6b2cdd870f1b60a5f520fac5bf7d9663105e4d3a313bcaea1ea3a2469c0d6db523
+  checksum: 962313e78fbcbed5adfdcc9ca351883c988ea28ec55b1c74c785ca4f6354953e73294ea1423e87098338297370bad44cec6c13f7bcf0b0baa00defc8bcf4876f
   languageName: node
   linkType: hard
 
@@ -6208,8 +6208,8 @@ __metadata:
   linkType: hard
 
 "micromark-core-commonmark@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "micromark-core-commonmark@npm:2.0.0"
+  version: 2.0.1
+  resolution: "micromark-core-commonmark@npm:2.0.1"
   dependencies:
     decode-named-character-reference: ^1.0.0
     devlop: ^1.0.0
@@ -6227,7 +6227,7 @@ __metadata:
     micromark-util-subtokenize: ^2.0.0
     micromark-util-symbol: ^2.0.0
     micromark-util-types: ^2.0.0
-  checksum: 9c12fb580cf4ce71f60872043bd2794efe129f44d7b2b73afa155bbc0a66b7bc35655ba8cef438a6bd068441837ed3b6dc6ad7e5a18f815462c1750793e03a42
+  checksum: 6a9891cc883a531e090dc8dab6669945f3df9448e84216a8f2a91f9258281e6abea5ae3940fde2bd77a57dc3e0d67f2add6762aed63a378f37b09eaf7e7426c4
   languageName: node
   linkType: hard
 
@@ -8828,9 +8828,9 @@ __metadata:
   linkType: hard
 
 "type-fest@npm:^4.6.0":
-  version: 4.15.0
-  resolution: "type-fest@npm:4.15.0"
-  checksum: 8da2b8c4556a6bbafd79c0d50b4f3ba6526942aead9c1687038980276eee72b95a1d195bc6f1408e0ebf96ebfbe9d33436b506b35ed4b68f14f8b3ff56753850
+  version: 4.16.0
+  resolution: "type-fest@npm:4.16.0"
+  checksum: 586fcaa07a20c04662840f5b1a0f003c0184d8e4c621623ec85d4e0bfa6f580c4f4060d406d6800d267e9d671c4d8272b6f77ea996f0db8ebbc80987054316ec
   languageName: node
   linkType: hard
 
@@ -9580,9 +9580,9 @@ __metadata:
   linkType: hard
 
 "zod@npm:^3.22.2":
-  version: 3.22.5
-  resolution: "zod@npm:3.22.5"
-  checksum: a7b47685ce53b62d2d895c07b1cc0277ef1eb258736ae2b4b526d0b4cbe94a1fb39a260882e2624af2d59af8533373c0a96d36d71c19e79c341057ea9f528561
+  version: 3.23.3
+  resolution: "zod@npm:3.23.3"
+  checksum: c5be5a79ec31c712db47ec8343140e626dcd647e91a896ae98a1ab29d0f17b09f4b2d6adb9db2c0f82aacacedc73e89f0c14453c7da02d70ea79a4298c1bbaa4
   languageName: node
   linkType: hard
 
