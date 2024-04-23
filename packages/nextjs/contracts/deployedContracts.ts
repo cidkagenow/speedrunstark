@@ -7,7 +7,7 @@ const deployedContracts = {
   devnet: {
     Challenge0: {
       address:
-        "0x020ce7d9d6a2182c5bccad7ef9032eae02f8d3d36764308cbceeb8cb15b60753",
+        "0x0564a6d4e70fea6ebb2e038108484654d1374cd7e478559b7097444a1f15ca57",
       abi: [
         {
           type: "impl",
@@ -534,7 +534,7 @@ const deployedContracts = {
     },
     ExampleExternalContract: {
       address:
-        "0x023f931b2839acf2cfb1665ba795f7a1ef9244d9052b8462029a3e97de0d5c50",
+        "0x009a15de9aa27c630ecfbc1f063410fa3525511a530d01e9a4dd69bdd026538a",
       abi: [
         {
           type: "impl",
@@ -609,7 +609,7 @@ const deployedContracts = {
     },
     Challenge1: {
       address:
-        "0x0592f23b0088ec581863d2627567f3166830ae3d23e32e27fe8204a758611dac",
+        "0x024a1de305ae560434aff366d59c1a4eea440e28b579e2ec339a7b6d81d686d5",
       abi: [
         {
           type: "impl",
@@ -793,7 +793,7 @@ const deployedContracts = {
     },
     PresetERC1155: {
       address:
-        "0x010ec2536555c655f715c0ea462176cd24bbcee41653a1da5c36f08b5c2ec6eb",
+        "0x0369c78b328bd5b86fea5e4df7128535e32c296efdf43193c58864a0c231b362",
       abi: [
         {
           type: "impl",
