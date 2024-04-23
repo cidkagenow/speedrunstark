@@ -45,12 +45,13 @@ export const MyHoldings = () => {
       const totalBalance = parseInt(myTotalBalance.toString());
       for (let tokenIndex = 0; tokenIndex < totalBalance; tokenIndex++) {
         try {
+          const tokenIx = await yourCollectibleContract.functions[
+            "token_of_owner_by_index"
+          ](connectedAddress, BigInt(tokenIndex));
+
           const tokenURI = decodeBigIntArrayToText(
-            (
-              await yourCollectibleContract.functions["token_uri"](
-                BigInt(tokenIndex + 1),
-              )
-            ).data,
+            (await yourCollectibleContract.functions["token_uri"](tokenIx))
+              .data,
           );
           const ipfsHash = tokenURI.replace(
             /https:\/\/ipfs\.io\/(ipfs\/)?/,
