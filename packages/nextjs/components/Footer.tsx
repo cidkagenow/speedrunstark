@@ -25,11 +25,11 @@ export const Footer = () => {
   return (
     <div className="min-h-0 py-5 px-1 lg:mb-0 bg-base-100 text-primary">
       <div>
-        <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0 pointer-events-none">
-          <div className="flex md:flex-row gap-2 pointer-events-auto ">
+        <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0 pointer-events-none ">
+          <div className="flex md:flex-row gap-2 pointer-events-auto text-[12px] sm:text-[16px]">
             {nativeCurrencyPrice > 0 && (
               <div>
-                <div className="btn btn-primary btn-sm font-normal gap-1 cursor-auto bg-base-300 text-base-100">
+                <div className="btn btn-primary btn-sm font-normal gap-1 cursor-auto bg-base-300 text-base-100 ">
                   <CurrencyDollarIcon className="h-4 w-4" />
                   <span>{nativeCurrencyPrice}</span>
                 </div>
@@ -58,7 +58,7 @@ export const Footer = () => {
       </div>
       <div className="w-full ">
         <ul className="menu menu-horizontal w-full ">
-          <div className="flex justify-center items-center gap-2 text-sm w-full sm:text-[12px]">
+          <div className="flex justify-center items-center gap-2 text-sm w-full ">
             <div className="text-center">
               <a
                 href="https://github.com/Quantum3-Labs/scaffold-stark-2"

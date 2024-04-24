@@ -25,7 +25,7 @@ export const menuLinks: HeaderMenuLink[] = [
   },
   {
     label: "Staker UI",
-    href: "/staker-ui",
+    href: "/stake-ui",
     icon: <CircleStackIcon className="h-4 w-4" />,
   },
   {
