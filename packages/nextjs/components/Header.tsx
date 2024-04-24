@@ -5,7 +5,12 @@ import { usePathname } from "next/navigation";
 import { useOutsideClick } from "~~/hooks/scaffold-stark";
 import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 import MenuItem from "~~/components/MenuItem/MenuItem";
-import {Bars3Icon, BugAntIcon, CircleStackIcon, InboxStackIcon} from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BugAntIcon,
+  CircleStackIcon,
+  InboxStackIcon,
+} from "@heroicons/react/24/outline";
 
 export type HeaderMenuLink = {
   label: string;
