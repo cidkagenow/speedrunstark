@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount } from "@starknet-react/core";
+import { useAccount, useBalance } from "@starknet-react/core";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
@@ -11,7 +11,9 @@ import { Address } from "~~/components/scaffold-stark";
 export const StakeContractInteraction = ({ address }: { address?: string }) => {
   const { address: connectedAddress } = useAccount();
   const { data: StakerContract } = useDeployedContractInfo("Challenge1");
-
+  const { data: balanceData } = useBalance({
+    address,
+  });
   const { targetNetwork } = useTargetNetwork();
 
   // Contract Read Actions
@@ -31,7 +33,12 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
     functionName: "completed",
     watch: true,
   });
-
+  // const { data: myStake } = useScaffoldContractRead({
+  //   contractName: "Challenge1",
+  //   functionName: "balances",
+  //   args: [],
+  //   watch: true,
+  // });
   // Contract Write Actions
   // const { writeAsync: stakeETH } = useScaffoldContractWrite({
   //     contractName: "Challenge1",
@@ -70,7 +77,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
           <p className="block text-2xl mt-0 mb-2 font-semibold">
             Staker Contract
           </p>
-          <Address address={address} size="xl" />
+          <Address address={connectedAddress} size="xl" />
         </div>
         <div className="flex items-start justify-around w-full">
           <div className="flex flex-col items-center justify-center w-1/2">
@@ -82,7 +89,8 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
           <div className="flex flex-col items-center w-1/2">
             <p className="block text-xl mt-0 mb-1 font-semibold">You Staked</p>
             <span>
-              {0} {targetNetwork.nativeCurrency.symbol}
+              {balanceData ? balanceData.formatted : 0}{" "}
+              {targetNetwork.nativeCurrency.symbol}
             </span>
           </div>
         </div>

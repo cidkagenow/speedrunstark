@@ -40,7 +40,7 @@ const Home: NextPage = () => {
                 className="underline text-primary font-bold"
               >
                 SpeedRunStark.com
-              </a>{" "}
+              </a>
               !
             </p>
           </div>

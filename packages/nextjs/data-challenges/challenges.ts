@@ -14,7 +14,7 @@ const allChallenges = [
     description:
       "🦸 A superpower of Ethereum is allowing you, the builder, to create a simple set of rules that an adversarial group of players can use to work together. In this challenge, you create a decentralized application where users can coordinate a group funding effort. The users only have to trust the code.",
     imageUrl: "/stakingToken.png",
-    id: "decentralized-staking",
+    id: "decentralized-stakings",
   },
   {
     challenge: "Challenge #2",
