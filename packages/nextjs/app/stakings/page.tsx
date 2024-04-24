@@ -25,7 +25,7 @@ const Stakings: React.FC<StakingsProps> = ({ stakeEvents, isLoading }) => {
           <span className="block text-2xl font-bold">All Staking Events</span>
         </h1>
       </div>
-      <div className="overflow-x-auto shadow-lg">
+      <div className="overflow-x-auto border border-base-300">
         <table className="table table-zebra w-full">
           <thead>
             <tr>

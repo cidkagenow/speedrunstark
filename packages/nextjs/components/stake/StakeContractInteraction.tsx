@@ -57,7 +57,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
   return (
     <div className="flex items-center flex-col flex-grow w-full px-4 gap-12">
       {isStakingCompleted && (
-        <div className="flex flex-col items-center gap-2 bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-12 w-full max-w-lg">
+        <div className="flex flex-col items-center gap-2 bg-base-100 border-8 border-secondary  rounded-xl p-6 mt-12 w-full max-w-lg">
           <p className="block m-0 font-semibold">
             {" "}
             🎉 &nbsp; Staking App triggered `ExampleExternalContract` &nbsp; 🎉{" "}
@@ -69,7 +69,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
         </div>
       )}
       <div
-        className={`flex flex-col items-center space-y-8 bg-base-100 shadow-lg shadow-secondary border-8 border-primary rounded-xl p-6 w-full max-w-lg ${
+        className={`flex flex-col items-center space-y-8 bg-base-100  border-8 border-primary rounded-xl p-6 w-full max-w-lg ${
           !isStakingCompleted ? "mt-24" : ""
         }`}
       >

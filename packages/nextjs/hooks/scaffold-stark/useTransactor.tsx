@@ -1,5 +1,4 @@
-import { publicProvider, useAccount, useProvider } from "@starknet-react/core";
-import { WalletProvider } from "get-starknet-core";
+import { useAccount} from "@starknet-react/core";
 import {
   AccountInterface,
   InvokeFunctionResponse,
