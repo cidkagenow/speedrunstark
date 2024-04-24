@@ -46,7 +46,7 @@ export const DisplayVariable = ({
   return (
     <div className="space-y-1 pb-2">
       <div className="flex items-center">
-        <h3 className="font-medium text-lg mb-0 break-all">
+        <h3 className="font-medium text-lg mb-0 break-all text-white">
           {abiFunction.name}
         </h3>
         <button
@@ -57,14 +57,14 @@ export const DisplayVariable = ({
             <span className="loading loading-spinner loading-xs"></span>
           ) : (
             <ArrowPathIcon
-              className="h-3 w-3 cursor-pointer"
+              className="h-3 w-3 cursor-pointer text-white"
               aria-hidden="true"
             />
           )}
         </button>
         {/* <InheritanceTooltip inheritedFrom={inheritedFrom} /> */}
       </div>
-      <div className="text-gray-500 font-medium flex flex-col items-start">
+      <div className="text-[#BBBBBB] font-medium flex flex-col items-start">
         <div>
           <div
             className={`break-all block transition bg-transparent ${

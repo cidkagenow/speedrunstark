@@ -28,7 +28,7 @@ export const NFTCard = ({ nft }: { nft: Collectible }) => {
           <p className="text-xl p-0 m-0 font-semibold">{nft.name}</p>
           <div className="flex flex-wrap space-x-2 mt-1">
             {nft.attributes?.map((attr: any, index: any) => (
-              <span key={index} className="badge badge-primary py-3">
+              <span key={index} className="badge badge-primary text-white py-3">
                 {attr.value}
               </span>
             ))}

@@ -7,7 +7,7 @@ const deployedContracts = {
   devnet: {
     Challenge0: {
       address:
-        "0x00d9f2da75f38f34520559b9169c44715c004b50da5507b0e0a90710f34ca7c1",
+        "0x07a8deec66de16f4da0c8612a33d7f7d8511b7b34b8289b27075333cc1187c83",
       abi: [
         {
           type: "impl",

@@ -96,11 +96,11 @@ export const Faucet = () => {
                 disabled={loading}
               >
                 {!loading ? (
-                  <BanknotesIcon className="h-6 w-6" />
+                  <BanknotesIcon className="h-6 w-6 text-white" />
                 ) : (
                   <span className="loading loading-spinner loading-sm"></span>
                 )}
-                <span>Send</span>
+                <span className="text-white">Send</span>
               </button>
             </div>
           </div>
