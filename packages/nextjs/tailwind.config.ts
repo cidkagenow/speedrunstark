@@ -12,7 +12,7 @@ const config: Config = {
         mytheme: {
           primary: "#794BFC",
 
-          secondary: "#F4F1FD",
+          secondary: "F4F1FD",
 
           accent: "#ff00ff",
 
@@ -131,14 +131,6 @@ module.exports = {
       },
       animation: {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-      screens: {
-        sm: { max: "639px" },
-        md: { min: "640px", max: "767px" },
-        lg: { min: "768px", max: "1023px" },
-      },
-      fontFamily: {
-        sans: ["Space Grotesk", "sans-serif"],
       },
     },
   },
