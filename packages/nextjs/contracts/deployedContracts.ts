@@ -7,13 +7,12 @@ const deployedContracts = {
   devnet: {
     Challenge0: {
       address:
-        "0x07a8deec66de16f4da0c8612a33d7f7d8511b7b34b8289b27075333cc1187c83",
+        "0x00b962516961d0f32ff68d8b4b21ff3add5b54039dedd445b247a6cf5b832611",
       abi: [
         {
           type: "impl",
-          name: "WrappedIERC721MetadataImpl",
-          interface_name:
-            "openzeppelin::token::erc721::interface::IERC721Metadata",
+          name: "Challenge0Impl",
+          interface_name: "contracts::challenge0::IChallenge0",
         },
         {
           type: "struct",
@@ -46,6 +45,60 @@ const deployedContracts = {
               type: "core::integer::u128",
             },
           ],
+        },
+        {
+          type: "interface",
+          name: "contracts::challenge0::IChallenge0",
+          items: [
+            {
+              type: "function",
+              name: "mint_item",
+              inputs: [
+                {
+                  name: "recipient",
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+                {
+                  name: "uri",
+                  type: "core::byte_array::ByteArray",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "external",
+            },
+          ],
+        },
+        {
+          type: "impl",
+          name: "ICounterImpl",
+          interface_name: "contracts::challenge0::ICounter",
+        },
+        {
+          type: "interface",
+          name: "contracts::challenge0::ICounter",
+          items: [
+            {
+              type: "function",
+              name: "token_id_counter",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "view",
+            },
+          ],
+        },
+        {
+          type: "impl",
+          name: "WrappedIERC721MetadataImpl",
+          interface_name:
+            "openzeppelin::token::erc721::interface::IERC721Metadata",
         },
         {
           type: "interface",
@@ -93,24 +146,24 @@ const deployedContracts = {
         },
         {
           type: "impl",
-          name: "Challenge0Impl",
-          interface_name: "contracts::challenge0::IChallenge0",
+          name: "IERC721EnumerableImpl",
+          interface_name: "contracts::challenge0::IERC721Enumerable",
         },
         {
           type: "interface",
-          name: "contracts::challenge0::IChallenge0",
+          name: "contracts::challenge0::IERC721Enumerable",
           items: [
             {
               type: "function",
-              name: "mint_item",
+              name: "token_of_owner_by_index",
               inputs: [
                 {
-                  name: "recipient",
+                  name: "owner",
                   type: "core::starknet::contract_address::ContractAddress",
                 },
                 {
-                  name: "uri",
-                  type: "core::byte_array::ByteArray",
+                  name: "index",
+                  type: "core::integer::u256",
                 },
               ],
               outputs: [
@@ -118,11 +171,11 @@ const deployedContracts = {
                   type: "core::integer::u256",
                 },
               ],
-              state_mutability: "external",
+              state_mutability: "view",
             },
             {
               type: "function",
-              name: "token_id_counter",
+              name: "total_supply",
               inputs: [],
               outputs: [
                 {

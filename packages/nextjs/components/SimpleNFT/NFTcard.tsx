@@ -4,16 +4,29 @@ import { Collectible } from "./MyHoldings";
 import { AddressInput } from "../scaffold-stark";
 import { Address } from "../scaffold-stark";
 import { Address as AddressType } from "@starknet-react/chains";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
 export const NFTCard = ({ nft }: { nft: Collectible }) => {
   const [transferToAddress, setTransferToAddress] = useState("");
 
-  // const { writeAsync: transferNFT } = useScaffoldContractWrite({
-  //   contractName: "Challenge0",
-  //    functionName: "transfer_from",
-  //   args: [nft.owner, transferToAddress, BigInt(nft.id.toString())],
-  //  });
+  console.log(BigInt(nft.id.toString()));
+  const { writeAsync: transferNFT } = useScaffoldContractWrite({
+    contractName: "Challenge0",
+    functionName: "transfer_from",
+    args: [nft.owner, transferToAddress, BigInt(nft.id.toString())],
+  });
 
-  //  console.log(transferNFT)
+  const wrapInTryCatch =
+    (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+      try {
+        await fn();
+      } catch (error) {
+        console.error(
+          `Error calling ${errorMessageFnDescription} function`,
+          error,
+        );
+      }
+    };
+
   return (
     <div className="card card-compact bg-base-100 shadow-lg sm:min-w-[300px] shadow-secondary">
       <figure className="relative">
@@ -50,7 +63,12 @@ export const NFTCard = ({ nft }: { nft: Collectible }) => {
           />
         </div>
         <div className="card-actions justify-end">
-          <ButtonStyle>Send</ButtonStyle>
+          <button
+            className="btn btn-secondary btn-md px-8 tracking-wide"
+            onClick={wrapInTryCatch(transferNFT, "transferNFT")}
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>

@@ -61,7 +61,7 @@ export const MyHoldings = () => {
           const nftMetadata: NFTMetaData = await getMetadataFromIPFS(ipfsHash);
 
           collectibleUpdate.push({
-            id: parseInt(tokenIndex.toString()),
+            id: parseInt(tokenIx.toString()),
             uri: tokenURI,
             owner: connectedAddress,
             ...nftMetadata,
