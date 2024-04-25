@@ -7,18 +7,7 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldCont
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
 import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
-
-function humanizeDuration(seconds: number) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = Math.floor(seconds % 60);
-
-  const formattedHours = hours > 0 ? `${hours}h ` : "";
-  const formattedMinutes = minutes > 0 ? `${minutes}m ` : "";
-  const formattedSecs = secs > 0 ? `${secs}s` : "";
-
-  return `${formattedHours}${formattedMinutes}${formattedSecs}`;
-}
+import humanizeDuration from "humanize-duration";
 
 const wrapInTryCatch =
   (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
@@ -67,7 +56,7 @@ export const StakeContractInteraction = () => {
   const { data: myStake } = useScaffoldContractRead({
     contractName: "Challenge1",
     functionName: "balances",
-    args: [connectedAddress],
+    args: [connectedAddress ?? ""],
     watch: true,
   });
 
@@ -85,7 +74,6 @@ export const StakeContractInteraction = () => {
     contractName: "Challenge1",
     functionName: "withdraw",
   });
-
   return (
     <div className="flex items-center flex-col flex-grow w-full px-4 gap-12">
       {isStakingCompleted && (
