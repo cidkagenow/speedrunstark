@@ -1,4 +1,4 @@
-import { useAccount} from "@starknet-react/core";
+import { useAccount } from "@starknet-react/core";
 import {
   AccountInterface,
   InvokeFunctionResponse,

@@ -8,12 +8,43 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldCon
 import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
 
-export const StakeContractInteraction = ({ address }: { address?: string }) => {
+function humanizeDuration(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  const formattedHours = hours > 0 ? `${hours}h ` : "";
+  const formattedMinutes = minutes > 0 ? `${minutes}m ` : "";
+  const formattedSecs = secs > 0 ? `${secs}s` : "";
+
+  return `${formattedHours}${formattedMinutes}${formattedSecs}`;
+}
+
+const wrapInTryCatch =
+  (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+    try {
+      await fn();
+    } catch (error) {
+      console.error(
+        `Error calling ${errorMessageFnDescription} function`,
+        error,
+      );
+    }
+  };
+
+export const StakeContractInteraction = () => {
   const { address: connectedAddress } = useAccount();
   const { data: StakerContract } = useDeployedContractInfo("Challenge1");
-  const { data: balanceData } = useBalance({
-    address,
+  const { data: ExampleExternalContact } = useDeployedContractInfo(
+    "ExampleExternalContract",
+  );
+  const { data: stakerContractBalance } = useBalance({
+    address: StakerContract?.address,
   });
+  const { data: exampleExternalContractBalance } = useBalance({
+    address: ExampleExternalContact?.address,
+  });
+
   const { targetNetwork } = useTargetNetwork();
 
   // Contract Read Actions
@@ -33,18 +64,19 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
     functionName: "completed",
     watch: true,
   });
-  // const { data: myStake } = useScaffoldContractRead({
-  //   contractName: "Challenge1",
-  //   functionName: "balances",
-  //   args: [],
-  //   watch: true,
-  // });
+  const { data: myStake } = useScaffoldContractRead({
+    contractName: "Challenge1",
+    functionName: "balances",
+    args: [connectedAddress],
+    watch: true,
+  });
+
   // Contract Write Actions
-  // const { writeAsync: stakeETH } = useScaffoldContractWrite({
-  //     contractName: "Challenge1",
-  //     functionName: "stake",
-  //     args:BigInt(0),
-  // });
+  const { writeAsync: stakeStark } = useScaffoldContractWrite({
+    contractName: "Challenge1",
+    functionName: "stake",
+    args: [BigInt(0)],
+  });
   const { writeAsync: execute } = useScaffoldContractWrite({
     contractName: "Challenge1",
     functionName: "execute",
@@ -59,11 +91,17 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
       {isStakingCompleted && (
         <div className="flex flex-col items-center gap-2 bg-base-100 border-8 border-secondary  rounded-xl p-6 mt-12 w-full max-w-lg">
           <p className="block m-0 font-semibold">
-            {" "}
             🎉 &nbsp; Staking App triggered `ExampleExternalContract` &nbsp; 🎉{" "}
           </p>
           <div className="flex items-center">
-            <ETHToPrice value={"0"} className="text-[1rem]" />
+            <ETHToPrice
+              value={
+                exampleExternalContractBalance != null
+                  ? exampleExternalContractBalance.toString()
+                  : undefined
+              }
+              className="text-[1rem]"
+            />
             <p className="block m-0 text-lg -ml-1">staked !!</p>
           </div>
         </div>
@@ -77,41 +115,59 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
           <p className="block text-2xl mt-0 mb-2 font-semibold">
             Staker Contract
           </p>
-          <Address address={connectedAddress} size="xl" />
+          <Address address={StakerContract?.address} size="xl" />
         </div>
         <div className="flex items-start justify-around w-full">
           <div className="flex flex-col items-center justify-center w-1/2">
             <p className="block text-xl mt-0 mb-1 font-semibold">Time Left</p>
             <p className="m-0 p-0">
-              {timeLeft ? `${Number(timeLeft) * 1000}` : 0}
+              {timeLeft ? `${humanizeDuration(Number(timeLeft) * 1000)}` : 0}
             </p>
           </div>
           <div className="flex flex-col items-center w-1/2">
             <p className="block text-xl mt-0 mb-1 font-semibold">You Staked</p>
             <span>
-              {balanceData ? balanceData.formatted : 0}{" "}
-              {targetNetwork.nativeCurrency.symbol}
+              {myStake
+                ? `${myStake} ${targetNetwork.nativeCurrency.symbol}`
+                : "0"}
             </span>
           </div>
         </div>
         <div className="flex flex-col items-center shrink-0 w-full">
           <p className="block text-xl mt-0 mb-1 font-semibold">Total Staked</p>
           <div className="flex space-x-2">
-            {<ETHToPrice value={"0"} />}
+            {
+              <ETHToPrice
+                value={
+                  stakerContractBalance != null
+                    ? stakerContractBalance.formatted
+                    : undefined
+                }
+              />
+            }
             <span>/</span>
-            {<ETHToPrice value={"0"} />}
+            {<ETHToPrice value={threshold ? `${threshold}` : undefined} />}
           </div>
         </div>
         <div className="flex flex-col space-y-5">
           <div className="flex space-x-7">
-            <button className="btn btn-primary uppercase text-base-100">
+            <button
+              className="btn btn-primary uppercase text-base-100"
+              onClick={wrapInTryCatch(execute, "execute")}
+            >
               Execute!
             </button>
-            <button className="btn btn-primary uppercase text-base-100">
+            <button
+              className="btn btn-primary uppercase text-base-100"
+              onClick={wrapInTryCatch(withdrawETH, "stakeETH")}
+            >
               Withdraw
             </button>
           </div>
-          <button className="btn btn-primary uppercase text-base-100">
+          <button
+            className="btn btn-primary uppercase text-base-100"
+            onClick={wrapInTryCatch(stakeStark, "stakeETH")}
+          >
             🥩 Stake 0.5 ether!
           </button>
         </div>

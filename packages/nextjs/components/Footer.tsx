@@ -29,7 +29,7 @@ export const Footer = () => {
           <div className="flex md:flex-row gap-2 pointer-events-auto text-[12px] sm:text-[16px]">
             {nativeCurrencyPrice > 0 && (
               <div>
-                <div className="btn btn-primary btn-sm font-normal gap-1 cursor-auto bg-base-300 text-base-100 ">
+                <div className="btn btn-primary btn-sm font-normal gap-1 cursor-auto bg-base-300 text-base-100 border-base-100 ">
                   <CurrencyDollarIcon className="h-4 w-4" />
                   <span>{nativeCurrencyPrice}</span>
                 </div>
@@ -41,7 +41,7 @@ export const Footer = () => {
                 <Link
                   href="/blockexplorer"
                   passHref
-                  className="btn btn-primary btn-sm font-normal gap-1 text-base-100"
+                  className="btn btn-primary btn-sm font-normal gap-1 text-base-100 border-base-100 "
                 >
                   <MagnifyingGlassIcon className="h-4 w-4" />
                   <span>Block Explorer</span>
