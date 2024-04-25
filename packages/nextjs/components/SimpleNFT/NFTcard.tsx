@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ButtonStyle from "../ButtonStyle/ButtonStyle";
 import { Collectible } from "./MyHoldings";
 import { AddressInput } from "../scaffold-stark";
 import { Address } from "../scaffold-stark";
@@ -8,7 +7,6 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldCon
 export const NFTCard = ({ nft }: { nft: Collectible }) => {
   const [transferToAddress, setTransferToAddress] = useState("");
 
-  console.log(BigInt(nft.id.toString()));
   const { writeAsync: transferNFT } = useScaffoldContractWrite({
     contractName: "Challenge0",
     functionName: "transfer_from",

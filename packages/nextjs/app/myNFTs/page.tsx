@@ -9,9 +9,11 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldCon
 import { notification } from "~~/utils/scaffold-stark";
 import { addToIPFS } from "~~/utils/simpleNFT/ipfs-fetch";
 import nftsMetadata from "~~/utils/simpleNFT/nftsMetadata";
+import { useState } from "react";
 
 const MyNFTs: NextPage = () => {
   const { address: connectedAddress, isConnected, isConnecting } = useAccount();
+  const [status, setStatus] = useState("Mint NFT");
 
   const { writeAsync: mintItem } = useScaffoldContractWrite({
     contractName: "Challenge0",
@@ -26,6 +28,7 @@ const MyNFTs: NextPage = () => {
   });
 
   const handleMintItem = async () => {
+    setStatus("Minting NFT");
     // circle back to the zero item if we've reached the end of the array
     if (tokenIdCounter === undefined) return;
 
@@ -43,9 +46,11 @@ const MyNFTs: NextPage = () => {
       await mintItem({
         args: [connectedAddress, uploadedItem.path],
       });
+      setStatus("Updating NFT List");
     } catch (error) {
       notification.remove(notificationId);
       console.error(error);
+      setStatus("Mint NFT");
     }
   };
 
@@ -62,12 +67,19 @@ const MyNFTs: NextPage = () => {
         {!isConnected || isConnecting ? (
           <CustomConnectButton />
         ) : (
-          <button className="btn btn-secondary" onClick={handleMintItem}>
-            Mint NFT
+          <button
+            className="btn btn-secondary"
+            disabled={status !== "Mint NFT"}
+            onClick={handleMintItem}
+          >
+            {status !== "Mint NFT" && (
+              <span className="loading loading-spinner loading-xs"></span>
+            )}
+            {status}
           </button>
         )}
       </div>
-      <MyHoldings />
+      <MyHoldings setStatus={setStatus} />
     </>
   );
 };

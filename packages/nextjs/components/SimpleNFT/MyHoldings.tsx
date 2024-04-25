@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { NFTCard } from "./NFTcard";
 import { useAccount } from "@starknet-react/core";
 import { useScaffoldContract } from "~~/hooks/scaffold-stark/useScaffoldContract";
@@ -16,7 +16,11 @@ export interface Collectible extends Partial<NFTMetaData> {
   owner: string;
 }
 
-export const MyHoldings = () => {
+export const MyHoldings = ({
+  setStatus,
+}: {
+  setStatus: Dispatch<SetStateAction<string>>;
+}) => {
   const { address: connectedAddress } = useAccount();
   const [myAllCollectibles, setMyAllCollectibles] = useState<Collectible[]>([]);
   const [allCollectiblesLoading, setAllCollectiblesLoading] = useState(false);
@@ -77,7 +81,7 @@ export const MyHoldings = () => {
       setAllCollectiblesLoading(false);
     };
 
-    updateMyCollectibles();
+    updateMyCollectibles().finally(() => setStatus("Mint NFT"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectedAddress, myTotalBalance]);
 
