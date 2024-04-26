@@ -7,12 +7,11 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldCont
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
 import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
-import {ethers} from "ethers";
+import { ethers } from "ethers";
 import humanizeDuration from "humanize-duration";
 import { uint256 } from "starknet-dev";
 import { BigNumberish } from "starknet";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
-
 
 export const StakeContractInteraction = () => {
   const { address: connectedAddress } = useAccount();
@@ -71,17 +70,16 @@ export const StakeContractInteraction = () => {
   });
 
   const wrapInTryCatch =
-  (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
-    try {
-      await fn();
-    } catch (error) {
-      console.error(
-        `Error calling ${errorMessageFnDescription} function`,
-        error,
-      );
-    }
-  };
-
+    (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+      try {
+        await fn();
+      } catch (error) {
+        console.error(
+          `Error calling ${errorMessageFnDescription} function`,
+          error,
+        );
+      }
+    };
 
   return (
     <div className="flex items-center flex-col flex-grow w-full px-4 gap-12">
@@ -143,7 +141,13 @@ export const StakeContractInteraction = () => {
               />
             }
             <span>/</span>
-            {<ETHToPrice value={threshold ? `${ethers.formatEther(threshold)}` : undefined} />}
+            {
+              <ETHToPrice
+                value={
+                  threshold ? `${ethers.formatEther(threshold)}` : undefined
+                }
+              />
+            }
           </div>
         </div>
         <div className="flex flex-col space-y-5">
