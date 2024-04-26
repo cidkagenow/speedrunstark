@@ -4,10 +4,269 @@
  */
 
 const deployedContracts = {
-  devnet: {
+  sepolia: {
+    ExampleExternalContract: {
+      address:
+        "0x037b6ee173adcfd6980abf8dd55289e83083ea018926b2515d3e9a98374b46ff",
+      abi: [
+        {
+          type: "impl",
+          name: "ExampleExternalContractImpl",
+          interface_name:
+            "contracts::exampleExternalContract::IExampleExternalContract",
+        },
+        {
+          type: "struct",
+          name: "core::integer::u256",
+          members: [
+            {
+              name: "low",
+              type: "core::integer::u128",
+            },
+            {
+              name: "high",
+              type: "core::integer::u128",
+            },
+          ],
+        },
+        {
+          type: "enum",
+          name: "core::bool",
+          variants: [
+            {
+              name: "False",
+              type: "()",
+            },
+            {
+              name: "True",
+              type: "()",
+            },
+          ],
+        },
+        {
+          type: "interface",
+          name: "contracts::exampleExternalContract::IExampleExternalContract",
+          items: [
+            {
+              type: "function",
+              name: "complete",
+              inputs: [
+                {
+                  name: "amount",
+                  type: "core::integer::u256",
+                },
+              ],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "completed",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::bool",
+                },
+              ],
+              state_mutability: "external",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::exampleExternalContract::ExampleExternalContract::Event",
+          kind: "enum",
+          variants: [],
+        },
+      ],
+    },
+    Challenge1: {
+      address:
+        "0x02776f66b04bf88edb2d84041a345446a4997af64f750ec265900bb13ef0de79",
+      abi: [
+        {
+          type: "impl",
+          name: "Challenge1Impl",
+          interface_name: "contracts::challenge1::IChallenge1",
+        },
+        {
+          type: "struct",
+          name: "core::integer::u256",
+          members: [
+            {
+              name: "low",
+              type: "core::integer::u128",
+            },
+            {
+              name: "high",
+              type: "core::integer::u128",
+            },
+          ],
+        },
+        {
+          type: "enum",
+          name: "core::bool",
+          variants: [
+            {
+              name: "False",
+              type: "()",
+            },
+            {
+              name: "True",
+              type: "()",
+            },
+          ],
+        },
+        {
+          type: "interface",
+          name: "contracts::challenge1::IChallenge1",
+          items: [
+            {
+              type: "function",
+              name: "execute",
+              inputs: [],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "stake",
+              inputs: [
+                {
+                  name: "amount",
+                  type: "core::integer::u256",
+                },
+              ],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "withdraw",
+              inputs: [],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "balances",
+              inputs: [
+                {
+                  name: "account",
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "completed",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::bool",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "deadline",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::integer::u64",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "example_external_contract",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "open_for_withdraw",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::bool",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "threshold",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "total_balance",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "time_left",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::integer::u64",
+                },
+              ],
+              state_mutability: "view",
+            },
+          ],
+        },
+        {
+          type: "constructor",
+          name: "constructor",
+          inputs: [
+            {
+              name: "external_contract_address",
+              type: "core::starknet::contract_address::ContractAddress",
+            },
+            {
+              name: "eth_contract_address",
+              type: "core::starknet::contract_address::ContractAddress",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::challenge1::Challenge1::Event",
+          kind: "enum",
+          variants: [],
+        },
+      ],
+    },
     Challenge0: {
       address:
-        "0x00b962516961d0f32ff68d8b4b21ff3add5b54039dedd445b247a6cf5b832611",
+        "0x026949669a9badb34ffee6a3ac157fd5aa4e84b840e720059950e4b0328d348a",
       abi: [
         {
           type: "impl",
@@ -146,49 +405,7 @@ const deployedContracts = {
         },
         {
           type: "impl",
-          name: "IERC721EnumerableImpl",
-          interface_name: "contracts::challenge0::IERC721Enumerable",
-        },
-        {
-          type: "interface",
-          name: "contracts::challenge0::IERC721Enumerable",
-          items: [
-            {
-              type: "function",
-              name: "token_of_owner_by_index",
-              inputs: [
-                {
-                  name: "owner",
-                  type: "core::starknet::contract_address::ContractAddress",
-                },
-                {
-                  name: "index",
-                  type: "core::integer::u256",
-                },
-              ],
-              outputs: [
-                {
-                  type: "core::integer::u256",
-                },
-              ],
-              state_mutability: "view",
-            },
-            {
-              type: "function",
-              name: "total_supply",
-              inputs: [],
-              outputs: [
-                {
-                  type: "core::integer::u256",
-                },
-              ],
-              state_mutability: "view",
-            },
-          ],
-        },
-        {
-          type: "impl",
-          name: "ERC721Impl",
+          name: "WrappedIERC721Impl",
           interface_name: "openzeppelin::token::erc721::interface::IERC721",
         },
         {
@@ -359,6 +576,48 @@ const deployedContracts = {
               outputs: [
                 {
                   type: "core::bool",
+                },
+              ],
+              state_mutability: "view",
+            },
+          ],
+        },
+        {
+          type: "impl",
+          name: "IERC721EnumerableImpl",
+          interface_name: "contracts::challenge0::IERC721Enumerable",
+        },
+        {
+          type: "interface",
+          name: "contracts::challenge0::IERC721Enumerable",
+          items: [
+            {
+              type: "function",
+              name: "token_of_owner_by_index",
+              inputs: [
+                {
+                  name: "owner",
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+                {
+                  name: "index",
+                  type: "core::integer::u256",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "total_supply",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::integer::u256",
                 },
               ],
               state_mutability: "view",
