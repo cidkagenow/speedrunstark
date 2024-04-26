@@ -5,12 +5,10 @@ import { usePathname } from "next/navigation";
 import { useOutsideClick } from "~~/hooks/scaffold-stark";
 import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 import {
-  ArrowDownTrayIcon,
-  ArrowPathIcon,
-  ArrowUpTrayIcon,
+  CircleStackIcon,
   Bars3Icon,
   BugAntIcon,
-  PhotoIcon,
+  BoltIcon,
 } from "@heroicons/react/24/outline";
 import MenuItem from "~~/components/MenuItem/MenuItem";
 
@@ -22,14 +20,18 @@ export type HeaderMenuLink = {
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: "Example View 1",
-    href: "/exampleView1",
-    icon: <PhotoIcon className="h-4 w-4" />,
+    label: "Home",
+    href: "/",
   },
   {
-    label: "Example View 2",
-    href: "/exampleView2",
-    icon: <ArrowDownTrayIcon className="h-4 w-4" />,
+    label: "Token Vendor",
+    href: "/token-vendor",
+    icon: <CircleStackIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Events",
+    href: "/events",
+    icon: <BoltIcon className="h-4 w-4" />,
   },
   {
     label: "Debug Contracts",
