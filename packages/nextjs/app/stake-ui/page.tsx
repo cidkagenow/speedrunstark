@@ -6,6 +6,7 @@ import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 
 const StakerUI: NextPage = () => {
   const { data: StakerContract } = useDeployedContractInfo("Challenge1");
+
   return (
     <StakeContractInteraction
       key={StakerContract?.address}

@@ -13,7 +13,7 @@ import { uint256 } from "starknet-dev";
 import { BigNumberish } from "starknet";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 
-export const StakeContractInteraction = () => {
+export const StakeContractInteraction = ({ address }: { address?: string }) => {
   const { address: connectedAddress } = useAccount();
   const { data: StakerContract } = useDeployedContractInfo("Challenge1");
   const { data: ExampleExternalContact } = useDeployedContractInfo(
