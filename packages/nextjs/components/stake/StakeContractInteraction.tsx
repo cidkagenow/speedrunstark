@@ -11,6 +11,7 @@ import { ethers } from "ethers";
 import humanizeDuration from "humanize-duration";
 import { uint256 } from "starknet-dev";
 import { BigNumberish } from "starknet";
+import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 
 export const StakeContractInteraction = () => {
   const { address: connectedAddress } = useAccount();
@@ -65,6 +66,21 @@ export const StakeContractInteraction = () => {
     contractName: "Challenge1",
     functionName: "withdraw",
   });
+
+  const {writeAsync: stakeEth} = useScaffoldMultiContractWrite({
+    calls: [
+      {
+        contractName: "Eth",
+        functionName: "approve",
+        args: [StakerContract?.address ?? "",10 ** 14],
+      },
+      {
+        contractName: "Challenge1",
+        functionName: "stake",
+        args: [10 ** 14],
+      }
+    ]
+  })
 
   const wrapInTryCatch =
     (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
@@ -158,7 +174,7 @@ export const StakeContractInteraction = () => {
           </div>
           <button
             className="btn btn-primary uppercase text-base-100"
-            onClick={wrapInTryCatch(stakeStark, "stakeETH")}
+            onClick={wrapInTryCatch(stakeEth, "stakeETH")}
           >
             🥩 Stake 0.5 ether!
           </button>
