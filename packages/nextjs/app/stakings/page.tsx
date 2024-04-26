@@ -4,12 +4,12 @@ interface StakeEvent {
   args: [string, string];
 }
 
-interface StakingsProps {
+interface StakingProps {
   stakeEvents: StakeEvent[] | undefined;
   isLoading: boolean;
 }
 
-const Stakings: React.FC<StakingsProps> = ({ stakeEvents, isLoading }) => {
+const Staking: React.FC<StakingProps> = ({ stakeEvents, isLoading }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center mt-10">
@@ -55,4 +55,4 @@ const Stakings: React.FC<StakingsProps> = ({ stakeEvents, isLoading }) => {
   );
 };
 
-export default Stakings;
+export default Staking;

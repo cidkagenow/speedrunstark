@@ -11,7 +11,6 @@ import { ethers } from "ethers";
 import humanizeDuration from "humanize-duration";
 import { uint256 } from "starknet-dev";
 import { BigNumberish } from "starknet";
-import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 
 export const StakeContractInteraction = () => {
   const { address: connectedAddress } = useAccount();
@@ -53,13 +52,11 @@ export const StakeContractInteraction = () => {
   });
 
   // Contract Write Actions
-  // const { writeAsync: stakeStark } = useScaffoldMultiContractWrite({
-  //   calls: [
-  //     {
-  //       contractName: ""
-  //     }
-  //   ]
-  // });
+  const { writeAsync: stakeStark } = useScaffoldContractWrite({
+    contractName: "Challenge1",
+    functionName: "stake",
+    args: [BigInt(0)],
+  });
   const { writeAsync: execute } = useScaffoldContractWrite({
     contractName: "Challenge1",
     functionName: "execute",
@@ -141,13 +138,7 @@ export const StakeContractInteraction = () => {
               />
             }
             <span>/</span>
-            {
-              <ETHToPrice
-                value={
-                  threshold ? `${ethers.formatEther(threshold)}` : undefined
-                }
-              />
-            }
+            {<ETHToPrice value={threshold ? `${threshold}` : undefined} />}
           </div>
         </div>
         <div className="flex flex-col space-y-5">
