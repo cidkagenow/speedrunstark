@@ -22,6 +22,7 @@ Then download the challenge to your computer and install dependencies by running
 git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-0-simple-nft
 cd challenge-0-simple-nft
 git checkout simple-nft-example
+>>>>>>> challenge-base
 yarn install
 ```
 
