@@ -67,20 +67,20 @@ export const StakeContractInteraction = () => {
     functionName: "withdraw",
   });
 
-  const {writeAsync: stakeEth} = useScaffoldMultiContractWrite({
+  const { writeAsync: stakeEth } = useScaffoldMultiContractWrite({
     calls: [
       {
         contractName: "Eth",
         functionName: "approve",
-        args: [StakerContract?.address ?? "",10 ** 14],
+        args: [StakerContract?.address ?? "", 10 ** 14],
       },
       {
         contractName: "Challenge1",
         functionName: "stake",
         args: [10 ** 14],
-      }
-    ]
-  })
+      },
+    ],
+  });
 
   const wrapInTryCatch =
     (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
