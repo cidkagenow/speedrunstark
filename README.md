@@ -1,6 +1,6 @@
 # 🚩 Challenge 1: 🥩 Decentralized Staking App
 
-![readme-1](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/27d98363741df286d563e45152aa46195256d0d8/packages/nextjs/public/banner-home.svg)
+![readme-1](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/27d98363741df286d563e45152aa46195256d0d8/packages/nextjs/public/banner-decentralized-staking.png)
 
 🦸 A superpower of Ethereum is allowing you, the builder, to create a simple set of rules that an adversarial group of players can use to work together. In this challenge, you create a decentralized application where users can coordinate a group funding effort. If the users cooperate, the money is collected in a second smart contract. If they defect, the worst that can happen is everyone gets their money back. The users only have to trust the code.
 
