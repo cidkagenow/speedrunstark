@@ -15,6 +15,7 @@ import { useOutsideClick } from "~~/hooks/scaffold-stark";
 import { getTargetNetworks } from "~~/utils/scaffold-stark";
 import { Address } from "@starknet-react/chains";
 import { useDisconnect } from "@starknet-react/core";
+import { usePathname } from "next/navigation";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -32,16 +33,24 @@ export const AddressInfoDropdown = ({
   blockExplorerAddressLink,
 }: AddressInfoDropdownProps) => {
   const { disconnect } = useDisconnect();
+  const location = usePathname();
 
   const [addressCopied, setAddressCopied] = useState(false);
-
   const [selectingNetwork, setSelectingNetwork] = useState(false);
   const dropdownRef = useRef<HTMLDetailsElement>(null);
+
   const closeDropdown = () => {
     setSelectingNetwork(false);
     dropdownRef.current?.removeAttribute("open");
   };
+
   useOutsideClick(dropdownRef, closeDropdown);
+
+  const handleDisconnect = () => {
+    if (location === "/myNFTs") {
+      disconnect();
+    }
+  };
 
   return (
     <>
@@ -135,7 +144,7 @@ export const AddressInfoDropdown = ({
             <button
               className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"
               type="button"
-              onClick={() => disconnect()}
+              onClick={handleDisconnect}
             >
               <ArrowLeftEndOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" />{" "}
               <span>Disconnect</span>
