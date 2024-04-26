@@ -1,33 +1,22 @@
-const { deployContract } = require("./deploy_contract");
-
+const { deployer, deployContract } = require("./deploy_contract");
 const deployScript = async () => {
-  //  const {
-  //    classHash: helloStarknetClassHash,
-  //    abi: helloStarknetAbi,
-  //    address: ContractAddress,
-  //  } = await deployContract(null, "HelloStarknet"); // can pass another argument for the exported contract name
+  // const {
+  //   classHash: helloStarknetClassHash,
+  //   abi: helloStarknetAbi,
+  //   address: ContractAddress,
+  // } = await deployContract(null, "HelloStarknet"); // can pass another argument for the exported contract name
   // await deployContract(
   //   {
   //     name: 1,
   //   },
   //   "SimpleStorage"
   // );
-
- await deployContract(
+  await deployContract(
     {
-       owner:
-        "0x4b3f4ba8c00a02b66142a4b1dd41a4dfab4f92650922a3280977b0f03c75ee1",
-    }, // last account in devnet accounts
-     "Challenge0",
-    );
-
-  // await deployContract(
-  //   {
-  //     owner:
-  //       "0x4b3f4ba8c00a02b66142a4b1dd41a4dfab4f92650922a3280977b0f03c75ee1",
-  //   }, // last account in devnet accounts
-  //   "Challenge0"
-  // );
+      owner: deployer.address, // the deployer address is the owner of the contract
+    },
+    "Challenge0"
+  );
 
   // const values = {
   //     classHash: helloStarknetClassHash,
@@ -36,7 +25,6 @@ const deployScript = async () => {
   //   } = await deployContract(null, "ExampleExternalContract");
   // await deployContract({ external_contract_address: values.address, eth_contract_address: "0x49D36570D4E46F48E99674BD3FCC84644DDD6B96F7C741B1562B82F9E004DC7" }
   //   , "Challenge1");
-  
 
   //await deployContract(null, "TransferETH");
   //   await deployContract(
