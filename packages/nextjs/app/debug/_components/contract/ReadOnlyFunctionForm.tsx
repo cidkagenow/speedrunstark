@@ -69,7 +69,7 @@ export const ReadOnlyFunctionForm = ({
       <div className="flex justify-between gap-2 flex-wrap">
         <div className="flex-grow w-4/5">
           {data !== null && data !== undefined && (
-            <div className="bg-secondary rounded-3xl text-sm px-4 py-1.5 break-words">
+            <div className="bg-secondary rounded-3xl text-sm px-4 py-1.5 break-words text-white">
               <p className="font-bold m-0 mb-1">Result:</p>
               <pre className="whitespace-pre-wrap break-words">
                 {displayTxResult(data, false, abiFunction?.outputs)}
@@ -78,7 +78,7 @@ export const ReadOnlyFunctionForm = ({
           )}
         </div>
         <button
-          className="btn btn-secondary btn-sm"
+          className="btn btn-secondary btn-sm bg-primary text-neutral-content"
           onClick={async () => {
             setInputValue(getParsedContractFunctionArgs(form));
           }}

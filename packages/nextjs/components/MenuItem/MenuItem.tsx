@@ -8,17 +8,20 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ link, isActive }) => {
+  // console.log({ isActive }, link.label);
   return (
     <li key={link.href}>
       <Link
         href={link.href}
         passHref
         className={`${
-          isActive ? "bg-base-300 shadow-md text-base-100" : ""
-        } hover:bg-base-300 hover:shadow-md hover:text-base-100 focus:bg-base-300 active:!text-neutral-content py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+          isActive
+            ? "!bg-base-300 !text-base-100 active:bg-base-300 shadow-md text-base-100"
+            : ""
+        } hover:bg-base-300 hover:text-base-100`}
       >
         {link.icon}
-        <span className="">{link.label}</span>
+        <span>{link.label}</span>
       </Link>
     </li>
   );
