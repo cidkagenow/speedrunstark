@@ -67,6 +67,11 @@ yarn start
 
 ![image](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-nfts-images.png)
 
+👛 Open an window Browser and navigate to http://localhost:3000
+
+🎟 Transfer an NFT from one address to another using the UI:
+
+![image](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-nfts-images-transfer.png)
 
 🕵🏻‍♂️ Inspect the `Debug Contracts` tab to figure out what address is the owner of YourCollectible?
 
@@ -90,7 +95,7 @@ yarn start
 cp packages/snfoundry/.env.example packages/snfoundry/.env
 ```
 
-> You need to fill the envs related to sepolia testnet with your own contract address and private key.
+> You need to fill the envs related to Sepolia testnet with your own contract address and private key.
 
 ⛽️ You will need to send ETH or STRK to your deployer Contract Addres with your wallet, or get it from a public faucet of your chosen network.
 
