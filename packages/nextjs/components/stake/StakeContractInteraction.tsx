@@ -13,13 +13,18 @@ import { uint256 } from "starknet-dev";
 import { BigNumberish } from "starknet";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 
+function formatEther(weiValue: number) {
+  const etherValue = weiValue / 1e18;
+  return etherValue.toFixed(1);
+}
+
 export const StakeContractInteraction = ({ address }: { address?: string }) => {
   const { address: connectedAddress } = useAccount();
   const { data: StakerContract } = useDeployedContractInfo("Challenge1");
   const { data: ExampleExternalContact } = useDeployedContractInfo(
     "ExampleExternalContract",
   );
-  const { data: stakerContractBalance } = useBalance({
+  const { data: stakerContractBalance, refetch } = useBalance({
     address: StakerContract?.address,
   });
   const { data: exampleExternalContractBalance } = useBalance({
@@ -53,11 +58,11 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
   });
 
   // Contract Write Actions
-  const { writeAsync: stakeStark } = useScaffoldContractWrite({
-    contractName: "Challenge1",
-    functionName: "stake",
-    args: [BigInt(0)],
-  });
+  // const { writeAsync: stakeStark } = useScaffoldContractWrite({
+  //   contractName: "Challenge1",
+  //   functionName: "stake",
+  //   args: [BigInt(0)],
+  // });
   const { writeAsync: execute } = useScaffoldContractWrite({
     contractName: "Challenge1",
     functionName: "execute",
@@ -81,11 +86,14 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
       },
     ],
   });
+  console.log(formatEther(Number(threshold)));
 
   const wrapInTryCatch =
     (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
       try {
-        await fn();
+        await fn().then(() => {
+          refetch();
+        });
       } catch (error) {
         console.error(
           `Error calling ${errorMessageFnDescription} function`,
@@ -129,14 +137,16 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
           <div className="flex flex-col items-center justify-center w-1/2">
             <p className="block text-xl mt-0 mb-1 font-semibold">Time Left</p>
             <p className="m-0 p-0">
-              {timeLeft ? `${humanizeDuration(Number(timeLeft) * 1000)}` : 0}
+              {timeLeft
+                ? `${humanizeDuration(Number(timeLeft) * 1000)} left`
+                : "0"}
             </p>
           </div>
           <div className="flex flex-col items-center w-1/2">
             <p className="block text-xl mt-0 mb-1 font-semibold">You Staked</p>
             <span>
               {myStake
-                ? `${myStake} ${targetNetwork.nativeCurrency.symbol}`
+                ? `${formatEther(Number(myStake))} ${targetNetwork.nativeCurrency.symbol}`
                 : "0"}
             </span>
           </div>
@@ -148,13 +158,21 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
               <ETHToPrice
                 value={
                   stakerContractBalance != null
-                    ? stakerContractBalance.formatted
+                    ? `${formatEther(Number(stakerContractBalance.value))}${targetNetwork.nativeCurrency.symbol}`
                     : undefined
                 }
               />
             }
             <span>/</span>
-            {<ETHToPrice value={threshold ? `${threshold}` : undefined} />}
+            {
+              <ETHToPrice
+                value={
+                  threshold
+                    ? `${formatEther(Number(threshold))} ${targetNetwork.nativeCurrency.symbol}`
+                    : undefined
+                }
+              />
+            }
           </div>
         </div>
         <div className="flex flex-col space-y-5">
