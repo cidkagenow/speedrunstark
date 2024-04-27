@@ -1,87 +1,35 @@
-# 🚩 Challenge #0: 🎟 Simple NFT Example
+# 🚩 Challenge 3: 🎲 Dice Game
 
-![readme-0](../speedrunstark/packages/nextjs/public/hero-bgtransparent.png)
+![readme-3](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/dice-game/packages/nextjs/public/hero3.png)
 
-🎫 Create a simple NFT to learn basics of 🏗 Scaffold-ETH 2. You'll use [👷‍♀️ HardHat](https://hardhat.org/getting-started/) to compile and deploy smart contracts. Then, you'll use a template React app full of important Ethereum components and hooks. Finally, you'll deploy an NFT to a public network to share with friends! 🚀
+> 🎰 Randomness is tricky on a public deterministic blockchain. The block hash is an easy to use, but very weak form of randomness. This challenge will give you an example of a contract using block hash to create random numbers. This randomness is exploitable. Other, stronger forms of randomness include commit/reveal schemes, oracles, or VRF from Chainlink.
 
-🌟 The final deliverable is an app that lets users purchase and transfer NFTs. Deploy your contracts to a testnet, then build and upload your app to a public web server. Submit the url on [SpeedRunEthereum.com](https://speedrunethereum.com)!
+> 👍 One day soon, randomness will be built into the Ethereum protocol!
 
-💬 Meet other builders working on this challenge and get help in the [Challenge 0 Telegram](https://t.me/+Y2vqXZZ_pEFhMGMx)!
+> 💬 Dice Game is a contract that allows users to roll the dice to try and win the prize. If players roll either a 0, 1, 2, 3, 4 or 5 they will win the current prize amount. The initial prize is 10% of the contract's balance, which starts out at .05 Eth.
+
+> 🧤 Every time a player rolls the dice, they are required to send .002 Eth. 40 percent of this value is added to the current prize amount while the other 60 percent stays in the contract to fund future prizes. Once a prize is won, the new prize amount is set to 10% of the total balance of the DiceGame contract.
+
+> 🧨 Your job is to attack the Dice Game contract! You will create a new contract that will predict the randomness ahead of time and only roll the dice when you're guaranteed to be a winner!
+
+> 💬 Meet other builders working on this challenge and get help in the [Challenge 3 telegram](https://t.me/+3StA0aBSArFjNjUx)!
+
+---
 
 ## Checkpoint 0: 📦 Environment 📚
 
 Before you begin, you need to install the following tools:
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
+- [Node (v18 LTS)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-scarb --version
-```
-
-If your local Scarb version is not `2.5.4`, you need to install it.
-
-<details>
-<summary><b>Installation Process</b></summary>
-
-To install Scarb, please refer to the [installation instructions](https://docs.swmansion.com/scarb/download).
-We strongly recommend that you install
-Scarb via [asdf](https://docs.swmansion.com/scarb/download.html#install-via-asdf), a CLI tool that can manage
-multiple language runtime versions on a per-project basis.
-This will ensure that the version of Scarb you use to work on a project always matches the one defined in the
-project settings, avoiding problems related to version mismatches.
-
-Please refer to the [asdf documentation](https://asdf-vm.com/guide/getting-started.html) to install all
-prerequisites.
-
-Once you have `asdf` installed locally, you can download Scarb plugin with the following command:
-
-```bash
-asdf plugin add scarb
-```
-
-This will allow you to download specific versions. You can choose the same version as the Dojo's Cairo version, for example, 2.5.4, with the following command:
-
-```bash
-asdf install scarb 2.5.4
-```
-
-and set a global version:
-
-```bash
-asdf global scarb 2.5.4
-```
-
-Otherwise, you can simply run the following command in your terminal, and follow the onscreen instructions. This
-will install the version `2.5.4` of Scarb.
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://docs.swmansion.com/scarb/install.sh | sh -s -- -v 2.5.4
-```
-
-</details>
-
-## Compatible versions
-
-- scarb - v2.5.4
-- cairo - v2.5.4
-- starknet - v2.5.4
-- sierra - v1.4.0
-- rpc - v0.5.1
-
-## Quickstart
-
-To get started with Scaffold-Stark 2, follow the steps below:
-
-1. Clone this repo and install dependencies
-
-```bash
-git clone https://github.com/Quantum3-Labs/scaffold-stark-2 --recurse-submodules
-cd scaffold-stark-2
->>>>>>> main
+git clone https://github.com/scaffold-eth/se-2-challenges.git challenge-3-dice-game
+cd challenge-3-dice-game
+git checkout challenge-3-dice-game
 yarn install
 ```
 
@@ -94,135 +42,118 @@ yarn chain
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-0-simple-nft
+cd challenge-3-dice-game
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-0-simple-nft
+cd challenge-3-dice-game
 yarn start
 ```
 
 📱 Open http://localhost:3000 to see the app.
 
----
-
-## Checkpoint 1: ⛽️ Gas & Wallets 👛
-
-> ⛽️ You'll need to get some funds from the faucet for gas.
-
-![gas&wallet](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/912d0d4b-db34-49d3-bd7d-7ca0ab18eb66)
-
-> 🦊 At first, **don't** connect MetaMask. If you are already connected, click **Disconnect**:
-
-<p>
-  <img src="https://github.com/scaffold-eth/se-2-challenges/assets/80153681/2c7a1e40-50ad-4c20-ba3e-a56eff4b892b" width="33%" />
-  <img src="https://github.com/scaffold-eth/se-2-challenges/assets/80153681/1bcf9752-e8ae-4db6-a0a6-5dc774abe46c" width="33%" />
-</p>
-
-> 🔥 We'll use burner wallets on localhost.
-
-> 👛 Explore how burner wallets work in 🏗 Scaffold-ETH 2 by opening a new incognito window and navigate to http://localhost:3000. You'll notice it has a new wallet address in the top right. Copy the incognito browser's address and send localhost test funds to it from your first browser (using the **Faucet** button in the bottom left):
-
-![icognito&webBrowser](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/fd191447-a31f-4c03-a36f-936bfb70c2a1)
-
-> 👨🏻‍🚒 When you close the incognito window, the account is gone forever. Burner wallets are great for local development but you'll move to more permanent wallets when you interact with public networks.
+> 👩‍💻 Rerun `yarn deploy` whenever you want to deploy new contracts to the frontend. If you haven't made any contract changes, you can run `yarn deploy --reset` for a completely fresh deploy.
 
 ---
 
-## Checkpoint 2: 🖨 Minting
+## Checkpoint 1: 🎲 Dice Game
 
-> ✏️ Mint some NFTs! Click the **MINT NFT** button in the `My NFTs` tab.
+🔍 Inspect the code in the `DiceGame.sol` contract in `packages/hardhat/contracts`
 
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/74cf02f2-4c1b-4278-9841-f19f668e0b1e)
+🔒 You will not be changing any code in the `DiceGame.sol` contract in this challenge. You will write your own contract to predict the outcome, then only roll the dice when it is favourable.
 
-👀 You should see your NFTs start to show up:
+💸 Grab some funds from the faucet and roll the dice a few times. Watch the balance of the DiceGame contract in the Debug tab. It increases on a failed roll and decreases by the prize amount on a successful roll.
 
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/63dabceb-ad42-4c09-8e5d-a0139939e32d)
+![Faucet](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e82e3100-20fb-4886-a6bf-4113c3729f53)
 
-👛 Open an incognito window and navigate to http://localhost:3000
+### 🥅 Goals
 
-🎟 Transfer an NFT to the incognito window address using the UI:
-
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/3b92fb50-d43f-48a8-838c-c45c443b0b71)
-
-👛 Try to mint an NFT from the incognito window.
-
-> Can you mint an NFT with no funds in this address? You might need to grab funds from the faucet to pay for the gas!
-
-🕵🏻‍♂️ Inspect the `Debug Contracts` tab to figure out what address is the owner of YourCollectible?
-
-🔏 You can also check out your smart contract `YourCollectible.sol` in `packages/hardhat/contracts`.
-
-💼 Take a quick look at your deploy script `00_deploy_your_contract.js` in `packages/hardhat/deploy`.
-
-📝 If you want to edit the frontend, navigate to `packages/nextjs/app` and open the specific page you want to modify. For instance: `/myNFTs/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
+- [ ] Track the solidity code to find out how the DiceGame contract is generating random numbers.
+- [ ] Is it possible to predict the random number for any given roll?
 
 ---
 
-## Checkpoint 3: 💾 Deploy your contract! 🛰
+## Checkpoint 2: 🔑 Rigged Contract
 
-🛰 Ready to deploy to a public testnet?!?
+Start by creating a `receive()` function in the `RiggedRoll.sol` contract to allow it to receive Eth. This will allow us to fund the RiggedRoll contract from the faucet which is required for our contract to call the `rollTheDice()` function.
 
-> Change the defaultNetwork in `packages/hardhat/hardhat.config.ts` to `sepolia`.
+Next add a `riggedRoll()` function. This function should predict the randomness of a roll, and if the outcome will be a winner, call `rollTheDice()` on the DiceGame contract.
 
-![chall-0-hardhat-config](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/f94b47d8-aa51-46eb-9c9e-7536559a5d45)
+🃏 Predict the outcome by generating your random numbers in the exact same way as the DiceGame contract.
 
-🔐 Generate a deployer address with `yarn generate`. This creates a unique deployer address and saves the mnemonic locally.
+> 📣 Reminder! Calling `rollTheDice()` will fail unless you send a message value of at least .002 Eth! [Here is one example of how to send value with a function call.](https://ethereum.stackexchange.com/questions/6665/call-contract-and-send-value-from-solidity)
 
-> This local account will deploy your contracts, allowing you to avoid entering a personal private key.
+🚀 To deploy your RiggedRoll contract, uncomment the appropriate lines in the `01_deploy_riggedRoll.ts` file in `packages/hardhat/deploy`
 
-![chall-0-yarn-generate](https://github.com/scaffold-eth/se-2-challenges/assets/2486142/133f5701-e575-4cc2-904f-cdc83ae86d94)
+💸 You will need to send some funds to your RiggedRoll contract before doing your first roll, you can use the Faucet button at the bottom left of the page.
+
+❓ If you're struggling to get the exact same random number as the DiceGame contract, try adding some `console.log()` statements in both contracts to help you track the values. These messages will appear in the Hardhat node terminal.
+
+### ⚔️ Side Quest
+
+- [ ] Add a statement to require `address(this).balance >= .002 ether` in your riggedRoll function. This will help prevent calling the `rollTheDice()` function without enough value.
+- [ ] Uncomment the code in `packages/nextjs/app/dice/page.tsx` to show a riggedRoll button and contract balance on the main UI tab. Now you can test your function without switching tabs.
+- [ ] Does your riggedRoll function only call `rollTheDice()` when it's going to be a winning roll? What happens when it does call `rollTheDice()`?
+
+![RiggedLosingRoll](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/b6c8d7b4-139b-4f54-a62c-a0c77b3692a3)
+
+---
+
+## Checkpoint 3: 💵 Where's my money?!?
+
+You have beaten the game, but where is your money? Since the RiggedRoll contract is the one calling `rollTheDice()`, that is where the prize money is being sent.
+
+![RiggedRollAddress](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e9b9d164-2fb1-416a-9c5e-198d15bca0c6)
+
+📥 Create a `withdraw(address _addr, uint256 _amount)` function to allow you to send Eth from RiggedRoll to another address.
+
+### 🥅 Goals
+
+- [ ] Can you send value from the RiggedRoll contract to your front end address?
+- [ ] Is anyone able to call the withdraw function? What would be the downside to that?
+
+### ⚔️ Side Quest
+
+- [ ] Lock the withdraw function so it can only be called by the owner.
+
+![WithdrawOnlyOwner](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e8397b1e-a077-4009-b518-30a6d8deb6e7)
+
+> ⚠️ But wait, I am not the owner! You will want to set your front end address as the owner in `01_deploy_riggedRoll.ts`. This will allow your front end address to call the withdraw function.
+
+## Checkpoint 4: 💾 Deploy your contracts! 🛰
+
+📡 Edit the `defaultNetwork` to [your choice of public EVM networks](https://ethereum.org/en/developers/docs/networks/) in `packages/hardhat/hardhat.config.ts`
+
+🔐 You will need to generate a **deployer address** using `yarn generate` This creates a mnemonic and saves it locally.
 
 👩‍🚀 Use `yarn account` to view your deployer account balances.
 
-![chall-0-yarn-account](https://github.com/scaffold-eth/se-2-challenges/assets/2486142/c34df8c9-9793-4a76-849b-170fae7fd0f0)
+⛽️ You will need to send ETH to your **deployer address** with your wallet, or get it from a public faucet of your chosen network.
 
-⛽️ You will need to send ETH to your deployer address with your wallet, or get it from a public faucet of your chosen network.
-
-> Some popular faucets are [https://sepoliafaucet.com/](https://sepoliafaucet.com/) and [https://www.infura.io/faucet/sepolia](https://www.infura.io/faucet/sepolia)
-
-> ⚔️ Side Quest: Keep a 🧑‍🎤 [punkwallet.io](https://punkwallet.io) on your phone's home screen and keep it loaded with testnet eth. 🧙‍♂️ You'll look like a wizard when you can fund your deployer address from your phone in seconds.
-
-🚀 Deploy your NFT smart contract with `yarn deploy`.
+🚀 Run `yarn deploy` to deploy your smart contract to a public network (selected in `hardhat.config.ts`)
 
 > 💬 Hint: You can set the `defaultNetwork` in `hardhat.config.ts` to `sepolia` **OR** you can `yarn deploy --network sepolia`.
 
 ---
 
-## Checkpoint 4: 🚢 Ship your frontend! 🚁
+## Checkpoint 5: 🚢 Ship your frontend! 🚁
 
-> ✏️ Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork` to `chains.sepolia` :
+✏️ Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork` to `chains.sepolia` or any other public network.
 
-![chall-0-scaffold-config](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/3b50c7a7-b9cc-4af3-ab2a-11be4f5d2235)
+💻 View your frontend at http://localhost:3000 and verify you see the correct network.
 
-> You should see the correct network in the frontend (http://localhost:3000):
+📡 When you are ready to ship the frontend app...
 
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/50eef1f7-e1a3-4b3b-87e2-59c19362c4ff)
-
-> 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 `burner wallets` are only available on `hardhat` . You can enable them on every chain by setting `onlyLocalBurnerWallet: false` in your frontend config (`scaffold.config.ts` in `packages/nextjs/`)
-
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/f582d311-9b57-4503-8143-bac60346ea33)
-
-> 💬 Hint: For faster loading of your transfer page, consider updating the `fromBlock` passed to `useScaffoldEventHistory` in [`packages/nextjs/app/transfers/page.tsx`](https://github.com/scaffold-eth/se-2-challenges/blob/challenge-0-simple-nft/packages/nextjs/app/transfers/page.tsx#L12) to `blocknumber - 10` at which your contract was deployed. Example: `fromBlock: 3750241n` (where `n` represents its a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)). To find this blocknumber, search your contract's address on Etherscan and find the `Contract Creation` transaction line.
-
-🚀 Deploy your NextJS App
-
-```shell
-yarn vercel
-```
+📦 Run `yarn vercel` to package up your frontend and deploy.
 
 > Follow the steps to deploy to Vercel. Once you log in (email, github, etc), the default options should work. It'll give you a public URL.
 
 > If you want to redeploy to the same production URL you can run `yarn vercel --prod`. If you omit the `--prod` flag it will deploy it to a preview/test URL.
 
-⚠️ Run the automated testing function to make sure your app passes
-
-```shell
-yarn test
-```
+> 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 `burner wallets` are only available on `hardhat` . You can enable them on every chain by setting `onlyLocalBurnerWallet: false` in your frontend config (`scaffold.config.ts` in `packages/nextjs/`)
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
@@ -239,38 +170,14 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 ---
 
-## Checkpoint 5: 📜 Contract Verification
+## Checkpoint 6: 📜 Contract Verification
 
-You can verify your smart contract on Etherscan by running (`yarn verify --network network_name`) :
+Run the `yarn verify --network your_network` command to verify your contracts on etherscan 🛰
 
-```shell
-yarn verify --network sepolia
-```
-
-> It is okay if it says your contract is already verified. Copy the address of YourCollectable.sol and search it on sepolia Etherscan to find the correct URL you need to submit this challenge.
-
-## Checkpoint 6: 💪 Flex!
-
-👩‍❤️‍👨 Share your public url with a friend and ask them for their address to send them a collectible :)
-
-![gif](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/547612f6-97b9-4eb3-ab6d-9b6d2c0ac769)
-
-## ⚔️ Side Quests
-
-### 🐟 Open Sea
-
-> 🐃 Want to see your new NFTs on Opensea? Head to [Testnets Opensea](https://testnets.opensea.io/)
-
-> 🎫 Make sure you have minted some NFTs on your Vercel page, then connect to Opensea using that same wallet.
-
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/c752b365-b801-4a02-ba2e-62e0270b3795)
-
-> You can see your collection of shiny new NFTs on a testnet!
-
-(It can take a while before they show up, but here is an example:) https://testnets.opensea.io/assets/sepolia/0x17ed03686653917efa2194a5252c5f0a4f3dc49c/2
+👉 Search this address on Etherscan to get the URL you submit to 🏃‍♀️[SpeedRunEthereum.com](https://speedrunethereum.com).
 
 ---
 
-> 🏃 Head to your next challenge [here](https://github.com/scaffold-eth/se-2-challenges).
+> 🏃 Head to your next challenge [here](https://speedrunethereum.com).
 
 > 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-eth developers chat](https://t.me/joinchat/F7nCRK3kI93PoCOk)
