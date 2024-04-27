@@ -23,7 +23,7 @@ mod Challenge1 {
     use starknet::{get_block_timestamp, get_caller_address, get_contract_address};
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
 
-    pub const THRESHOLD: u256 = 100000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
+    pub const THRESHOLD: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
     #[storage]
     struct Storage {
         token: IERC20CamelDispatcher,
@@ -40,7 +40,7 @@ mod Challenge1 {
         eth_contract_address: ContractAddress
     ) {
         self.token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
-        self.deadline.write(get_block_timestamp() + 100); // 45 seconds
+        self.deadline.write(get_block_timestamp() + 60); // 45 seconds
         self.external_contract_address.write(external_contract_address);
     }
 
