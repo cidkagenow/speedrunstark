@@ -11,6 +11,7 @@ import {
   Bars3Icon,
   BugAntIcon,
   PhotoIcon,
+  CubeIcon
 } from "@heroicons/react/24/outline";
 import MenuItem from "~~/components/MenuItem/MenuItem";
 
@@ -22,14 +23,13 @@ export type HeaderMenuLink = {
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: "Example View 1",
-    href: "/exampleView1",
-    icon: <PhotoIcon className="h-4 w-4" />,
+    label: "Home",
+    href: "/",
   },
   {
-    label: "Example View 2",
-    href: "/exampleView2",
-    icon: <ArrowDownTrayIcon className="h-4 w-4" />,
+    label: "Dice Game",
+    href: "/dice",
+    icon: <CubeIcon className="h-4 w-4" />,
   },
   {
     label: "Debug Contracts",
