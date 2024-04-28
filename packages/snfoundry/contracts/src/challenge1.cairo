@@ -24,6 +24,7 @@ mod Challenge1 {
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
 
     pub const THRESHOLD: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
+    pub const THRESHOLD: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
     #[storage]
     struct Storage {
         token: IERC20CamelDispatcher,
@@ -40,7 +41,7 @@ mod Challenge1 {
         eth_contract_address: ContractAddress
     ) {
         self.token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
-        self.deadline.write(get_block_timestamp() + 60); // 45 seconds
+        self.deadline.write(get_block_timestamp() + 30); // 30 seconds
         self.external_contract_address.write(external_contract_address);
     }
 
@@ -74,7 +75,7 @@ mod Challenge1 {
             let sender = get_caller_address();
             let sender_amount = self.balances.read(sender);
             assert(sender_amount > 0, 'No balance to withdraw');
-            self.token.read().transferFrom(get_contract_address(), sender, sender_amount);
+            self.token.read().transfer(sender, sender_amount);
             self.balances.write(sender, 0);
         }
 
