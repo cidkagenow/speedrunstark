@@ -6,7 +6,7 @@ interface ButtonProps {
   isDisable?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const ButtonPrimary: React.FC<ButtonProps> = ({
   onClick,
   children,
   isDisable = false,
@@ -23,4 +23,4 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default ButtonPrimary;

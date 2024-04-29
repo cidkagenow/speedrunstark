@@ -141,7 +141,7 @@ export const EtherInput = ({
       onChange={handleChangeNumber}
       disabled={disabled}
       prefix={
-        <span className="pl-4 mr-2 text-accent self-center">
+        <span className="pl-4 mr-2 text-accent self-center text-primary">
           {internalUsdMode ? "$" : "Ξ"}
         </span>
       }
@@ -160,7 +160,7 @@ export const EtherInput = ({
             disabled={!internalUsdMode && !nativeCurrencyPrice}
           >
             <ArrowsRightLeftIcon
-              className="h-3 w-3 cursor-pointer"
+              className="h-3 w-3 cursor-pointer text-base-100"
               aria-hidden="true"
             />
           </button>
