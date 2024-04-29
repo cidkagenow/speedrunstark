@@ -45,7 +45,7 @@ const Dex: NextPage = () => {
       </h1>
       <div className="items-start pt-10 grid grid-cols-1 md:grid-cols-2 content-start">
         <div className="px-5 py-5">
-          <div className="bg-base-100 border-8 border-secondary rounded-xl p-8 m-8">
+          <div className="bg-base-100 border-8 border-neutral rounded-xl p-8 m-8">
             <div className="flex flex-col text-center">
               <span className="text-3xl font-semibold mb-2">DEX Contract</span>
               <span className="block text-2xl mb-2 mx-auto">
@@ -123,7 +123,7 @@ const Dex: NextPage = () => {
             </div>
           </div>
 
-          <div className="space-y-4 bg-base-100 border-8 border-secondary rounded-xl py-5 p-8 m-8">
+          <div className="space-y-4 bg-base-100 border-8 border-neutral  rounded-xl py-5 p-8 m-8">
             <div className="flex flex-col text-center mt-2 mb-4 px-4">
               <span className="block text-3xl font-semibold mb-2">
                 Balloons
