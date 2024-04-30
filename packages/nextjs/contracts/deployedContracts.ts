@@ -4,6 +4,5 @@
  */
 
 const deployedContracts = {} as const;
-  
-  export default deployedContracts;
-  
+
+export default deployedContracts;

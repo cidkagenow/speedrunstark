@@ -83,41 +83,38 @@ const TokenVendor: NextPage = () => {
             </div>
           </div>
           {/* Vendor Balances */}
-           <hr className="w-full border-secondary my-3" />
+          <hr className="w-full border-secondary my-3" />
           <div>
             Vendor token balance:{" "}
             <div className="inline-flex items-center justify-center">
               {/* {parseFloat(formatEther(vendorTokenBalance || 0n)).toFixed(4)} */}
-              <span className="font-bold ml-1">
-                {/* {yourTokenSymbol} */}
-                </span>
+              <span className="font-bold ml-1">{/* {yourTokenSymbol} */}</span>
             </div>
           </div>
           <div>
             Vendor eth balance:
-             {/* {vendorEthBalance?.toFixed(4)} */}
+            {/* {vendorEthBalance?.toFixed(4)} */}
             <span className="font-bold ml-1">ETH</span>
-          </div> 
+          </div>
         </div>
 
         {/* Buy Tokens  */}
         <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
           <div className="text-xl">Buy tokens</div>
-          <div>
-            {/* {tokensPerEth?.toString() || 0}  */}
-          0 tokens per ETH</div>
+          <div>{/* {tokensPerEth?.toString() || 0}  */}0 tokens per ETH</div>
 
           <div className="w-full flex flex-col space-y-2">
             <IntegerInput
               placeholder="amount of tokens to buy"
               value={tokensToBuy.toString()}
-              onChange={value => setTokensToBuy(value)}
+              onChange={(value) => setTokensToBuy(value)}
               disableMultiplyBy1e18
             />
           </div>
 
-          <button className="btn btn-secondary mt-2" 
-          // onClick={wrapInTryCatch(buyTokens, "buyTokens")}
+          <button
+            className="btn btn-secondary mt-2"
+            // onClick={wrapInTryCatch(buyTokens, "buyTokens")}
           >
             Buy Tokens
           </button>
@@ -148,45 +145,46 @@ const TokenVendor: NextPage = () => {
         </div>
 
         {/* Sell Tokens */}
-         {/* {!!yourTokenBalance && ( */}
-          <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
-            <div className="text-xl">Sell tokens</div>
-            <div>  
-              {/* {tokensPerEth?.toString() || 0}  */}
-            tokens per ETH</div>
-
-            <div className="w-full flex flex-col space-y-2">
-              <IntegerInput
-                placeholder="amount of tokens to sell"
-                value={tokensToSell}
-                onChange={value => setTokensToSell(value as string)}
-                disabled={isApproved}
-                disableMultiplyBy1e18
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                className={`btn ${isApproved ? "btn-disabled" : "btn-secondary"}`}
-                // onClick={wrapInTryCatch(async () => {
-                //   await approveTokens();
-                //   setIsApproved(true);
-                // }, "approveTokens")}
-              >
-                Approve Tokens
-              </button>
-
-              <button
-                className={`btn ${isApproved ? "btn-secondary" : "btn-disabled"}`}
-                // onClick={wrapInTryCatch(async () => {
-                //   await sellTokens();
-                //   setIsApproved(false);
-                // }, "sellTokens")}
-              >
-                Sell Tokens
-              </button>
-            </div>
+        {/* {!!yourTokenBalance && ( */}
+        <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
+          <div className="text-xl">Sell tokens</div>
+          <div>
+            {/* {tokensPerEth?.toString() || 0}  */}
+            tokens per ETH
           </div>
+
+          <div className="w-full flex flex-col space-y-2">
+            <IntegerInput
+              placeholder="amount of tokens to sell"
+              value={tokensToSell}
+              onChange={(value) => setTokensToSell(value as string)}
+              disabled={isApproved}
+              disableMultiplyBy1e18
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <button
+              className={`btn ${isApproved ? "btn-disabled" : "btn-secondary"}`}
+              // onClick={wrapInTryCatch(async () => {
+              //   await approveTokens();
+              //   setIsApproved(true);
+              // }, "approveTokens")}
+            >
+              Approve Tokens
+            </button>
+
+            <button
+              className={`btn ${isApproved ? "btn-secondary" : "btn-disabled"}`}
+              // onClick={wrapInTryCatch(async () => {
+              //   await sellTokens();
+              //   setIsApproved(false);
+              // }, "sellTokens")}
+            >
+              Sell Tokens
+            </button>
+          </div>
+        </div>
         {/* )} */}
       </div>
     </>
