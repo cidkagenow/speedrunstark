@@ -29,7 +29,7 @@ mod Challenge2 {
 
     #[storage]
     struct Storage {
-        erc20_token: IERC20CamelDispatcher,
+        eth_token: IERC20CamelDispatcher,
         your_token: IYourTokenDispatcher,
         #[substorage(v0)]
         ownable: OwnableComponent::Storage,
@@ -49,7 +49,7 @@ mod Challenge2 {
         eth_contract_address: ContractAddress,
         owner: ContractAddress
     ) {
-        self.erc20_token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
+        self.eth_token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
         self.your_token.write(IYourTokenDispatcher { contract_address: token_address });
         self.ownable.initializer(owner);
     }
@@ -63,7 +63,7 @@ mod Challenge2 {
             assert(vendor_token_balance >= tokens_to_buy, 'Not Enough tokens');
             //call fn approve() on UI 
             self
-                .erc20_token
+                .eth_token
                 .read()
                 .transferFrom(get_caller_address(), get_contract_address(), eth_amount_wei);
             let sent = self.your_token.read().transfer(get_caller_address(), tokens_to_buy);
@@ -72,15 +72,15 @@ mod Challenge2 {
 
         fn withdraw(ref self: ContractState) {
             self.ownable.assert_only_owner();
-            let balance = self.erc20_token.read().balanceOf(get_contract_address());
-            let sent = self.erc20_token.read().transfer(self.ownable.owner(), balance);
+            let balance = self.eth_token.read().balanceOf(get_contract_address());
+            let sent = self.eth_token.read().transfer(self.ownable.owner(), balance);
             assert(sent, 'Eth Transfer failed');
         }
 
         fn sell_tokens(ref self: ContractState, amount_tokens: u256) {
             assert(amount_tokens > 0, 'Amount must be greater than 0');
             let eth_amount_wei = amount_tokens * Eth / TokensPerEth;
-            let contract_eth_balance = self.erc20_token.read().balanceOf(get_caller_address());
+            let contract_eth_balance = self.eth_token.read().balanceOf(get_caller_address());
             assert(contract_eth_balance >= eth_amount_wei, 'Not Enough tokens');
             // call fn approve() on UI 
             let sent = self
@@ -89,7 +89,7 @@ mod Challenge2 {
                 .transfer_from(get_caller_address(), get_contract_address(), amount_tokens);
             assert(sent, 'Tokens Transfer failed');
 
-            let sent = self.erc20_token.read().transfer(get_caller_address(), eth_amount_wei);
+            let sent = self.eth_token.read().transfer(get_caller_address(), eth_amount_wei);
             assert(sent, 'Eth Transfer failed');
         }
 
