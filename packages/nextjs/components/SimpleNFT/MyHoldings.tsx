@@ -40,7 +40,7 @@ export const MyHoldings = ({
       if (
         myTotalBalance === undefined ||
         yourCollectibleContract === undefined ||
-        connectedAddress === undefined
+        connectedAddress === undefined 
       )
         return;
 
@@ -85,12 +85,15 @@ export const MyHoldings = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectedAddress, myTotalBalance]);
 
-  if (allCollectiblesLoading)
-    return (
-      <div className="flex justify-center items-center mt-10">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+   if (allCollectiblesLoading)
+     return (
+       <div className="flex justify-center items-center mt-10">
+         <span className="loading loading-spinner loading-lg"></span>
+       </div>
+     );
+
+     if (!connectedAddress)
+      return null;
 
   return (
     <>
