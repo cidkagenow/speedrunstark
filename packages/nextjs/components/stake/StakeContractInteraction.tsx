@@ -113,7 +113,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
             <ETHToPrice
               value={
                 exampleExternalContractBalance != null
-                  ? exampleExternalContractBalance.toString()
+                  ? exampleExternalContractBalance.formatted
                   : undefined
               }
               className="text-[1rem]"
