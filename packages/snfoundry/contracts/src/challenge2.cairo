@@ -4,6 +4,7 @@ pub trait IChallenge2<T> {
     fn buy_tokens(ref self: T, eth_amount_wei: u256);
     fn withdraw(ref self: T);
     fn sell_tokens(ref self: T, amount_tokens: u256);
+    fn send_tokens(ref self: T, to: ContractAddress, amount_tokens: u256);
 }
 
 #[starknet::contract]
@@ -90,6 +91,11 @@ mod Challenge2 {
 
             let sent = self.erc20_token.read().transfer(get_caller_address(), eth_amount_wei);
             assert(sent, 'Eth Transfer failed');
+        }
+
+        fn send_tokens(ref self: ContractState, to: ContractAddress, amount_tokens: u256) {
+            let sent = self.your_token.read().transfer(to, amount_tokens);
+            assert(sent, 'Token Transfer failed');
         }
     }
 }
