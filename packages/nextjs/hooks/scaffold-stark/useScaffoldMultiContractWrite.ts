@@ -53,7 +53,7 @@ export const useScaffoldMultiContractWrite = <
           entrypoint: functionName,
           calldata:
             abiFunction && unParsedArgs
-              ? parseFunctionParams(abiFunction, unParsedArgs)
+              ? parseFunctionParams(abiFunction, unParsedArgs, false).flat()
               : [],
         };
       });
@@ -65,7 +65,6 @@ export const useScaffoldMultiContractWrite = <
   // TODO add custom options
   const wagmiContractWrite = useContractWrite({
     calls: parsedCalls,
-    options,
   });
 
   const sendContractWriteTx = async () => {
