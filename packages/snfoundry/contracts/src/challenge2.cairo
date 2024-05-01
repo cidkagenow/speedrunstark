@@ -5,6 +5,8 @@ pub trait IChallenge2<T> {
     fn withdraw(ref self: T);
     fn sell_tokens(ref self: T, amount_tokens: u256);
     fn send_tokens(ref self: T, to: ContractAddress, amount_tokens: u256);
+    fn tokens_per_eth(self: @T) -> u256;
+    fn your_token(self: @T) -> ContractAddress;
 }
 
 #[starknet::contract]
@@ -24,8 +26,6 @@ mod Challenge2 {
     impl OwnableInternalImpl = OwnableComponent::InternalImpl<ContractState>;
 
     pub const TokensPerEth: u256 = 100;
-    pub const Eth: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
-
 
     #[storage]
     struct Storage {
@@ -96,6 +96,14 @@ mod Challenge2 {
         fn send_tokens(ref self: ContractState, to: ContractAddress, amount_tokens: u256) {
             let sent = self.your_token.read().transfer(to, amount_tokens);
             assert(sent, 'Token Transfer failed');
+        }
+
+        fn tokens_per_eth(self: @ContractState) -> u256 {
+            TokensPerEth
+        }
+
+        fn your_token(self: @ContractState) -> ContractAddress {
+            self.your_token.read().contract_address
         }
     }
 }
