@@ -58,7 +58,7 @@ mod Challenge2 {
     impl Challenge1Impl of IChallenge2<ContractState> {
         fn buy_tokens(ref self: ContractState, eth_amount_wei: u256) {
             assert(eth_amount_wei > 0, 'Amount must be greater than 0');
-            let tokens_to_buy = eth_amount_wei * TokensPerEth / Eth;
+            let tokens_to_buy = eth_amount_wei * TokensPerEth;
             let vendor_token_balance = self.your_token.read().balance_of(get_contract_address());
             assert(vendor_token_balance >= tokens_to_buy, 'Not Enough tokens');
             //call fn approve() on UI 
@@ -79,7 +79,7 @@ mod Challenge2 {
 
         fn sell_tokens(ref self: ContractState, amount_tokens: u256) {
             assert(amount_tokens > 0, 'Amount must be greater than 0');
-            let eth_amount_wei = amount_tokens * Eth / TokensPerEth;
+            let eth_amount_wei = amount_tokens / TokensPerEth;
             let contract_eth_balance = self.eth_token.read().balanceOf(get_caller_address());
             assert(contract_eth_balance >= eth_amount_wei, 'Not Enough tokens');
             // call fn approve() on UI 
