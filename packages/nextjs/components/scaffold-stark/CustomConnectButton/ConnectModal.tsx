@@ -120,17 +120,20 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
             ))}
           </div>
         </div>
-        <div className="p-4 border-t-[.5px] border-solid  border-red h-fit lg:h-full lg:border-none lg:col-span-3 lg:px-8 lg:py-0 lg:flex lg:flex-col">
+        <div className=" h-fit lg:h-full lg:border-none lg:col-span-3 lg:px-8 lg:py-0 lg:flex lg:flex-col pb-[20px]">
           {isBurnerWallet ? (
-            <div className="flex flex-col">
+            <div className="flex flex-col max-h-[400px] overflow-y-auto pb-[20px] items-center justify-center">
               {burnerAccounts.map((burnerAcc, ix) => (
-                <button
-                  key={burnerAcc.publicKey}
-                  className="my-2"
-                  onClick={(e) => handleConnectBurner(e, ix)}
-                >
-                  {`${burnerAcc.accountAddress.slice(0, 6)}...${burnerAcc.accountAddress.slice(-4)}`}
-                </button>
+                // eslint-disable-next-line react/jsx-key
+                <div className="w-full flex flex-col">
+                  <button
+                    key={burnerAcc.publicKey}
+                    className=" rounded-md text-base-100 hover:bg-base-100 hover:text-base-300 py-2"
+                    onClick={(e) => handleConnectBurner(e, ix)}
+                  >
+                    {`${burnerAcc.accountAddress.slice(0, 6)}...${burnerAcc.accountAddress.slice(-4)}`}
+                  </button>
+                </div>
               ))}
             </div>
           ) : (
