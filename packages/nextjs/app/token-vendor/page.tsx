@@ -7,8 +7,12 @@ import { AddressInput } from "~~/components/scaffold-stark/Input/AddressInput";
 import { IntegerInput } from "~~/components/scaffold-stark/Input/IntegerInput";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
+import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
+import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
+import { formatEther } from "ethers";
 // import { useScaffoldEthBalance } from "~~/hooks/scaffold-stark/useScaffoldEthBalance";
-// import { getTokenPrice, multiplyTo1e18 } from "~~/utils/scaffold-stark/";
+import { getTokenPrice, multiplyTo1e18 } from "~~/utils/scaffold-stark/priceInWei";
+
 
 const TokenVendor: NextPage = () => {
   const [toAddress, setToAddress] = useState("");
@@ -23,20 +27,22 @@ const TokenVendor: NextPage = () => {
   //   functionName: "symbol",
   // });
 
-  // const { data: yourTokenBalance } = useScaffoldContractRead({
-  //   contractName: "YourToken",
-  //   functionName: "balanceOf",
-  //   args: [address],
-  // });
+   const { data: yourTokenBalance } = useScaffoldContractRead({
+    contractName: "YourToken",
+     functionName: "balance_of",
+     args: [address],
+   });
 
-  // const { writeAsync: transferTokens } = useScaffoldContractWrite({
-  //   contractName: "YourToken",
-  //   functionName: "transfer",
-  //   args: [toAddress, multiplyTo1e18(tokensToSend)],
-  // });
+   //console.log(yourTokenBalance)
+
+   const { writeAsync: transferTokens } = useScaffoldContractWrite({
+     contractName: "YourToken",
+     functionName: "transfer",
+     args: [toAddress, multiplyTo1e18(tokensToSend)],
+   });
 
   // // Vendor Balances
-  // const { data: vendorContractData } = useDeployedContractInfo("Vendor");
+   const { data: vendorContractData } = useDeployedContractInfo("YourToken");
   // const { data: vendorTokenBalance } = useScaffoldContractRead({
   //   contractName: "YourToken",
   //   functionName: "balanceOf",
@@ -51,25 +57,51 @@ const TokenVendor: NextPage = () => {
   // });
 
   // // Buy Tokens
-  // const { writeAsync: buyTokens } = useScaffoldContractWrite({
-  //   contractName: "Vendor",
-  //   functionName: "buyTokens",
-  //   value: getTokenPrice(tokensToBuy, tokensPerEth),
-  // });
+  //  const { writeAsync: buyTokens } = useScaffoldMultiContractWrite({
+  //   contractName: "Challenge2",
+  //    functionName: "buyTokens",
+  //    value: getTokenPrice(tokensToBuy, tokensPerEth),
+  //  },
+  // );
+
+  const { writeAsync: buy } = useScaffoldMultiContractWrite({
+    calls: [
+      {
+        contractName: "Eth",
+        functionName: "approve",
+        args: [vendorContractData?.address ?? "", multiplyTo1e18(tokensToSell)],
+      },
+      {
+        contractName: "Challenge2",
+        functionName: "buy_tokens",
+        args: [BigInt(tokensToBuy)]
+      },
+    ],
+  });
 
   // // Approve Tokens
-  // const { writeAsync: approveTokens } = useScaffoldContractWrite({
-  //   contractName: "YourToken",
-  //   functionName: "approve",
-  //   args: [vendorContractData?.address, multiplyTo1e18(tokensToSell)],
-  // });
+   const { writeAsync: approveTokens } = useScaffoldContractWrite({
+    contractName: "YourToken",
+    functionName: "approve",
+    args: [vendorContractData?.address, multiplyTo1e18(tokensToSell)],
+   });
+    
+   //console.log(multiplyTo1e18(tokensToSell))
 
   // // Sell Tokens
-  // const { writeAsync: sellTokens } = useScaffoldContractWrite({
-  //   contractName: "Vendor",
-  //   functionName: "sellTokens",
-  //   args: [multiplyTo1e18(tokensToSell)],
-  // });
+  const { writeAsync: sellTokens } = useScaffoldContractWrite({
+     contractName: "Challenge2",
+     functionName: "sell_tokens",
+    args: [multiplyTo1e18(tokensToSell)],
+   });
+
+   const wrapInTryCatch = (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+    try {
+      await fn();
+    } catch (error) {
+      console.error(`Error calling ${errorMessageFnDescription} function`, error);
+    }
+  };
 
   return (
     <>
@@ -78,7 +110,8 @@ const TokenVendor: NextPage = () => {
           <div className="text-xl">
             Your token balance:{" "}
             <div className="inline-flex items-center justify-center">
-              {/* {parseFloat(formatEther(yourTokenBalance || 0n)).toFixed(4)} */}
+               {/* {parseFloat(formatEther(yourTokenBalance || 0n)).toFixed(4)}  */}
+               <span></span>
               <span className="font-bold ml-1">{/* {yourTokenSymbol} */}</span>
             </div>
           </div>
@@ -114,7 +147,7 @@ const TokenVendor: NextPage = () => {
 
           <button
             className="btn btn-secondary mt-2"
-            // onClick={wrapInTryCatch(buyTokens, "buyTokens")}
+           onClick={wrapInTryCatch(buy, "buyTokens")}
           >
             Buy Tokens
           </button>
@@ -138,7 +171,7 @@ const TokenVendor: NextPage = () => {
 
           <button
             className="btn btn-secondary"
-            // onClick={wrapInTryCatch(transferTokens, "transferTokens")}
+             onClick={wrapInTryCatch(transferTokens, "transferTokens")}
           >
             Send Tokens
           </button>
@@ -166,20 +199,20 @@ const TokenVendor: NextPage = () => {
           <div className="flex gap-4">
             <button
               className={`btn ${isApproved ? "btn-disabled" : "btn-secondary"}`}
-              // onClick={wrapInTryCatch(async () => {
-              //   await approveTokens();
-              //   setIsApproved(true);
-              // }, "approveTokens")}
+               onClick={wrapInTryCatch(async () => {
+                 await approveTokens();
+                 setIsApproved(true);
+               }, "approveTokens")}
             >
               Approve Tokens
             </button>
 
             <button
               className={`btn ${isApproved ? "btn-secondary" : "btn-disabled"}`}
-              // onClick={wrapInTryCatch(async () => {
-              //   await sellTokens();
-              //   setIsApproved(false);
-              // }, "sellTokens")}
+               onClick={wrapInTryCatch(async () => {
+                 await sellTokens();
+                 setIsApproved(false);
+               }, "sellTokens")}
             >
               Sell Tokens
             </button>
