@@ -7,10 +7,7 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldCont
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
 import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
-import { ethers } from "ethers";
 import humanizeDuration from "humanize-duration";
-import { uint256 } from "starknet-dev";
-import { BigNumberish } from "starknet";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 
 function formatEther(weiValue: number) {
@@ -113,7 +110,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
             <ETHToPrice
               value={
                 exampleExternalContractBalance != null
-                  ? exampleExternalContractBalance.toString()
+                  ? exampleExternalContractBalance.formatted
                   : undefined
               }
               className="text-[1rem]"
