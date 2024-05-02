@@ -1,1 +1,1 @@
-mod HelloStarknet;
+mod Challenge1;
