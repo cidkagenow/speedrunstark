@@ -9,10 +9,13 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldCont
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
+import { useBalance } from "@starknet-react/core";
 import { formatEther } from "ethers";
 // import { useScaffoldEthBalance } from "~~/hooks/scaffold-stark/useScaffoldEthBalance";
-import { getTokenPrice, multiplyTo1e18 } from "~~/utils/scaffold-stark/priceInWei";
-
+import {
+  getTokenPrice,
+  multiplyTo1e18,
+} from "~~/utils/scaffold-stark/priceInWei";
 
 const TokenVendor: NextPage = () => {
   const [toAddress, setToAddress] = useState("");
@@ -21,48 +24,37 @@ const TokenVendor: NextPage = () => {
   const [isApproved, setIsApproved] = useState(false);
   const [tokensToSell, setTokensToSell] = useState<string>("");
 
-  const { address } = useAccount();
-  // const { data: yourTokenSymbol } = useScaffoldContractRead({
-  //   contractName: "YourToken",
-  //   functionName: "symbol",
-  // });
+  const { address: connectedAddress } = useAccount();
 
-   const { data: yourTokenBalance } = useScaffoldContractRead({
+  const { data: yourTokenBalance } = useScaffoldContractRead({
     contractName: "YourToken",
-     functionName: "balance_of",
-     args: [address],
-   });
+    functionName: "balance_of",
+    args: [connectedAddress ?? ""],
+  });
 
-   //console.log(yourTokenBalance)
+  const { data: tokensPerEth } = useScaffoldContractRead({
+    contractName: "Challenge2",
+    functionName: "tokens_per_eth",
+  });
 
-   const { writeAsync: transferTokens } = useScaffoldContractWrite({
-     contractName: "YourToken",
-     functionName: "transfer",
-     args: [toAddress, multiplyTo1e18(tokensToSend)],
-   });
+  const { writeAsync: transferTokens } = useScaffoldContractWrite({
+    contractName: "YourToken",
+    functionName: "transfer",
+    args: [toAddress, multiplyTo1e18(tokensToSend)],
+  });
 
   // // Vendor Balances
-   const { data: vendorContractData } = useDeployedContractInfo("Challenge2");
-  // const { data: vendorTokenBalance } = useScaffoldContractRead({
-  //   contractName: "YourToken",
-  //   functionName: "balanceOf",
-  //   args: [vendorContractData?.address],
-  // });
-  // const { balance: vendorEthBalance } = useAccountBalance(vendorContractData?.address);
+  const { data: vendorContractData } = useDeployedContractInfo("Challenge2");
 
-  // // tokenPerEth
-   const { data: tokensPerEth } = useScaffoldContractRead({
-     contractName: "Challenge2",
-     functionName: "tokens_per_eth",
-   });
+  const { data: vendorTokenBalance } = useScaffoldContractRead({
+    contractName: "YourToken",
+    functionName: "balance_of",
+    args: [vendorContractData?.address],
+  });
 
-  // // Buy Tokens
-  //  const { writeAsync: buyTokens } = useScaffoldMultiContractWrite({
-  //   contractName: "Challenge2",
-  //    functionName: "buyTokens",
-  //    value: getTokenPrice(tokensToBuy, tokensPerEth),
-  //  },
-  // );
+  const { data: vendorContractBalance } = useBalance({
+    address: vendorContractData?.address,
+  });
 
   const { writeAsync: buy } = useScaffoldMultiContractWrite({
     calls: [
@@ -74,34 +66,37 @@ const TokenVendor: NextPage = () => {
       {
         contractName: "Challenge2",
         functionName: "buy_tokens",
-        args: [multiplyTo1e18(tokensToBuy)]
+        args: [multiplyTo1e18(tokensToBuy)],
       },
     ],
   });
 
-  // // Approve Tokens
-   const { writeAsync: approveTokens } = useScaffoldContractWrite({
-    contractName: "YourToken",
-    functionName: "approve",
-    args: [vendorContractData?.address, multiplyTo1e18(tokensToSell)],
-   });
-    
-   //console.log(multiplyTo1e18(tokensToSell))
+  const { writeAsync: sell } = useScaffoldMultiContractWrite({
+    calls: [
+      {
+        contractName: "YourToken",
+        functionName: "approve",
+        args: [vendorContractData?.address ?? "", multiplyTo1e18(tokensToSell)],
+      },
+      {
+        contractName: "Challenge2",
+        functionName: "sell_tokens",
+        args: [multiplyTo1e18(tokensToSell)],
+      },
+    ],
+  });
 
-  // // Sell Tokens
-  const { writeAsync: sellTokens } = useScaffoldContractWrite({
-     contractName: "Challenge2",
-     functionName: "sell_tokens",
-    args: [multiplyTo1e18(tokensToSell)],
-   });
-
-   const wrapInTryCatch = (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
-    try {
-      await fn();
-    } catch (error) {
-      console.error(`Error calling ${errorMessageFnDescription} function`, error);
-    }
-  };
+  const wrapInTryCatch =
+    (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+      try {
+        await fn();
+      } catch (error) {
+        console.error(
+          `Error calling ${errorMessageFnDescription} function`,
+          error,
+        );
+      }
+    };
 
   return (
     <>
@@ -110,9 +105,7 @@ const TokenVendor: NextPage = () => {
           <div className="text-xl">
             Your token balance:{" "}
             <div className="inline-flex items-center justify-center">
-               {/* {parseFloat(formatEther(yourTokenBalance || 0n)).toFixed(4)}  */}
-               <span></span>
-              <span className="font-bold ml-1">{/* {yourTokenSymbol} */}</span>
+              <span className="font-bold ml-1">{Number(yourTokenBalance)}</span>
             </div>
           </div>
           {/* Vendor Balances */}
@@ -120,21 +113,23 @@ const TokenVendor: NextPage = () => {
           <div>
             Vendor token balance:{" "}
             <div className="inline-flex items-center justify-center">
-              {/* {parseFloat(formatEther(vendorTokenBalance || 0n)).toFixed(4)} */}
-              <span className="font-bold ml-1">{/* {yourTokenSymbol} */}</span>
+              {parseFloat(formatEther(vendorTokenBalance || 0n)).toFixed(4)}
+              <span className="font-bold ml-1"> </span>
             </div>
           </div>
           <div>
             Vendor eth balance:
-            {/* {vendorEthBalance?.toFixed(4)} */}
-            <span className="font-bold ml-1">ETH</span>
+            <span className="px-1">{vendorContractBalance?.formatted}</span>
+            <span className="font-bold ml-1">
+              {vendorContractBalance?.symbol}
+            </span>
           </div>
         </div>
 
         {/* Buy Tokens  */}
         <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
           <div className="text-xl">Buy tokens</div>
-          <div>{/* {tokensPerEth?.toString() || 0}  */}0 tokens per ETH</div>
+          <div>{Number(tokensPerEth)} tokens per ETH</div>
 
           <div className="w-full flex flex-col space-y-2">
             <IntegerInput
@@ -147,7 +142,7 @@ const TokenVendor: NextPage = () => {
 
           <button
             className="btn btn-secondary mt-2"
-           onClick={wrapInTryCatch(buy, "buyTokens")}
+            onClick={wrapInTryCatch(buy, "buyTokens")}
           >
             Buy Tokens
           </button>
@@ -171,21 +166,17 @@ const TokenVendor: NextPage = () => {
 
           <button
             className="btn btn-secondary"
-             onClick={wrapInTryCatch(transferTokens, "transferTokens")}
+            onClick={wrapInTryCatch(transferTokens, "transferTokens")}
           >
             Send Tokens
           </button>
         </div>
 
         {/* Sell Tokens */}
-        {/* {!!yourTokenBalance && ( */}
+
         <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
           <div className="text-xl">Sell tokens</div>
-          <div>
-            {/* {tokensPerEth?.toString() || 0}  */}
-            tokens per ETH
-          </div>
-
+          <div>{Number(tokensPerEth)} tokens per ETH</div>
           <div className="w-full flex flex-col space-y-2">
             <IntegerInput
               placeholder="amount of tokens to sell"
@@ -198,27 +189,13 @@ const TokenVendor: NextPage = () => {
 
           <div className="flex gap-4">
             <button
-              className={`btn ${isApproved ? "btn-disabled" : "btn-secondary"}`}
-               onClick={wrapInTryCatch(async () => {
-                 await approveTokens();
-                 setIsApproved(true);
-               }, "approveTokens")}
-            >
-              Approve Tokens
-            </button>
-
-            <button
-              className={`btn ${isApproved ? "btn-secondary" : "btn-disabled"}`}
-               onClick={wrapInTryCatch(async () => {
-                 await sellTokens();
-                 setIsApproved(false);
-               }, "sellTokens")}
+              className="btn btn-secondary mt-2"
+              onClick={wrapInTryCatch(sell, "sellTokens")}
             >
               Sell Tokens
             </button>
           </div>
         </div>
-        {/* )} */}
       </div>
     </>
   );
