@@ -11,7 +11,7 @@ import {
   Bars3Icon,
   BugAntIcon,
   PhotoIcon,
-  CubeIcon
+  CubeIcon,
 } from "@heroicons/react/24/outline";
 import MenuItem from "~~/components/MenuItem/MenuItem";
 
