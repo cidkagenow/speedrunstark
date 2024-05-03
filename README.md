@@ -22,9 +22,11 @@ Before you begin, you need to install the following tools:
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
+
 git clone https://github.com/scaffold-eth/se-2-challenges.git challenge-4-dex
 cd challenge-4-dex
 git checkout challenge-4-dex
+
 yarn install
 ```
 
