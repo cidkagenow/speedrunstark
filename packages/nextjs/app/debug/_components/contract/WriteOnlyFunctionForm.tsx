@@ -123,7 +123,7 @@ WriteOnlyFunctionFormProps) => {
         {inputs}
         <div className="flex justify-between gap-2">
           {!zeroInputs && (
-            <div className="flex-grow basis-0">
+            <div className="flex-grow basis-0 text-neutral-content">
               {displayedTxResult ? (
                 <TxReceipt txResult={displayedTxResult} />
               ) : null}

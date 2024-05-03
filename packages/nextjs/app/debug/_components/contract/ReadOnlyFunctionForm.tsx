@@ -73,15 +73,15 @@ export const ReadOnlyFunctionForm = ({
         <div className="flex-grow w-4/5">
           {data !== null && data !== undefined && (
             <div className="bg-secondary rounded-3xl text-sm px-4 py-1.5 break-words">
-              <p className="font-bold m-0 mb-1">Result:</p>
-              <pre className="whitespace-pre-wrap break-words">
+              <p className="font-bold m-0 mb-1 text-neutral-content">Result:</p>
+              <pre className="whitespace-pre-wrap break-words text-neutral-content ">
                 {displayTxResult(data, false, abiFunction?.outputs)}
               </pre>
             </div>
           )}
         </div>
         <button
-          className="btn btn-secondary btn-sm"
+          className="btn btn-secondary btn-sm text-neutral-content bg-primary"
           onClick={handleRead}
           disabled={inputValue && isFetching}
         >

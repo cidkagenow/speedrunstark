@@ -5,21 +5,24 @@ interface StakeEvent {
 }
 
 interface StakingProps {
-  stakeEvents: StakeEvent[] | undefined;
-  isLoading: boolean;
+  stakeEvents?: StakeEvent[];
+  isLoading?: boolean;
 }
 
-const Staking: React.FC<StakingProps> = ({ stakeEvents, isLoading }) => {
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center mt-10">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
+const Staking: React.FC<StakingProps> = ({
+  stakeEvents = [],
+  // isLoading = false,
+}) => {
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center mt-10 text-primary">
+  //       <span className="loading loading-spinner loading-lg"></span>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div className="flex items-center flex-col flex-grow pt-10">
+    <div className="flex items-center flex-col flex-grow pt-10 text-primary">
       <div className="px-5">
         <h1 className="text-center mb-3">
           <span className="block text-2xl font-bold">All Staking Events</span>
