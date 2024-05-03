@@ -8,10 +8,11 @@ import {
   ExtractAbiFunctionNamesScaffold,
   getFunctionsByStateMutability,
   parseFunctionParams,
+  UseScaffoldArgsParam,
   UseScaffoldWriteConfig,
 } from "~~/utils/scaffold-stark/contract";
 import { useContractWrite, useNetwork } from "@starknet-react/core";
-import { Call, InvocationsDetails } from "starknet";
+import { InvocationsDetails } from "starknet";
 import { notification } from "~~/utils/scaffold-stark";
 import { useMemo } from "react";
 import { useTransactor } from "./useTransactor";
@@ -53,7 +54,7 @@ export const useScaffoldMultiContractWrite = <
           entrypoint: functionName,
           calldata:
             abiFunction && unParsedArgs
-              ? parseFunctionParams(abiFunction, unParsedArgs)
+              ? parseFunctionParams(abiFunction, unParsedArgs, false).flat()
               : [],
         };
       });
@@ -81,11 +82,7 @@ export const useScaffoldMultiContractWrite = <
     if (wagmiContractWrite.writeAsync) {
       try {
         // setIsMining(true);
-        const writeTxResult = await writeTx(() =>
-          wagmiContractWrite.writeAsync(),
-        );
-
-        return writeTxResult;
+        return await writeTx(() => wagmiContractWrite.writeAsync());
       } catch (e: any) {
         throw e;
       } finally {
@@ -102,3 +99,17 @@ export const useScaffoldMultiContractWrite = <
     writeAsync: sendContractWriteTx,
   };
 };
+
+export function createContractCall<
+  TContractName extends ContractName,
+  TFunctionName extends ExtractAbiFunctionNamesScaffold<
+    ContractAbi<TContractName>,
+    "external"
+  >,
+>(
+  contractName: TContractName,
+  functionName: TFunctionName,
+  args: UseScaffoldArgsParam<TContractName, TFunctionName>["args"],
+) {
+  return { contractName, functionName, args };
+}

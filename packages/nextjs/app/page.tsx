@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { NextPage } from "next";
+import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const Home: NextPage = () => {
   return (
