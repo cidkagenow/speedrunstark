@@ -11,11 +11,7 @@ import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 import { useBalance } from "@starknet-react/core";
 import { formatEther } from "ethers";
-// import { useScaffoldEthBalance } from "~~/hooks/scaffold-stark/useScaffoldEthBalance";
-import {
-  getTokenPrice,
-  multiplyTo1e18,
-} from "~~/utils/scaffold-stark/priceInWei";
+import { multiplyTo1e18 } from "~~/utils/scaffold-stark/priceInWei";
 
 const TokenVendor: NextPage = () => {
   const [toAddress, setToAddress] = useState("");
@@ -105,7 +101,9 @@ const TokenVendor: NextPage = () => {
           <div className="text-xl">
             Your token balance:{" "}
             <div className="inline-flex items-center justify-center">
-              <span className="font-bold ml-1">{Number(yourTokenBalance)}</span>
+              <span className="font-bold ml-1">
+                {parseFloat(formatEther(yourTokenBalance || 0n)).toFixed(4)}
+              </span>
             </div>
           </div>
           {/* Vendor Balances */}
