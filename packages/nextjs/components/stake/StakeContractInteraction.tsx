@@ -9,6 +9,7 @@ import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
 import humanizeDuration from "humanize-duration";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
+import { useEffect } from "react";
 
 function formatEther(weiValue: number) {
   const etherValue = weiValue / 1e18;
@@ -21,10 +22,14 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
   const { data: ExampleExternalContact } = useDeployedContractInfo(
     "ExampleExternalContract",
   );
-  const { data: stakerContractBalance, refetch } = useBalance({
-    address: StakerContract?.address,
-  });
-  const { data: exampleExternalContractBalance } = useBalance({
+  const { data: stakerContractBalance, refetch: refetchStakeContract } =
+    useBalance({
+      address: StakerContract?.address,
+    });
+  const {
+    data: exampleExternalContractBalance,
+    refetch: refetchExampleExternalContract,
+  } = useBalance({
     address: ExampleExternalContact?.address,
   });
 
@@ -89,7 +94,8 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
     (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
       try {
         await fn().then(() => {
-          refetch();
+          refetchStakeContract();
+          refetchExampleExternalContract();
         });
       } catch (error) {
         console.error(
