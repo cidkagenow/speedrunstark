@@ -1,1 +1,2 @@
-mod HelloStarknet;
+mod DiceGame;
+mod RiggedRoll;
