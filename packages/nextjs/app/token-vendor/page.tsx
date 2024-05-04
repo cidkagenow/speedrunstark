@@ -124,28 +124,6 @@ const TokenVendor: NextPage = () => {
           </div>
         </div>
 
-        {/* Buy Tokens  */}
-        <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
-          <div className="text-xl">Buy tokens</div>
-          <div>{Number(tokensPerEth)} tokens per ETH</div>
-
-          <div className="w-full flex flex-col space-y-2">
-            <IntegerInput
-              placeholder="amount of tokens to buy"
-              value={tokensToBuy.toString()}
-              onChange={(value) => setTokensToBuy(value)}
-              disableMultiplyBy1e18
-            />
-          </div>
-
-          <button
-            className="btn btn-secondary mt-2"
-            onClick={wrapInTryCatch(buy, "buyTokens")}
-          >
-            Buy Tokens
-          </button>
-        </div>
-
         <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
           <div className="text-xl">Transfer tokens</div>
           <div className="w-full flex flex-col space-y-2">
@@ -167,6 +145,28 @@ const TokenVendor: NextPage = () => {
             onClick={wrapInTryCatch(transferTokens, "transferTokens")}
           >
             Send Tokens
+          </button>
+        </div>
+
+        {/* Buy Tokens  */}
+        <div className="flex flex-col items-center space-y-4 bg-base-100 border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
+          <div className="text-xl">Buy tokens</div>
+          <div>{Number(tokensPerEth)} tokens per ETH</div>
+
+          <div className="w-full flex flex-col space-y-2">
+            <IntegerInput
+              placeholder="amount of tokens to buy"
+              value={tokensToBuy.toString()}
+              onChange={(value) => setTokensToBuy(value)}
+              disableMultiplyBy1e18
+            />
+          </div>
+
+          <button
+            className="btn btn-secondary mt-2"
+            onClick={wrapInTryCatch(buy, "buyTokens")}
+          >
+            Buy Tokens
           </button>
         </div>
 
