@@ -2,19 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
-// import { formatEther, parseEther } from "viem";
 import { useBalance } from "@starknet-react/core";
-// import { Amount } from "~~/components/scaffold-stark/";
 import { Roll, RollEvents } from "~~/components/RollEvents";
 import { Winner, WinnerEvents } from "~~/components/WinnerEvents";
 import { Address } from "~~/components/scaffold-stark/Address";
-
 import { useScaffoldContract } from "~~/hooks/scaffold-stark/useScaffoldContract";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
+import { Amount } from "~~/components/diceComponents/Amount";
 
-const ROLL_ETH_VALUE = "0.002";
 const MAX_TABLE_ROWS = 10;
+const ROLL_ETH_VALUE = 2000000000000000;
 
 const DiceGame: NextPage = () => {
   const [rolls, setRolls] = useState<Roll[]>([]);
@@ -25,12 +23,17 @@ const DiceGame: NextPage = () => {
   const [rolled, setRolled] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
 
-  // const { data: riggedRollContract } = useScaffoldContract({ contractName: "RiggedRoll" });
-  // const { data: riggedRollBalance } = useBalance({
-  //   address: riggedRollContract?.address,
-  //   watch: true,
-  // });
-  // const { data: prize } = useScaffoldContractRead({ contractName: "DiceGame", functionName: "prize" });
+  const { data: riggedRollContract } = useScaffoldContract({
+    contractName: "RiggedRoll",
+  });
+  const { data: riggedRollBalance } = useBalance({
+    address: riggedRollContract?.address,
+    watch: true,
+  });
+  const { data: prize } = useScaffoldContractRead({
+    contractName: "DiceGame",
+    functionName: "prize",
+  });
 
   // const { data: rollsHistoryData, isLoading: rollsHistoryLoading } = useScaffoldEventHistory({
   //   contractName: "DiceGame",
@@ -106,24 +109,26 @@ const DiceGame: NextPage = () => {
   //   },
   // });
 
-  // const { writeAsync: randomDiceRoll, isError: rollTheDiceError } = useScaffoldContractWrite({
-  //   contractName: "DiceGame",
-  //   functionName: "rollTheDice",
-  //   value: parseEther(ROLL_ETH_VALUE),
-  // });
+  const { writeAsync: randomDiceRoll, isError: rollTheDiceError } =
+    useScaffoldContractWrite({
+      contractName: "DiceGame",
+      functionName: "roll_dice",
+      args: [BigInt(ROLL_ETH_VALUE)],
+    });
 
-  // const { writeAsync: riggedRoll, isError: riggedRollError } = useScaffoldContractWrite({
-  //   contractName: "RiggedRoll",
-  //   functionName: "riggedRoll",
-  //   gas: 1_000_000n,
-  // });
+  const { writeAsync: riggedRoll, isError: riggedRollError } =
+    useScaffoldContractWrite({
+      contractName: "RiggedRoll",
+      functionName: "rigged_roll",
+      args: [BigInt(1_000_000n)],
+    });
 
-  // useEffect(() => {
-  //   if (rollTheDiceError || riggedRollError) {
-  //     setIsRolling(false);
-  //     setRolled(false);
-  //   }
-  // }, [riggedRollError, rollTheDiceError]);
+  useEffect(() => {
+    if (rollTheDiceError || riggedRollError) {
+      setIsRolling(false);
+      setRolled(false);
+    }
+  }, [riggedRollError, rollTheDiceError]);
 
   useEffect(() => {
     if (videoRef.current && !isRolling) {
@@ -131,6 +136,18 @@ const DiceGame: NextPage = () => {
       videoRef.current.currentTime = 9999;
     }
   }, [isRolling]);
+
+  const wrapInTryCatch =
+    (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+      try {
+        await fn().then(() => {});
+      } catch (error) {
+        console.error(
+          `Error calling ${errorMessageFnDescription} function`,
+          error,
+        );
+      }
+    };
 
   return (
     <div className="py-10 px-10">
@@ -142,25 +159,31 @@ const DiceGame: NextPage = () => {
         <div className="flex flex-col items-center pt-4 max-lg:row-start-1">
           <div className="flex w-full justify-center">
             <span className="text-xl">
-              {" "}
               Roll a 0, 1, 2, 3, 4 or 5 to win the prize!{" "}
             </span>
           </div>
 
           <div className="flex items-center mt-1">
             <span className="text-lg mr-2">Prize:</span>
-            {/* <Amount amount={prize ? Number(formatEther(prize)) : 0} showUsdPrice className="text-lg" /> */}
+            <Amount
+              amount={prize ? Number(prize) : 0}
+              showUsdPrice
+              className="text-lg"
+            />
           </div>
 
           <button
-            // onClick={async () => {
-            //   if (!rolled) {
-            //     setRolled(true);
-            //   }
-            //   setIsRolling(true);
-            //   const wrappedRandomDiceRoll = wrapInTryCatch(randomDiceRoll, "randomDiceRoll");
-            //   await wrappedRandomDiceRoll();
-            // }}
+            onClick={async () => {
+              if (!rolled) {
+                setRolled(true);
+              }
+              setIsRolling(true);
+              const wrappedRandomDiceRoll = wrapInTryCatch(
+                randomDiceRoll,
+                "randomDiceRoll",
+              );
+              await wrappedRandomDiceRoll();
+            }}
             disabled={isRolling}
             className="mt-2 btn btn-secondary btn-xl normal-case font-xl text-lg text-base-100"
           >
@@ -174,23 +197,28 @@ const DiceGame: NextPage = () => {
             </div>
             <div className="flex mt-1 items-center">
               <span className="text-lg mr-2">Balance:</span>
-              {/*<Amount amount={Number(riggedRollBalance?.formatted || 0)} showUsdPrice className="text-lg" */}
+              <Amount
+                amount={Number(riggedRollBalance?.formatted || 0)}
+                showUsdPrice
+                className="text-lg"
+              />
             </div>
           </div>
-          {/* <button
-              onClick={async () => {
-              if (!rolled) {
-                setRolled(true);
-              }
-              setIsRolling(true);
-              const wrappedRiggedRoll = wrapInTryCatch(riggedRoll, "riggedRoll");
-              await wrappedRiggedRoll();
-            }}
-            disabled={isRolling}
-            className="mt-2 btn btn-secondary btn-xl normal-case font-xl text-lg"
-          >
-            Rigged Roll!
-            </button> */}
+          {
+            <button
+              onClick={() => {
+                if (!rolled) {
+                  setRolled(true);
+                }
+                setIsRolling(true);
+                riggedRoll();
+              }}
+              disabled={isRolling}
+              className="mt-2 btn btn-secondary btn-xl normal-case font-xl text-lg text-base-100"
+            >
+              Rigged Roll!
+            </button>
+          }
 
           <div className="flex mt-8">
             {rolled ? (
