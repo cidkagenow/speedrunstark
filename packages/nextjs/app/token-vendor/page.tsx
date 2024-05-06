@@ -102,7 +102,7 @@ const TokenVendor: NextPage = () => {
             Your token balance:{" "}
             <div className="inline-flex items-center justify-center">
               <span className="font-bold ml-1">
-                {parseFloat(formatEther(yourTokenBalance || 0n)).toFixed(4)}
+                {parseFloat(formatEther(yourTokenBalance || 0n))}
               </span>
             </div>
           </div>
