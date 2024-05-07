@@ -14,7 +14,7 @@ mod Challenge2 {
     use openzeppelin::access::ownable::interface::IOwnable;
     use core::traits::Destruct;
     use openzeppelin::access::ownable::OwnableComponent;
-    use contracts::yourToken::{IYourTokenDispatcher, IYourTokenDispatcherTrait};
+    use contracts::YourToken::{IYourTokenDispatcher, IYourTokenDispatcherTrait};
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
     use super::{ContractAddress, IChallenge2};
     use starknet::{get_caller_address, get_contract_address};
