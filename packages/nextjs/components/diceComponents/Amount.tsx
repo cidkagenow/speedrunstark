@@ -62,7 +62,12 @@ export const Amount = ({
         ) : (
           <>
             <span className="font-bold mr-1">$</span>
-            <span>{(parseFloat(amount) * price).toFixed(2)}</span>
+            <span>
+              {(parseFloat(amount) * price).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </>
         )}
       </div>

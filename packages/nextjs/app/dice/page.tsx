@@ -14,7 +14,7 @@ import {
   useScaffoldMultiContractWrite,
 } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 import { Address } from "~~/components/scaffold-stark";
-import { ADDRESS } from "starknet";
+import { Address as AddressType } from "@starknet-react/chains";
 
 const ROLL_ETH_VALUE = "0.002";
 const MAX_TABLE_ROWS = 10;
@@ -34,10 +34,12 @@ const DiceGame: NextPage = () => {
   const { data: riggedRollContract } = useScaffoldContract({
     contractName: "RiggedRoll",
   });
-  const { data: riggedRollBalance, refetch } = useBalance({
-    address: riggedRollContract?.address,
-    watch: true,
-  });
+  const { data: riggedRollBalance, refetch: refetchRiggedBalance } = useBalance(
+    {
+      address: riggedRollContract?.address,
+      watch: true,
+    },
+  );
   console.log(riggedRollContract);
 
   const { data: prize } = useScaffoldContractRead({
@@ -87,7 +89,7 @@ const DiceGame: NextPage = () => {
       const results = await multiContractWriteRigged();
       setIsRolling(false);
       setRolled(false);
-      refetch();
+      refetchRiggedBalance();
     } catch (error) {
       console.error("Error", error);
     }
@@ -158,7 +160,7 @@ const DiceGame: NextPage = () => {
               <span className="mr-2 text-lg">Address:</span>
               <Address
                 size="lg"
-                address={riggedRollContract?.address as ADDRESS}
+                address={riggedRollContract?.address as AddressType}
               />
             </div>
             <div className="flex mt-1 items-center">
