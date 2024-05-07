@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useGlobalState } from "~~/services/store/store";
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
+import { formatEther } from "ethers";
 
 type TAmountProps = {
-  amount?: BigInt | number;
+  amount?: string;
   className?: string;
   isLoading?: boolean;
   showUsdPrice?: boolean;
@@ -16,7 +17,7 @@ type TAmountProps = {
 export const Amount = ({
   isLoading,
   showUsdPrice = false,
-  amount = 0,
+  amount = "0",
   className = "",
   disableToggle = false,
 }: TAmountProps) => {
@@ -53,7 +54,7 @@ export const Amount = ({
       <div className="w-full flex items-center justify-center">
         {isEthBalance ? (
           <>
-            <span>{Number(amount)}</span>
+            <span>{parseFloat(amount).toFixed(4)}</span>
             <span className="font-bold ml-1">
               {configuredNetwork.nativeCurrency.symbol}
             </span>
@@ -61,7 +62,7 @@ export const Amount = ({
         ) : (
           <>
             <span className="font-bold mr-1">$</span>
-            <span>{(Number(amount) * price).toFixed(2)}</span>
+            <span>{(parseFloat(amount) * price).toFixed(2)}</span>
           </>
         )}
       </div>

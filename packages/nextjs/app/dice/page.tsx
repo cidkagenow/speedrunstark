@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
-import { useAccount, useBalance } from "@starknet-react/core";
+import { useBalance } from "@starknet-react/core";
 import { Roll, RollEvents } from "~~/components/RollEvents";
 import { Winner, WinnerEvents } from "~~/components/WinnerEvents";
 import { useScaffoldContract } from "~~/hooks/scaffold-stark/useScaffoldContract";
@@ -14,6 +14,7 @@ import {
   useScaffoldMultiContractWrite,
 } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 import { Address } from "~~/components/scaffold-stark";
+import { ADDRESS } from "starknet";
 
 const ROLL_ETH_VALUE = "0.002";
 const MAX_TABLE_ROWS = 10;
@@ -26,100 +27,23 @@ const DiceGame: NextPage = () => {
 
   const [rolled, setRolled] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
+  const { data: accountDice } = useScaffoldContract({
+    contractName: "DiceGame",
+  });
 
   const { data: riggedRollContract } = useScaffoldContract({
     contractName: "RiggedRoll",
   });
-  const { data: riggedRollBalance } = useBalance({
+  const { data: riggedRollBalance, refetch } = useBalance({
     address: riggedRollContract?.address,
     watch: true,
   });
-  const { data: accountDice } = useScaffoldContract({
-    contractName: "DiceGame",
-  });
+  console.log(riggedRollContract);
 
   const { data: prize } = useScaffoldContractRead({
     contractName: "DiceGame",
     functionName: "prize",
   });
-
-  const { data: lastDiceValue } = useScaffoldContractRead({
-    contractName: "DiceGame",
-    functionName: "last_dice_value",
-  });
-  // const { data: rollsHistoryData, isLoading: rollsHistoryLoading } = useScaffoldEventHistory({
-  //   contractName: "DiceGame",
-  //   eventName: "Roll",
-  //   fromBlock: 0n,
-  // });
-
-  // useEffect(() => {
-  //   if (!rolls.length && !!rollsHistoryData?.length && !rollsHistoryLoading) {
-  //     setRolls(
-  //       (
-  //         rollsHistoryData?.map(({ args }) => ({
-  //           address: args.player as string,
-  //           amount: Number(args.amount),
-  //           roll: (args.roll as bigint).toString(16).toUpperCase(),
-  //         })) || []
-  //       ).slice(0, MAX_TABLE_ROWS),
-  //     );
-  //   }
-  // }, [rolls, rollsHistoryData, rollsHistoryLoading]);
-
-  // useScaffoldEventSubscriber({
-  //   contractName: "DiceGame",
-  //   eventName: "Roll",
-  //   listener: logs => {
-  //     logs.map(log => {
-  //       const { player, amount, roll } = log.args;
-
-  //       if (player && amount && roll !== undefined) {
-  //         setIsRolling(false);
-  //         setRolls(rolls =>
-  //           [{ address: player, amount: Number(amount), roll: roll.toString(16).toUpperCase() }, ...rolls].slice(
-  //             0,
-  //             MAX_TABLE_ROWS,
-  //           ),
-  //         );
-  //       }
-  //     });
-  //   },
-  // });
-
-  // const { data: winnerHistoryData, isLoading: winnerHistoryLoading } = useScaffoldEventHistory({
-  //   contractName: "DiceGame",
-  //   eventName: "Winner",
-  //   fromBlock: 0n,
-  // });
-
-  // useEffect(() => {
-  //   if (!winners.length && !!winnerHistoryData?.length && !winnerHistoryLoading) {
-  //     setWinners(
-  //       (
-  //         winnerHistoryData?.map(({ args }) => ({
-  //           address: args.winner as string,
-  //           amount: args.amount as bigint,
-  //         })) || []
-  //       ).slice(0, MAX_TABLE_ROWS),
-  //     );
-  //   }
-  // }, [winnerHistoryData, winnerHistoryLoading, winners.length]);
-
-  // useScaffoldEventSubscriber({
-  //   contractName: "DiceGame",
-  //   eventName: "Winner",
-  //   listener: logs => {
-  //     logs.map(log => {
-  //       const { winner, amount } = log.args;
-
-  //       if (winner && amount) {
-  //         setIsRolling(false);
-  //         setWinners(winners => [{ address: winner, amount }, ...winners].slice(0, MAX_TABLE_ROWS));
-  //       }
-  //     });
-  //   },
-  // });
 
   const { writeAsync: multiContractWriteDice } = useScaffoldMultiContractWrite({
     calls: [
@@ -136,10 +60,14 @@ const DiceGame: NextPage = () => {
       calls: [
         createContractCall("Eth", "approve", [
           riggedRollContract?.address,
-          BigInt(1_000_000n),
+          BigInt("1000000000000000000"),
+        ]),
+        createContractCall("Eth", "transfer", [
+          riggedRollContract?.address,
+          BigInt("1000000000000000000"),
         ]),
         createContractCall("RiggedRoll", "rigged_roll", [
-          parseEther(ROLL_ETH_VALUE),
+          BigInt("1000000000000000000"),
         ]),
       ],
     });
@@ -159,6 +87,7 @@ const DiceGame: NextPage = () => {
       const results = await multiContractWriteRigged();
       setIsRolling(false);
       setRolled(false);
+      refetch();
     } catch (error) {
       console.error("Error", error);
     }
@@ -181,10 +110,8 @@ const DiceGame: NextPage = () => {
         );
       }
     };
+  console.log(prize);
 
-  // @ts-ignore
-  // @ts-ignore
-  // @ts-ignore
   return (
     <div className="py-10 px-10">
       <div className="grid grid-cols-3 max-lg:grid-cols-1 text-primary">
@@ -202,7 +129,7 @@ const DiceGame: NextPage = () => {
           <div className="flex items-center mt-1">
             <span className="text-lg mr-2">Prize:</span>
             <Amount
-              amount={prize ? Number(formatEther(Number(prize))) : 0}
+              amount={prize ? formatEther(prize.toString()) : "0"}
               showUsdPrice
               className="text-lg"
             />
@@ -229,12 +156,15 @@ const DiceGame: NextPage = () => {
             <span className="text-2xl">Rigged Roll</span>
             <div className="flex mt-2 items-center">
               <span className="mr-2 text-lg">Address:</span>
-              <Address size="lg" address={riggedRollContract?.address} />
+              <Address
+                size="lg"
+                address={riggedRollContract?.address as ADDRESS}
+              />
             </div>
             <div className="flex mt-1 items-center">
               <span className="text-lg mr-2">Balance:</span>
               <Amount
-                amount={Number(riggedRollBalance?.value || 0)}
+                amount={riggedRollBalance?.formatted || "0"}
                 showUsdPrice
                 className="text-lg"
               />
