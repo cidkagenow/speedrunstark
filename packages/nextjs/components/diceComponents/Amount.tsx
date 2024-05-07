@@ -3,7 +3,7 @@ import { useGlobalState } from "~~/services/store/store";
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
 
 type TAmountProps = {
-  amount?: number;
+  amount?: BigInt | number;
   className?: string;
   isLoading?: boolean;
   showUsdPrice?: boolean;
@@ -53,7 +53,7 @@ export const Amount = ({
       <div className="w-full flex items-center justify-center">
         {isEthBalance ? (
           <>
-            <span>{amount?.toFixed(4)}</span>
+            <span>{Number(amount)}</span>
             <span className="font-bold ml-1">
               {configuredNetwork.nativeCurrency.symbol}
             </span>
@@ -61,7 +61,7 @@ export const Amount = ({
         ) : (
           <>
             <span className="font-bold mr-1">$</span>
-            <span>{(amount * price).toFixed(2)}</span>
+            <span>{(Number(amount) * price).toFixed(2)}</span>
           </>
         )}
       </div>
