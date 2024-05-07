@@ -61,17 +61,17 @@ yarn start
 
 > ✏️ Mint some NFTs! Click the **MINT NFT** button in the `My NFTs` tab.
 
-![image](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-mynft.png)
+![image](./packages/nextjs/public/ch0-mynft.png)
 
 👀 You should see your NFTs start to show up!
 
-![image](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-nfts-images.png)
+![image](./packages/nextjs/public/ch0-nfts-images.png)
 
 👛 Open an window Browser and navigate to http://localhost:3000
 
 🎟 Transfer an NFT from one address to another using the UI:
 
-![image](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-nfts-images-transfer.png)
+![image](./packages/nextjs/public/ch0-nfts-images-transfer.png)
 
 🕵🏻‍♂️ Inspect the `Debug Contracts` tab to figure out what address is the owner of YourCollectible?
 
@@ -111,15 +111,15 @@ cp packages/snfoundry/.env.example packages/snfoundry/.env
 
 > ✏️ Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork` to `chains.sepolia` :
 
-![chall-0-scaffold-config](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-scaffold-config.png)
+![chall-0-scaffold-config](./packages/nextjs/public/ch0-scaffold-config.png)
 
 > 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own(Argent X or Braavos).
 
-![connect-wallet](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-walletconnect.png)
+![connect-wallet](./packages/nextjs/public/ch0-walletconnect.png)
 
 > You should see the correct network in the frontend (http://localhost:3000):
 
-![image](https://github.com/Quantum3-Labs/speedrunstark/blob/simple-nft-example/packages/nextjs/public/ch0-balance.png)
+![image](./packages/nextjs/public/ch0-balance.png)
 
 > 💬 Hint: For faster loading of your transfer page, consider updating the `fromBlock` passed to `useScaffoldEventHistory` in [`packages/nextjs/app/transfers/page.tsx`](https://github.com/scaffold-eth/se-2-challenges/blob/challenge-0-simple-nft/packages/nextjs/app/transfers/page.tsx#L12) to `blocknumber - 10` at which your contract was deployed. Example: `fromBlock: 3750241n` (where `n` represents its a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)). To find this blocknumber, search your contract's address on Etherscan and find the `Contract Creation` transaction line.
 
@@ -145,28 +145,9 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
----
-
-## Checkpoint 5: 💪 Flex!
-
-👩‍❤️‍👨 Share your public url with a friend and ask them for their address to send them a collectible :)
-
-## ⚔️ Side Quests
-
-### 🐟 Open Sea
-
-> 🐃 Want to see your new NFTs on Opensea? Head to [Testnets Opensea](https://testnets.opensea.io/)
-
-> 🎫 Make sure you have minted some NFTs on your Vercel page, then connect to Opensea using that same wallet.
-
-![image](https://github.com/scaffold-eth/se-2-challenges/assets/80153681/c752b365-b801-4a02-ba2e-62e0270b3795)
-
-> You can see your collection of shiny new NFTs on a testnet!
-
-(It can take a while before they show up, but here is an example:) https://testnets.opensea.io/assets/sepolia/0x17ed03686653917efa2194a5252c5f0a4f3dc49c/2
 
 ---
 
-> 🏃 Head to your next challenge [here](https://github.com/scaffold-eth/se-2-challenges).
+> 🏃 Head to your next challenge [here](https://github.com/Quantum3-Labs/speedrunstark/tree/decentralized-staking).
 
-> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-eth developers chat](https://t.me/joinchat/F7nCRK3kI93PoCOk)
+> 💭 Problems, questions, comments on the stack? Post them to the [🏗 Scaffold-Stark developers chat]()
