@@ -4,7 +4,7 @@ const deployScript = async () => {
     {
       owner: deployer.address, // the deployer address is the owner of the contract
     },
-    "Challenge0"
+    "YourCollectible"
   );
   
 };

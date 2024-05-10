@@ -16,13 +16,13 @@ const MyNFTs: NextPage = () => {
   const [status, setStatus] = useState("Mint NFT");
 
   const { writeAsync: mintItem } = useScaffoldContractWrite({
-    contractName: "Challenge0",
+    contractName: "YourCollectible",
     functionName: "mint_item",
     args: [connectedAddress, ""],
   });
 
   const { data: tokenIdCounter, refetch} = useScaffoldContractRead({
-    contractName: "Challenge0",
+    contractName: "YourCollectible",
     functionName: "token_id_counter",
     watch: true,
   });

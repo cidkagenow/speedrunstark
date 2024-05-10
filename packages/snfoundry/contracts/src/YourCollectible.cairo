@@ -1,7 +1,7 @@
 use starknet::ContractAddress;
 
 #[starknet::interface]
-trait IChallenge0<T> {
+trait IYourCollectible<T> {
     fn mint_item(ref self: T, recipient: ContractAddress, uri: ByteArray) -> u256;
 }
 
@@ -17,10 +17,10 @@ trait IERC721Enumerable<T> {
 }
 
 #[starknet::contract]
-mod Challenge0 {
+mod YourCollectible {
     use core::traits::TryInto;
     use core::traits::Into;
-    use super::{IChallenge0, ContractAddress, IERC721Enumerable, ICounter};
+    use super::{IYourCollectible, ContractAddress, IERC721Enumerable, ICounter};
     use core::num::traits::zero::Zero;
     use openzeppelin::introspection::src5::SRC5Component;
     use openzeppelin::token::erc721::ERC721Component;
@@ -87,7 +87,7 @@ mod Challenge0 {
     }
 
     #[abi(embed_v0)]
-    impl Challenge0Impl of IChallenge0<ContractState> {
+    impl YourCollectibleImpl of IYourCollectible<ContractState> {
         fn mint_item(ref self: ContractState, recipient: ContractAddress, uri: ByteArray) -> u256 {
             self._increment();
             let token_id = self._current();
@@ -175,7 +175,7 @@ mod Challenge0 {
 
     #[generate_trait]
     impl InternalImpl of InternalTrait {
-        // IChallenge0 internal functions
+        // IYourCollectible internal functions
         fn _mint(ref self: ContractState, recipient: ContractAddress, token_id: u256) {
             assert(!recipient.is_zero(), ERC721Component::Errors::INVALID_RECEIVER);
             assert(!self.erc721._exists(token_id), ERC721Component::Errors::ALREADY_MINTED);
@@ -231,6 +231,7 @@ mod Challenge0 {
             format!("{}{}", base_uri, uri)
         }
         fn _set_token_uri(ref self: ContractState, token_id: u256, uri: ByteArray) {
+            assert(self.erc721._exists(token_id), ERC721Component::Errors::INVALID_TOKEN_ID);
             self.token_uris.write(token_id, uri);
         }
 
@@ -295,7 +296,7 @@ mod Challenge0 {
             } else if (from != to) {
                 self._remove_token_from_owner_enumeration(from, first_token_id);
             }
-            if (to == Zero::zero()) { 
+            if (to == Zero::zero()) {
                 self._remove_token_from_all_tokens_enumeration(first_token_id);
             } else if (to != from) {
                 self._add_token_to_owner_enumeration(to, first_token_id);

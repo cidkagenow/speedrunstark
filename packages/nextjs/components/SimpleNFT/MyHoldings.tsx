@@ -26,11 +26,11 @@ export const MyHoldings = ({
   const [allCollectiblesLoading, setAllCollectiblesLoading] = useState(false);
 
   const { data: yourCollectibleContract } = useScaffoldContract({
-    contractName: "Challenge0",
+    contractName: "YourCollectible",
   });
 
   const { data: myTotalBalance } = useScaffoldContractRead({
-    contractName: "Challenge0",
+    contractName: "YourCollectible",
     functionName: "balance_of",
     args: [connectedAddress ?? ""],
   });
