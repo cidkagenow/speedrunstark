@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 #[starknet::interface]
-pub trait IChallenge1<T> {
+pub trait IStaker<T> {
     fn execute(ref self: T);
     fn stake(ref self: T, amount: u256);
     fn withdraw(ref self: T);
@@ -15,15 +15,29 @@ pub trait IChallenge1<T> {
 }
 
 #[starknet::contract]
-mod Challenge1 {
-    use contracts::exampleExternalContract::{
+mod Staker {
+    use contracts::ExampleExternalContract::{
         IExampleExternalContractDispatcher, IExampleExternalContractDispatcherTrait
     };
-    use super::{ContractAddress, IChallenge1};
+    use super::{ContractAddress, IStaker};
     use starknet::{get_block_timestamp, get_caller_address, get_contract_address};
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
 
     pub const THRESHOLD: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        Stake: Stake,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Stake {
+        #[key]
+        sender: ContractAddress,
+        amount: u256,
+    }
+
     #[storage]
     struct Storage {
         token: IERC20CamelDispatcher,
@@ -45,15 +59,16 @@ mod Challenge1 {
     }
 
     #[abi(embed_v0)]
-    impl Challenge1Impl of IChallenge1<ContractState> {
+    impl StakerImpl of IStaker<ContractState> {
         fn stake(ref self: ContractState, amount: u256) {
-            // ToDo in UI: Sender should approve to transfer the amount to the staker contract
+            // Note: Sender should approve to transfer the amount to the staker contract
             self._not_completed();
             assert(get_block_timestamp() < self.deadline.read(), 'Staking period has ended');
             let sender = get_caller_address();
             let sender_current_amount = self.balances.read(sender);
             self.token.read().transferFrom(sender, get_contract_address(), amount);
             self.balances.write(sender, sender_current_amount + amount);
+            self.emit(Stake { sender, amount });
         }
 
         // Function to execute the transfer or allow withdrawals after the deadline
@@ -127,7 +142,7 @@ mod Challenge1 {
             let external_contract_dispatcher = IExampleExternalContractDispatcher {
                 contract_address: external_contract_address
             };
-            // Todo in UI: Staker contract should approve to transfer the staked_amount to the external contract
+            // Note: Staker contract should approve to transfer the staked_amount to the external contract
             self.token.read().transfer(external_contract_address, amount);
             external_contract_dispatcher.complete(amount);
         }

@@ -1,2 +1,2 @@
-mod Challenge1;
-mod exampleExternalContract;
+mod Staker;
+mod ExampleExternalContract;

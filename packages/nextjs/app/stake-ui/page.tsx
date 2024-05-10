@@ -5,7 +5,7 @@ import { StakeContractInteraction } from "~~/components/stake/StakeContractInter
 import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 
 const StakerUI: NextPage = () => {
-  const { data: StakerContract } = useDeployedContractInfo("Challenge1");
+  const { data: StakerContract } = useDeployedContractInfo("Staker");
 
   return (
     <StakeContractInteraction

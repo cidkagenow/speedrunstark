@@ -18,7 +18,7 @@ function formatEther(weiValue: number) {
 
 export const StakeContractInteraction = ({ address }: { address?: string }) => {
   const { address: connectedAddress } = useAccount();
-  const { data: StakerContract } = useDeployedContractInfo("Challenge1");
+  const { data: StakerContract } = useDeployedContractInfo("Staker");
   const { data: ExampleExternalContact } = useDeployedContractInfo(
     "ExampleExternalContract",
   );
@@ -37,40 +37,34 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
 
   // Contract Read Actions
   const { data: threshold } = useScaffoldContractRead({
-    contractName: "Challenge1",
+    contractName: "Staker",
     functionName: "threshold",
     watch: true,
   });
   const { data: timeLeft } = useScaffoldContractRead({
-    contractName: "Challenge1",
+    contractName: "Staker",
     functionName: "time_left",
     watch: true,
   });
 
   const { data: isStakingCompleted } = useScaffoldContractRead({
-    contractName: "Challenge1",
+    contractName: "Staker",
     functionName: "completed",
     watch: true,
   });
   const { data: myStake } = useScaffoldContractRead({
-    contractName: "Challenge1",
+    contractName: "Staker",
     functionName: "balances",
     args: [connectedAddress ?? ""],
     watch: true,
   });
 
-  // Contract Write Actions
-  // const { writeAsync: stakeStark } = useScaffoldContractWrite({
-  //   contractName: "Challenge1",
-  //   functionName: "stake",
-  //   args: [BigInt(0)],
-  // });
   const { writeAsync: execute } = useScaffoldContractWrite({
-    contractName: "Challenge1",
+    contractName: "Staker",
     functionName: "execute",
   });
   const { writeAsync: withdrawETH } = useScaffoldContractWrite({
-    contractName: "Challenge1",
+    contractName: "Staker",
     functionName: "withdraw",
   });
 
@@ -82,7 +76,7 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
         args: [StakerContract?.address ?? "", 5 * 10 ** 17],
       },
       {
-        contractName: "Challenge1",
+        contractName: "Staker",
         functionName: "stake",
         args: [5 * 10 ** 17],
       },
