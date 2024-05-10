@@ -1,2 +1,2 @@
-mod Challenge2;
+mod Vendor;
 mod YourToken;

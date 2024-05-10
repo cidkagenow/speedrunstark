@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 #[starknet::interface]
-pub trait IChallenge2<T> {
+pub trait IVendor<T> {
     fn buy_tokens(ref self: T, eth_amount_wei: u256);
     fn withdraw(ref self: T);
     fn sell_tokens(ref self: T, amount_tokens: u256);
@@ -10,13 +10,12 @@ pub trait IChallenge2<T> {
 }
 
 #[starknet::contract]
-mod Challenge2 {
+mod Vendor {
     use openzeppelin::access::ownable::interface::IOwnable;
-    use core::traits::Destruct;
     use openzeppelin::access::ownable::OwnableComponent;
     use contracts::YourToken::{IYourTokenDispatcher, IYourTokenDispatcherTrait};
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
-    use super::{ContractAddress, IChallenge2};
+    use super::{ContractAddress, IVendor};
     use starknet::{get_caller_address, get_contract_address};
 
     component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
@@ -39,7 +38,24 @@ mod Challenge2 {
     #[derive(Drop, starknet::Event)]
     enum Event {
         #[flat]
-        OwnableEvent: OwnableComponent::Event
+        OwnableEvent: OwnableComponent::Event,
+        BuyTokens: BuyTokens,
+        SellTokens: SellTokens,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct BuyTokens {
+        buyer: ContractAddress,
+        eth_amount: u256,
+        tokens_amount: u256,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct SellTokens {
+        #[key]
+        seller: ContractAddress,
+        tokens_amount: u256,
+        eth_amount: u256,
     }
 
     #[constructor]
@@ -55,7 +71,7 @@ mod Challenge2 {
     }
 
     #[abi(embed_v0)]
-    impl Challenge1Impl of IChallenge2<ContractState> {
+    impl VendorImpl of IVendor<ContractState> {
         fn buy_tokens(ref self: ContractState, eth_amount_wei: u256) {
             assert(eth_amount_wei > 0, 'Amount must be greater than 0');
             let tokens_to_buy = eth_amount_wei * TokensPerEth;
@@ -68,6 +84,14 @@ mod Challenge2 {
                 .transferFrom(get_caller_address(), get_contract_address(), eth_amount_wei);
             let sent = self.your_token.read().transfer(get_caller_address(), tokens_to_buy);
             assert(sent, 'Token Transfer failed');
+            self
+                .emit(
+                    BuyTokens {
+                        buyer: get_caller_address(),
+                        eth_amount: eth_amount_wei,
+                        tokens_amount: tokens_to_buy,
+                    }
+                );
         }
 
         fn withdraw(ref self: ContractState) {
@@ -91,6 +115,14 @@ mod Challenge2 {
 
             let sent = self.eth_token.read().transfer(get_caller_address(), eth_amount_wei);
             assert(sent, 'Eth Transfer failed');
+            self
+                .emit(
+                    SellTokens {
+                        seller: get_caller_address(),
+                        tokens_amount: amount_tokens,
+                        eth_amount: eth_amount_wei,
+                    }
+                );
         }
 
         fn send_tokens(ref self: ContractState, to: ContractAddress, amount_tokens: u256) {
