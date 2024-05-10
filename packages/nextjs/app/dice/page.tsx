@@ -62,14 +62,14 @@ const DiceGame: NextPage = () => {
       calls: [
         createContractCall("Eth", "approve", [
           riggedRollContract?.address,
-          BigInt("1000000000000000000"),
+          BigInt("2000000000000000000"),
         ]),
         createContractCall("Eth", "transfer", [
           riggedRollContract?.address,
-          BigInt("1000000000000000000"),
+          BigInt("2000000000000000000"),
         ]),
         createContractCall("RiggedRoll", "rigged_roll", [
-          BigInt("1000000000000000000"),
+          BigInt("2000000000000000000"),
         ]),
       ],
     });
