@@ -15,6 +15,28 @@ mod DiceGame {
     use keccak::keccak_u256s_le_inputs;
     use super::IDiceGame;
 
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        Roll: Roll,
+        Winner: Winner,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Roll {
+        #[key]
+        player: ContractAddress,
+        amount: u256,
+        roll: u256,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Winner {
+        winner: ContractAddress,
+        tokens_amount: u256,
+        eth_amount: u256,
+    }
+
     #[storage]
     struct Storage {
         eth_token: IERC20CamelDispatcher,
@@ -34,11 +56,13 @@ mod DiceGame {
         fn roll_dice(ref self: ContractState, amount: u256) {
             // >= 0.002 ETH 
             assert(amount >= 2000000000000000, 'Not enough ETH');
+            let caller = get_caller_address();
+            let this_contract = get_contract_address();
             // call approve on UI
             self
                 .eth_token
                 .read()
-                .transferFrom(get_caller_address(), get_contract_address(), amount);
+                .transferFrom(caller, this_contract, amount);
 
             let prev_block: u256 = get_block_number().into() - 1;
             let array = array![prev_block, self.nonce.read()];
@@ -48,16 +72,22 @@ mod DiceGame {
             let new_prize = self.prize.read() + amount * 4 / 10;
             self.prize.write(new_prize);
 
+            self.emit(Roll { player: caller, amount, roll });
+
             if (roll > 5) {
                 return;
             }
 
-            let contract_balance = self.eth_token.read().balanceOf(get_contract_address());
+            let contract_balance = self.eth_token.read().balanceOf(this_contract);
             let prize = self.prize.read();
             assert(contract_balance >= prize, 'Not enough balance');
-            self.eth_token.read().transfer(get_caller_address(), prize);
+            self.eth_token.read().transfer(caller, prize);
 
             self._reset_prize();
+            self
+                .emit(
+                    Winner { winner: caller, tokens_amount: prize, eth_amount: prize }
+                );
         }
         fn last_dice_value(self: @ContractState) -> u256 {
             self.last_dice_value.read()
