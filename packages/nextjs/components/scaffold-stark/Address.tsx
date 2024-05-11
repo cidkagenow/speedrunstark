@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Address as AddressType } from "@starknet-react/chains";
@@ -10,10 +10,8 @@ import {
   CheckCircleIcon,
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
-// import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
 import { getBlockExplorerAddressLink } from "~~/utils/scaffold-stark";
-import { useStarkProfile } from "@starknet-react/core";
 import { BlockieAvatar } from "~~/components/scaffold-stark/BlockieAvatar";
 
 type AddressProps = {

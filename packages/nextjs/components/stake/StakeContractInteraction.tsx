@@ -9,7 +9,6 @@ import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
 import humanizeDuration from "humanize-duration";
 import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
-import { useEffect } from "react";
 
 function formatEther(weiValue: number) {
   const etherValue = weiValue / 1e18;
@@ -82,7 +81,6 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
       },
     ],
   });
-  console.log(formatEther(Number(threshold)));
 
   const wrapInTryCatch =
     (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
