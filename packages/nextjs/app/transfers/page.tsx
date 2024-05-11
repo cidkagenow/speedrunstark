@@ -2,28 +2,23 @@
 
 import type { NextPage } from "next";
 import { Address } from "~~/components/scaffold-stark";
-// import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark";
+import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
 
 const Transfers: NextPage = () => {
-  //   const { data: transferEvents, isLoading } = useScaffoldEventHistory({
-  //     contractName: "YourCollectible",
-  //     eventName: "Transfer",
-  //     // Specify the starting block number from which to read events, this is a bigint.
-  //     fromBlock: 0n,
-  //   });
+  const { data: transferEvents, isLoading } = useScaffoldEventHistory({
+    contractName: "YourCollectible",
+    eventName: "openzeppelin::token::erc721::erc721::ERC721Component::Transfer",
+    fromBlock: 0n,
+    watch: true,
+  });
 
-  //   if (isLoading)
-  //     return (
-  //       <div className="flex justify-center items-center mt-10">
-  //         <span className="loading loading-spinner loading-xl"></span>
-  //       </div>
-  //     );
-
-  const transferEvents = [
-    {
-      address: "0x7f982E4f614167DfC7950fdA06e920b9E2514748",
-    },
-  ];
+  // console.log(transferEvents)
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center mt-10">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
 
   return (
     <>
@@ -55,9 +50,17 @@ const Transfers: NextPage = () => {
                 transferEvents?.map((event, index) => {
                   return (
                     <tr key={index}>
-                      {/* <th className="text-center">{event.args.tokenId?.toString()}</th> */}
-                      <td>{/* <Address address={event.args.from} /> */}</td>
-                      <td>{/* <Address address={event.args.to} /> */}</td>
+                      <th className="text-center">
+                        {event.args.tokenId?.toString()}
+                      </th>
+                      <td>
+                        {" "}
+                        <Address address={event.args.from} />{" "}
+                      </td>
+                      <td>
+                        {" "}
+                        <Address address={event.args.to} />{" "}
+                      </td>
                     </tr>
                   );
                 })

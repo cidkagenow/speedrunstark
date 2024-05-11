@@ -21,7 +21,7 @@ const MyNFTs: NextPage = () => {
     args: [connectedAddress, ""],
   });
 
-  const { data: tokenIdCounter, refetch} = useScaffoldContractRead({
+  const { data: tokenIdCounter, refetch } = useScaffoldContractRead({
     contractName: "YourCollectible",
     functionName: "token_id_counter",
     watch: true,
@@ -47,7 +47,7 @@ const MyNFTs: NextPage = () => {
         args: [connectedAddress, uploadedItem.path],
       });
       setStatus("Updating NFT List");
-       refetch()
+      refetch();
     } catch (error) {
       notification.remove(notificationId);
       console.error(error);

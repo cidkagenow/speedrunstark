@@ -46,7 +46,6 @@ export const AddressInfoDropdown = ({
 
   useOutsideClick(dropdownRef, closeDropdown);
 
-
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
@@ -139,7 +138,7 @@ export const AddressInfoDropdown = ({
             <button
               className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"
               type="button"
-              onClick={()=>disconnect()}
+              onClick={() => disconnect()}
             >
               <ArrowLeftEndOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" />{" "}
               <span>Disconnect</span>
