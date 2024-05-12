@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 #[starknet::interface]
-pub trait IStaker<T> {
+trait IStaker<T> {
     fn execute(ref self: T);
     fn stake(ref self: T, amount: u256);
     fn withdraw(ref self: T);
@@ -16,6 +16,7 @@ pub trait IStaker<T> {
 
 #[starknet::contract]
 mod Staker {
+    use core::traits::TryInto;
     use contracts::ExampleExternalContract::{
         IExampleExternalContractDispatcher, IExampleExternalContractDispatcherTrait
     };
@@ -23,7 +24,9 @@ mod Staker {
     use starknet::{get_block_timestamp, get_caller_address, get_contract_address};
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
 
-    pub const THRESHOLD: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
+    const THRESHOLD: u256 = 1000000000000000000; // ONE_ETH_IN_WEI: 10 ^ 18;
+    const ETH_CONTRACT_ADDRESS: felt252 =
+        0x49D36570D4E46F48E99674BD3FCC84644DDD6B96F7C741B1562B82F9E004DC7;
 
     #[event]
     #[derive(Drop, starknet::Event)]
@@ -48,12 +51,9 @@ mod Staker {
     }
 
     #[constructor]
-    fn constructor(
-        ref self: ContractState,
-        external_contract_address: ContractAddress,
-        eth_contract_address: ContractAddress
-    ) {
-        self.token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
+    fn constructor(ref self: ContractState, external_contract_address: ContractAddress,) {
+        let eth_contract: ContractAddress = ETH_CONTRACT_ADDRESS.try_into().unwrap();
+        self.token.write(IERC20CamelDispatcher { contract_address: eth_contract });
         self.deadline.write(get_block_timestamp() + 60); // 30 seconds
         self.external_contract_address.write(external_contract_address);
     }
