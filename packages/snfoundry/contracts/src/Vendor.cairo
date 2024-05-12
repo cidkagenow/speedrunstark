@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 #[starknet::interface]
-pub trait IVendor<T> {
+trait IVendor<T> {
     fn buy_tokens(ref self: T, eth_amount_wei: u256);
     fn withdraw(ref self: T);
     fn sell_tokens(ref self: T, amount_tokens: u256);
@@ -11,6 +11,7 @@ pub trait IVendor<T> {
 
 #[starknet::contract]
 mod Vendor {
+    use core::traits::TryInto;
     use openzeppelin::access::ownable::interface::IOwnable;
     use openzeppelin::access::ownable::OwnableComponent;
     use contracts::YourToken::{IYourTokenDispatcher, IYourTokenDispatcherTrait};
@@ -24,7 +25,9 @@ mod Vendor {
     impl OwnableImpl = OwnableComponent::OwnableImpl<ContractState>;
     impl OwnableInternalImpl = OwnableComponent::InternalImpl<ContractState>;
 
-    pub const TokensPerEth: u256 = 100;
+    const TokensPerEth: u256 = 100;
+    const ETH_CONTRACT_ADDRESS: felt252 =
+        0x49D36570D4E46F48E99674BD3FCC84644DDD6B96F7C741B1562B82F9E004DC7;
 
     #[storage]
     struct Storage {
@@ -60,12 +63,10 @@ mod Vendor {
 
     #[constructor]
     fn constructor(
-        ref self: ContractState,
-        token_address: ContractAddress,
-        eth_contract_address: ContractAddress,
-        owner: ContractAddress
+        ref self: ContractState, token_address: ContractAddress, owner: ContractAddress
     ) {
-        self.eth_token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
+        let eth_contract: ContractAddress = ETH_CONTRACT_ADDRESS.try_into().unwrap();
+        self.eth_token.write(IERC20CamelDispatcher { contract_address: eth_contract });
         self.your_token.write(IYourTokenDispatcher { contract_address: token_address });
         self.ownable.initializer(owner);
     }

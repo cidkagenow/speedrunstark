@@ -15,9 +15,7 @@ const deployScript = async () => {
     );
   
   const ch2 = await deployContract({
-    token_address: your_token.address,
-    eth_contract_address: "0x49D36570D4E46F48E99674BD3FCC84644DDD6B96F7C741B1562B82F9E004DC7",
-    owner: deployer.address,
+    token_address: your_token.address, owner: deployer.address,
   }
     , "Vendor");
   
