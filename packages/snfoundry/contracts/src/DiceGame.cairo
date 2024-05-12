@@ -1,6 +1,6 @@
 use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
 #[starknet::interface]
-pub trait IDiceGame<T> {
+trait IDiceGame<T> {
     fn roll_dice(ref self: T, amount: u256);
     fn last_dice_value(self: @T) -> u256;
     fn nonce(self: @T) -> u256;
@@ -14,6 +14,9 @@ mod DiceGame {
     use starknet::{ContractAddress, get_contract_address, get_block_number, get_caller_address};
     use keccak::keccak_u256s_le_inputs;
     use super::IDiceGame;
+
+    const ETH_CONTRACT_ADDRESS: felt252 =
+        0x49D36570D4E46F48E99674BD3FCC84644DDD6B96F7C741B1562B82F9E004DC7;
 
     #[event]
     #[derive(Drop, starknet::Event)]
@@ -46,8 +49,9 @@ mod DiceGame {
     }
 
     #[constructor]
-    fn constructor(ref self: ContractState, eth_contract_address: ContractAddress) {
-        self.eth_token.write(IERC20CamelDispatcher { contract_address: eth_contract_address });
+    fn constructor(ref self: ContractState) {
+        let eth_contract: ContractAddress = ETH_CONTRACT_ADDRESS.try_into().unwrap();
+        self.eth_token.write(IERC20CamelDispatcher { contract_address: eth_contract });
         self._reset_prize();
     }
 
@@ -59,10 +63,7 @@ mod DiceGame {
             let caller = get_caller_address();
             let this_contract = get_contract_address();
             // call approve on UI
-            self
-                .eth_token
-                .read()
-                .transferFrom(caller, this_contract, amount);
+            self.eth_token.read().transferFrom(caller, this_contract, amount);
 
             let prev_block: u256 = get_block_number().into() - 1;
             let array = array![prev_block, self.nonce.read()];
@@ -84,10 +85,7 @@ mod DiceGame {
             self.eth_token.read().transfer(caller, prize);
 
             self._reset_prize();
-            self
-                .emit(
-                    Winner { winner: caller, tokens_amount: prize, eth_amount: prize }
-                );
+            self.emit(Winner { winner: caller, tokens_amount: prize, eth_amount: prize });
         }
         fn last_dice_value(self: @ContractState) -> u256 {
             self.last_dice_value.read()
