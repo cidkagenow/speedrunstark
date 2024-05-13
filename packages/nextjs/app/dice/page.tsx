@@ -15,6 +15,7 @@ import {
 } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 import { Address } from "~~/components/scaffold-stark";
 import { Address as AddressType } from "@starknet-react/chains";
+import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
 
 const ROLL_ETH_VALUE = "0.002";
 const MAX_TABLE_ROWS = 10;
@@ -40,36 +41,82 @@ const DiceGame: NextPage = () => {
       watch: true,
     },
   );
-  console.log(riggedRollContract);
 
   const { data: prize } = useScaffoldContractRead({
     contractName: "DiceGame",
     functionName: "prize",
   });
+  const { data: rollsHistoryData, isLoading: rollsHistoryLoading } =
+    useScaffoldEventHistory({
+      contractName: "DiceGame",
+      eventName: "contracts::DiceGame::DiceGame::Roll",
+      fromBlock: BigInt(0n),
+      watch: true,
+    });
 
-  const { writeAsync: multiContractWriteDice } = useScaffoldMultiContractWrite({
-    calls: [
-      createContractCall("Eth", "approve", [
-        accountDice?.address,
-        parseEther(ROLL_ETH_VALUE),
-      ]),
-      createContractCall("DiceGame", "roll_dice", [parseEther(ROLL_ETH_VALUE)]),
-    ],
-  });
+  useEffect(() => {
+    if (!rolls.length && !!rollsHistoryData?.length && !rollsHistoryLoading) {
+      const newRolls = (
+        rollsHistoryData?.map(({ args }) => ({
+          address: args.player,
+          amount: Number(args.amount),
+          roll: args.roll.toString(16).toUpperCase(),
+        })) || []
+      ).slice(0, MAX_TABLE_ROWS);
+      setRolls(newRolls);
+    }
+  }, [rolls, rollsHistoryData, rollsHistoryLoading]);
 
-  const { writeAsync: multiContractWriteRigged } =
+  const { data: winnerHistoryData, isLoading: winnerHistoryLoading } =
+    useScaffoldEventHistory({
+      contractName: "DiceGame",
+      eventName: "contracts::DiceGame::DiceGame::Winner",
+      fromBlock: BigInt(0),
+      watch: true,
+    });
+
+  useEffect(() => {
+    if (
+      !winners.length &&
+      !!winnerHistoryData?.length &&
+      !winnerHistoryLoading
+    ) {
+      const newWinners = (
+        winnerHistoryData?.map(({ args }) => {
+          console.log("Amount:", args);
+          return {
+            address: args.winner,
+            amount: args.eth_amount,
+          };
+        }) || []
+      ).slice(0, MAX_TABLE_ROWS);
+
+      setWinners(newWinners);
+    }
+  }, [winnerHistoryData, winnerHistoryLoading, winners.length]);
+
+  const { writeAsync: multiContractWriteDice, isError: rollTheDiceError } =
+    useScaffoldMultiContractWrite({
+      calls: [
+        createContractCall("Eth", "approve", [
+          accountDice?.address,
+          parseEther(ROLL_ETH_VALUE),
+        ]),
+        createContractCall("DiceGame", "roll_dice", [
+          parseEther(ROLL_ETH_VALUE),
+        ]),
+      ],
+    });
+
+  const { writeAsync: multiContractWriteRigged, isError: riggedRollError } =
     useScaffoldMultiContractWrite({
       calls: [
         createContractCall("Eth", "approve", [
           riggedRollContract?.address,
-          BigInt("2000000000000000000"),
-        ]),
-        createContractCall("Eth", "transfer", [
-          riggedRollContract?.address,
-          BigInt("2000000000000000000"),
+          parseEther(ROLL_ETH_VALUE),
         ]),
         createContractCall("RiggedRoll", "rigged_roll", [
-          BigInt("2000000000000000000"),
+          parseEther(ROLL_ETH_VALUE),
         ]),
       ],
     });
@@ -78,7 +125,7 @@ const DiceGame: NextPage = () => {
     try {
       const results = await multiContractWriteDice();
       setIsRolling(false);
-      setRolled(false);
+      setRolled(true);
     } catch (error) {
       console.error("Error", error);
     }
@@ -87,13 +134,19 @@ const DiceGame: NextPage = () => {
   const handleRigged = async () => {
     try {
       const results = await multiContractWriteRigged();
+      refetchRiggedBalance();
       setIsRolling(false);
       setRolled(false);
-      refetchRiggedBalance();
     } catch (error) {
       console.error("Error", error);
     }
   };
+  useEffect(() => {
+    if (rollTheDiceError || riggedRollError) {
+      setIsRolling(false);
+      setRolled(false);
+    }
+  }, [riggedRollError, rollTheDiceError]);
 
   useEffect(() => {
     if (videoRef.current && !isRolling) {
@@ -102,7 +155,7 @@ const DiceGame: NextPage = () => {
   }, [isRolling]);
 
   const wrapInTryCatch =
-    (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+    (fn: Promise<void>, errorMessageFnDescription: string) => async () => {
       try {
         await fn().then(() => {});
       } catch (error) {
@@ -112,7 +165,6 @@ const DiceGame: NextPage = () => {
         );
       }
     };
-  console.log(prize);
 
   return (
     <div className="py-10 px-10">
@@ -131,7 +183,7 @@ const DiceGame: NextPage = () => {
           <div className="flex items-center mt-1">
             <span className="text-lg mr-2">Prize:</span>
             <Amount
-              amount={prize ? formatEther(prize.toString()) : "0"}
+              amount={prize ? Number(formatEther(prize.toString())) : 0}
               showUsdPrice
               className="text-lg"
             />
@@ -144,7 +196,7 @@ const DiceGame: NextPage = () => {
               }
               setIsRolling(true);
               const wrappedRandomDiceRoll = wrapInTryCatch(
-                handleDice,
+                handleDice(),
                 "randomDiceRoll",
               );
               await wrappedRandomDiceRoll();
@@ -166,7 +218,7 @@ const DiceGame: NextPage = () => {
             <div className="flex mt-1 items-center">
               <span className="text-lg mr-2">Balance:</span>
               <Amount
-                amount={riggedRollBalance?.formatted || "0"}
+                amount={Number(riggedRollBalance?.formatted || 0)}
                 showUsdPrice
                 className="text-lg"
               />

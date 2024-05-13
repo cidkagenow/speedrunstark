@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-// import { Amount } from "./scaffold-stark/";
-import { Address } from "./scaffold-stark/Address";
-// import { formatEther } from "viem";
+import { Amount } from "~~/components/diceComponents/Amount";
+import { Address as AddressType } from "@starknet-react/chains";
+import { Address } from "~~/components/scaffold-stark";
+import { formatEther } from "ethers";
 
 export type Winner = {
-  address: string;
-  amount: bigint;
+  address: AddressType;
+  amount: number;
 };
 
 export type WinnerEventsProps = {
@@ -21,7 +22,7 @@ export const WinnerEvents = ({ winners }: WinnerEventsProps) => {
       </div>
 
       <table className="mt-4 p-2 bg-base-100 table table-zebra shadow-lg w-full overflow-hidden">
-        <thead className="text-accent text-lg text-base-100">
+        <thead className="text-lg text-primary">
           <tr>
             <th className="bg-primary" colSpan={3}>
               Address
@@ -38,26 +39,29 @@ export const WinnerEvents = ({ winners }: WinnerEventsProps) => {
           </tr>
         </thead>
         <tbody>
-          {winners.map(({ address, amount }, i) => (
-            <tr key={i}>
-              <td colSpan={3}>
-                {/* <Address address={address} size="lg" /> */}
-              </td>
-              <td
-                colSpan={2}
-                onClick={() => {
-                  setShowUsdPrice(!showUsdPrice);
-                }}
-              >
-                {/* <Amount
-                  showUsdPrice={showUsdPrice}
-                  amount={Number(formatEther(amount))}
-                  disableToggle
-                  className="text-lg"
-                /> */}
-              </td>
-            </tr>
-          ))}
+          {winners.map(({ address, amount }, i) => {
+            console.log(amount);
+            return (
+              <tr key={i}>
+                <td colSpan={3}>
+                  <Address address={address} size="lg" />
+                </td>
+                <td
+                  colSpan={2}
+                  onClick={() => {
+                    setShowUsdPrice(!showUsdPrice);
+                  }}
+                >
+                  <Amount
+                    showUsdPrice={showUsdPrice}
+                    amount={Number(formatEther(amount))}
+                    disableToggle
+                    className="text-lg"
+                  />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

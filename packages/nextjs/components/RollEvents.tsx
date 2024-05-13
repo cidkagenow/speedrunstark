@@ -31,16 +31,18 @@ export const RollEvents = ({ rolls }: RollEventsProps) => {
           </tr>
         </thead>
         <tbody>
-          {rolls.map(({ address, roll }, i) => (
-            <tr key={i}>
-              <td colSpan={3} className="py-3.5">
-                <Address address={address} size="lg" />
-              </td>
-              <td className="col-span-1 text-lg text-base-100">
-                <span> {roll} </span>
-              </td>
-            </tr>
-          ))}
+          {rolls.map(({ address, roll }, i) => {
+            return (
+              <tr key={i}>
+                <td colSpan={3} className="py-3.5">
+                  <Address address={address} size="lg" />
+                </td>
+                <td className="col-span-1 text-lg text-primary">
+                  <span> {roll} </span>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
