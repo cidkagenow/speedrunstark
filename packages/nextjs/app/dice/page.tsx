@@ -57,18 +57,17 @@ const DiceGame: NextPage = () => {
   useEffect(() => {
     if (!rolls.length && !!rollsHistoryData?.length && !rollsHistoryLoading) {
       const newRolls = (
-          rollsHistoryData?.map(({ args }) => {
-            return {
-              address: args.player,
-              amount: Number(args.amount),
-              roll: args.roll.toString(16).toUpperCase(),
-            };
-          }) || []
+        rollsHistoryData?.map(({ args }) => {
+          return {
+            address: args.player,
+            amount: Number(args.amount),
+            roll: args.roll.toString(16).toUpperCase(),
+          };
+        }) || []
       ).slice(0, MAX_TABLE_ROWS);
       setRolls(newRolls);
     }
   }, [rolls, rollsHistoryData, rollsHistoryLoading]);
-
 
   const { data: winnerHistoryData, isLoading: winnerHistoryLoading } =
     useScaffoldEventHistory({
@@ -110,7 +109,7 @@ const DiceGame: NextPage = () => {
       ],
     });
 
-  const { writeAsync: multiContractWriteRigged, isError: riggedRollError} =
+  const { writeAsync: multiContractWriteRigged, isError: riggedRollError } =
     useScaffoldMultiContractWrite({
       calls: [
         createContractCall("Eth", "approve", [
@@ -123,11 +122,10 @@ const DiceGame: NextPage = () => {
       ],
     });
 
-
   const handleDice = async () => {
     try {
-     await multiContractWriteDice();
-      refetchRiggedBalance()
+      await multiContractWriteDice();
+      refetchRiggedBalance();
       setIsRolling(false);
       setRolled(true);
     } catch (error) {
@@ -138,14 +136,13 @@ const DiceGame: NextPage = () => {
   const handleRigged = async () => {
     try {
       await multiContractWriteRigged();
-      refetchRiggedBalance()
+      refetchRiggedBalance();
       setIsRolling(false);
       setRolled(false);
     } catch (error) {
       console.error("Error", error);
     }
   };
-
 
   useEffect(() => {
     if (rollTheDiceError || riggedRollError) {
@@ -159,7 +156,6 @@ const DiceGame: NextPage = () => {
       videoRef.current.currentTime = 9999;
     }
   }, [isRolling]);
-
 
   return (
     <div className="py-10 px-10">
@@ -187,8 +183,8 @@ const DiceGame: NextPage = () => {
           <button
             onClick={() => {
               if (!rolled) {
-              setRolled(true);
-            }
+                setRolled(true);
+              }
               setIsRolling(true);
               handleDice();
             }}
@@ -241,7 +237,6 @@ const DiceGame: NextPage = () => {
                   loop
                   src="/rolls/Spin.webm"
                   autoPlay
-
                 />
               ) : (
                 <video
