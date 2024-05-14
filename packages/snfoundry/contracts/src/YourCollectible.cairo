@@ -1,17 +1,17 @@
 use starknet::ContractAddress;
 
 #[starknet::interface]
-trait IYourCollectible<T> {
+pub trait IYourCollectible<T> {
     fn mint_item(ref self: T, recipient: ContractAddress, uri: ByteArray) -> u256;
 }
 
 #[starknet::interface]
-trait ICounter<T> {
+pub trait ICounter<T> {
     fn token_id_counter(self: @T) -> u256;
 }
 
 #[starknet::interface]
-trait IERC721Enumerable<T> {
+pub trait IERC721Enumerable<T> {
     fn token_of_owner_by_index(self: @T, owner: ContractAddress, index: u256) -> u256;
     fn total_supply(self: @T) -> u256;
 }
@@ -119,7 +119,7 @@ mod YourCollectible {
     }
 
     #[abi(embed_v0)]
-    impl WrappedIERC721Impl of IERC721<ContractState> {
+    pub impl WrappedIERC721Impl of IERC721<ContractState> {
         fn balance_of(self: @ContractState, account: ContractAddress) -> u256 {
             self.erc721.balance_of(account)
         }
