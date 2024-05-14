@@ -7,7 +7,7 @@ const deployedContracts = {
   devnet: {
     DiceGame: {
       address:
-        "0x031e45f6029ccabfeee3409fa53bf2e8ed985747b896d9eb54d76953446565e6",
+        "0x06b3313c91dfb66af7b1a14dcb1c679e47d316763dbca65242d28c67217dc89f",
       abi: [
         {
           type: "impl",
@@ -138,12 +138,7 @@ const deployedContracts = {
               kind: "data",
             },
             {
-              name: "tokens_amount",
-              type: "core::integer::u256",
-              kind: "data",
-            },
-            {
-              name: "eth_amount",
+              name: "amount",
               type: "core::integer::u256",
               kind: "data",
             },
@@ -170,7 +165,7 @@ const deployedContracts = {
     },
     RiggedRoll: {
       address:
-        "0x02c99416b1e613426017431de60ead712585ccfd1779411f0b98d0ba3318a074",
+        "0x05df166eaddd281459ffd1a536aa5917ee0197de7bd1964e093b058fdd6f44bc",
       abi: [
         {
           type: "impl",

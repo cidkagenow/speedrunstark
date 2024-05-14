@@ -36,8 +36,7 @@ mod DiceGame {
     #[derive(Drop, starknet::Event)]
     struct Winner {
         winner: ContractAddress,
-        tokens_amount: u256,
-        eth_amount: u256,
+        amount: u256,
     }
 
     #[storage]
@@ -85,7 +84,7 @@ mod DiceGame {
             self.eth_token.read().transfer(caller, prize);
 
             self._reset_prize();
-            self.emit(Winner { winner: caller, tokens_amount: prize, eth_amount: prize });
+            self.emit(Winner { winner: caller, amount });
         }
         fn last_dice_value(self: @ContractState) -> u256 {
             self.last_dice_value.read()
