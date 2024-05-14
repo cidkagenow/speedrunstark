@@ -202,7 +202,7 @@ const DiceGame: NextPage = () => {
               handleDice();
             }}
             disabled={isRolling}
-            className="mt-2 btn btn-secondary btn-xl normal-case font-xl text-lg text-base-100"
+            className="mt-2 btn btn-secondary btn-xl normal-case font-xl text-lg text-base-100 bg-primary"
           >
             Roll the dice!
           </button>
@@ -234,7 +234,7 @@ const DiceGame: NextPage = () => {
                 handleRigged();
               }}
               disabled={isRolling}
-              className="mt-2 btn btn-secondary btn-xl normal-case font-xl text-lg text-base-100"
+              className="mt-2 btn btn-secondary bg-primary btn-xl normal-case font-xl text-lg text-base-100"
             >
               Rigged Roll!
             </button>
