@@ -1,6 +1,6 @@
 use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
 #[starknet::interface]
-trait IDiceGame<T> {
+pub trait IDiceGame<T> {
     fn roll_dice(ref self: T, amount: u256);
     fn last_dice_value(self: @T) -> u256;
     fn nonce(self: @T) -> u256;
