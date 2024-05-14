@@ -6,7 +6,7 @@ import { formatEther } from "ethers";
 
 export type Winner = {
   address: AddressType;
-  amount: number;
+  amount: bigint | number;
 };
 
 export type WinnerEventsProps = {
@@ -22,7 +22,7 @@ export const WinnerEvents = ({ winners }: WinnerEventsProps) => {
       </div>
 
       <table className="mt-4 p-2 bg-base-100 table table-zebra shadow-lg w-full overflow-hidden">
-        <thead className="text-lg text-primary">
+        <thead className="text-lg text-base-100">
           <tr>
             <th className="bg-primary" colSpan={3}>
               Address
@@ -40,7 +40,6 @@ export const WinnerEvents = ({ winners }: WinnerEventsProps) => {
         </thead>
         <tbody>
           {winners.map(({ address, amount }, i) => {
-            console.log(amount);
             return (
               <tr key={i}>
                 <td colSpan={3}>
