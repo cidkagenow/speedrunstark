@@ -46,56 +46,6 @@ const DiceGame: NextPage = () => {
     contractName: "DiceGame",
     functionName: "prize",
   });
-  const { data: rollsHistoryData, isLoading: rollsHistoryLoading } =
-    useScaffoldEventHistory({
-      contractName: "DiceGame",
-      eventName: "contracts::DiceGame::DiceGame::Roll",
-      fromBlock: BigInt(0n),
-      watch: true,
-    });
-
-  useEffect(() => {
-    if (!rolls.length && !!rollsHistoryData?.length && !rollsHistoryLoading) {
-      const newRolls = (
-        rollsHistoryData?.map(({ args }) => {
-          return {
-            address: args.player,
-            amount: Number(args.amount),
-            roll: args.roll.toString(16).toUpperCase(),
-          };
-        }) || []
-      ).slice(0, MAX_TABLE_ROWS);
-      setRolls(newRolls);
-    }
-  }, [rolls, rollsHistoryData, rollsHistoryLoading]);
-
-  const { data: winnerHistoryData, isLoading: winnerHistoryLoading } =
-    useScaffoldEventHistory({
-      contractName: "DiceGame",
-      eventName: "contracts::DiceGame::DiceGame::Winner",
-      fromBlock: BigInt(0),
-      watch: true,
-    });
-
-  useEffect(() => {
-    if (
-      !winners.length &&
-      !!winnerHistoryData?.length &&
-      !winnerHistoryLoading
-    ) {
-      const newWinners = (
-        winnerHistoryData?.map(({ args }) => {
-          return {
-            address: args.winner,
-            amount: args.amount,
-          };
-        }) || []
-      ).slice(0, MAX_TABLE_ROWS);
-
-      setWinners(newWinners);
-    }
-  }, [winnerHistoryData, winnerHistoryLoading, winners.length]);
-
   const { writeAsync: multiContractWriteDice, isError: rollTheDiceError } =
     useScaffoldMultiContractWrite({
       calls: [
@@ -121,6 +71,69 @@ const DiceGame: NextPage = () => {
         ]),
       ],
     });
+  const { data: rollsHistoryData, isLoading: rollsHistoryLoading } =
+    useScaffoldEventHistory({
+      contractName: "DiceGame",
+      eventName: "contracts::DiceGame::DiceGame::Roll",
+      fromBlock: BigInt(0n),
+      watch: true,
+    });
+  const { data: winnerHistoryData, isLoading: winnerHistoryLoading } =
+    useScaffoldEventHistory({
+      contractName: "DiceGame",
+      eventName: "contracts::DiceGame::DiceGame::Winner",
+      fromBlock: BigInt(0),
+      watch: true,
+    });
+
+  useEffect(() => {
+    if (!!rollsHistoryData?.length && !rollsHistoryLoading) {
+      const newRolls = (
+        rollsHistoryData?.map(({ args }) => {
+          return {
+            address: args.player,
+            amount: Number(args.amount),
+            roll: args.roll.toString(16).toUpperCase(),
+          };
+        }) || []
+      ).slice(0, MAX_TABLE_ROWS);
+      setRolls(newRolls);
+    }
+  }, [rollsHistoryData, rollsHistoryLoading]);
+
+  useEffect(() => {
+    if (!!winnerHistoryData?.length && !winnerHistoryLoading) {
+      const newWinners = (
+        winnerHistoryData?.map(({ args }) => {
+          return {
+            address: args.winner,
+            amount: args.amount,
+          };
+        }) || []
+      ).slice(0, MAX_TABLE_ROWS);
+
+      setWinners(newWinners);
+    }
+  }, [winnerHistoryData, winnerHistoryLoading, rolls]);
+
+  // useEffect(() => {
+  //   if (
+  //     !winners.length &&
+  //     !!winnerHistoryData?.length &&
+  //     !winnerHistoryLoading
+  //   ) {
+  //     const newWinners = (
+  //       winnerHistoryData?.map(({ args }) => {
+  //         return {
+  //           address: args.winner,
+  //           amount: args.amount,
+  //         };
+  //       }) || []
+  //     ).slice(0, MAX_TABLE_ROWS);
+  //
+  //     setWinners(newWinners);
+  //   }
+  // }, [winnerHistoryData, winnerHistoryLoading, winners.length]);
 
   const handleDice = async () => {
     try {
@@ -138,7 +151,7 @@ const DiceGame: NextPage = () => {
       await multiContractWriteRigged();
       refetchRiggedBalance();
       setIsRolling(false);
-      setRolled(false);
+      setRolled(true);
     } catch (error) {
       console.error("Error", error);
     }
@@ -231,11 +244,15 @@ const DiceGame: NextPage = () => {
             {rolled ? (
               isRolling ? (
                 <video
-                  key="rolling"
+                  key={rolled ? "rolling" : rolls.length}
                   width={300}
                   height={300}
                   loop
-                  src="/rolls/Spin.webm"
+                  src={
+                    isRolling
+                      ? "/rolls/Spin.webm"
+                      : `/rolls/${rolls[0]?.roll || "0"}.webm`
+                  }
                   autoPlay
                 />
               ) : (
