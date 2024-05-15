@@ -53,7 +53,7 @@ export const Amount = ({
       <div className="w-full flex items-center justify-center">
         {isEthBalance ? (
           <>
-            <span>{amount?.toFixed(4)}</span>
+            <span>{amount?.toFixed(5)}</span>
             <span className="font-bold ml-1">
               {configuredNetwork.nativeCurrency.symbol}
             </span>
