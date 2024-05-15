@@ -102,7 +102,7 @@ const DiceGame: NextPage = () => {
   }, [rollsHistoryData]);
 
   useEffect(() => {
-    if (!!winnerHistoryData?.length && !winnerHistoryLoading) {
+    if (winnerHistoryData?.length) {
       const newWinners = (
         winnerHistoryData?.map(({ args }) => {
           return {
@@ -114,7 +114,7 @@ const DiceGame: NextPage = () => {
 
       setWinners(newWinners);
     }
-  }, [winnerHistoryData, winnerHistoryLoading, rolls]);
+  }, [winnerHistoryData]);
 
   const handleDice = async () => {
     try {
