@@ -82,12 +82,12 @@ const DiceGame: NextPage = () => {
     useScaffoldEventHistory({
       contractName: "DiceGame",
       eventName: "contracts::DiceGame::DiceGame::Winner",
-      fromBlock: BigInt(0),
+      fromBlock: BigInt(0n),
       watch: true,
     });
 
   useEffect(() => {
-    if (!!rollsHistoryData?.length && !rollsHistoryLoading) {
+    if (rollsHistoryData?.length) {
       const newRolls = (
         rollsHistoryData?.map(({ args }) => {
           return {
@@ -99,7 +99,7 @@ const DiceGame: NextPage = () => {
       ).slice(0, MAX_TABLE_ROWS);
       setRolls(newRolls);
     }
-  }, [rollsHistoryData, rollsHistoryLoading]);
+  }, [rollsHistoryData]);
 
   useEffect(() => {
     if (!!winnerHistoryData?.length && !winnerHistoryLoading) {
@@ -115,25 +115,6 @@ const DiceGame: NextPage = () => {
       setWinners(newWinners);
     }
   }, [winnerHistoryData, winnerHistoryLoading, rolls]);
-
-  // useEffect(() => {
-  //   if (
-  //     !winners.length &&
-  //     !!winnerHistoryData?.length &&
-  //     !winnerHistoryLoading
-  //   ) {
-  //     const newWinners = (
-  //       winnerHistoryData?.map(({ args }) => {
-  //         return {
-  //           address: args.winner,
-  //           amount: args.amount,
-  //         };
-  //       }) || []
-  //     ).slice(0, MAX_TABLE_ROWS);
-  //
-  //     setWinners(newWinners);
-  //   }
-  // }, [winnerHistoryData, winnerHistoryLoading, winners.length]);
 
   const handleDice = async () => {
     try {
@@ -244,20 +225,16 @@ const DiceGame: NextPage = () => {
             {rolled ? (
               isRolling ? (
                 <video
-                  key={rolled ? "rolling" : rolls.length}
+                  key="rolling"
                   width={300}
                   height={300}
                   loop
-                  src={
-                    isRolling
-                      ? "/rolls/Spin.webm"
-                      : `/rolls/${rolls[0]?.roll || "0"}.webm`
-                  }
+                  src="/rolls/Spin.webm"
                   autoPlay
                 />
               ) : (
                 <video
-                  key={rolls.length}
+                  key="rolled"
                   width={300}
                   height={300}
                   src={`/rolls/${rolls[0]?.roll || "0"}.webm`}
