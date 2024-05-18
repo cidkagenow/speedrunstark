@@ -5,10 +5,9 @@ import type { NextPage } from "next";
 import { useAccount } from "@starknet-react/core";
 import { AddressInput } from "~~/components/scaffold-stark/Input/AddressInput";
 import { IntegerInput } from "~~/components/scaffold-stark/Input/IntegerInput";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
-import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
 import { useBalance } from "@starknet-react/core";
 import { formatEther } from "ethers";
 import { multiplyTo1e18 } from "~~/utils/scaffold-stark/priceInWei";
@@ -22,27 +21,31 @@ const TokenVendor: NextPage = () => {
 
   const { address: connectedAddress } = useAccount();
 
-  const { data: yourTokenBalance } = useScaffoldContractRead({
+  const { data: yourTokenBalance } = useScaffoldReadContract({
     contractName: "YourToken",
     functionName: "balance_of",
     args: [connectedAddress ?? ""],
   });
 
-  const { data: tokensPerEth } = useScaffoldContractRead({
+  const { data: tokensPerEth } = useScaffoldReadContract({
     contractName: "Vendor",
     functionName: "tokens_per_eth",
   });
 
-  const { writeAsync: transferTokens } = useScaffoldContractWrite({
-    contractName: "YourToken",
-    functionName: "transfer",
-    args: [toAddress, multiplyTo1e18(tokensToSend)],
+  const { writeAsync: transferTokens } = useScaffoldWriteContract({
+    calls: [
+      {
+        contractName: "YourToken",
+        functionName: "transfer",
+        args: [toAddress, multiplyTo1e18(tokensToSend)],
+      },
+    ],
   });
 
   // // Vendor Balances
   const { data: vendorContractData } = useDeployedContractInfo("Vendor");
 
-  const { data: vendorTokenBalance } = useScaffoldContractRead({
+  const { data: vendorTokenBalance } = useScaffoldReadContract({
     contractName: "YourToken",
     functionName: "balance_of",
     args: [vendorContractData?.address],
@@ -52,7 +55,7 @@ const TokenVendor: NextPage = () => {
     address: vendorContractData?.address,
   });
 
-  const { writeAsync: buy } = useScaffoldMultiContractWrite({
+  const { writeAsync: buy } = useScaffoldWriteContract({
     calls: [
       {
         contractName: "Eth",
@@ -67,7 +70,7 @@ const TokenVendor: NextPage = () => {
     ],
   });
 
-  const { writeAsync: sell } = useScaffoldMultiContractWrite({
+  const { writeAsync: sell } = useScaffoldWriteContract({
     calls: [
       {
         contractName: "YourToken",
