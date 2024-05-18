@@ -8,13 +8,13 @@ export const NFTCard = ({ nft }: { nft: Collectible }) => {
   const [transferToAddress, setTransferToAddress] = useState("");
 
   const { writeAsync: transferNFT } = useScaffoldWriteContract({
-    calls:[
+    calls: [
       {
         contractName: "YourCollectible",
         functionName: "transfer_from",
         args: [nft.owner, transferToAddress, BigInt(nft.id.toString())],
-      }
-    ]
+      },
+    ],
   });
 
   const wrapInTryCatch =

@@ -6,7 +6,6 @@ const deployScript = async () => {
     },
     "YourCollectible"
   );
-  
 };
 
 deployScript()
