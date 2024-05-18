@@ -1,4 +1,4 @@
-const { deployer, deployContract } = require("./deploy_contract");
+const { deployer, deployContract } = require("./deploy-contract.ts");
 const deployScript = async () => {
   const { address: diceGameAddr } = await deployContract(null, "DiceGame");
 
