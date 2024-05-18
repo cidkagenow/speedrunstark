@@ -1,7 +1,12 @@
-const { deployer, deployContract } = require("./deploy-contract.ts");
-const deployScript = async () => {
-  const { address: diceGameAddr } = await deployContract(null, "DiceGame");
+import {
+  deployContract,
+  deployer,
+  resetDeploymentState,
+} from "./deploy-contract";
 
+const deployScript = async (): Promise<void> => {
+  resetDeploymentState();
+  const { address: diceGameAddr } = await deployContract(null, "DiceGame");
   await deployContract(
     {
       dice_game_address: diceGameAddr,

@@ -6,13 +6,13 @@ import { useBalance } from "@starknet-react/core";
 import { Roll, RollEvents } from "~~/components/RollEvents";
 import { Winner, WinnerEvents } from "~~/components/WinnerEvents";
 import { useScaffoldContract } from "~~/hooks/scaffold-stark/useScaffoldContract";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { Amount } from "~~/components/diceComponents/Amount";
 import { formatEther, parseEther } from "ethers";
 import {
   createContractCall,
-  useScaffoldMultiContractWrite,
-} from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
+  useScaffoldMultiWriteContract,
+} from "~~/hooks/scaffold-stark/useScaffoldMultiWriteContract";
 import { Address } from "~~/components/scaffold-stark";
 import { Address as AddressType } from "@starknet-react/chains";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
@@ -42,12 +42,12 @@ const DiceGame: NextPage = () => {
     },
   );
 
-  const { data: prize } = useScaffoldContractRead({
+  const { data: prize } = useScaffoldReadContract({
     contractName: "DiceGame",
     functionName: "prize",
   });
   const { writeAsync: multiContractWriteDice, isError: rollTheDiceError } =
-    useScaffoldMultiContractWrite({
+    useScaffoldMultiWriteContract({
       calls: [
         createContractCall("Eth", "approve", [
           accountDice?.address,
@@ -60,7 +60,7 @@ const DiceGame: NextPage = () => {
     });
 
   const { writeAsync: multiContractWriteRigged, isError: riggedRollError } =
-    useScaffoldMultiContractWrite({
+    useScaffoldMultiWriteContract({
       calls: [
         createContractCall("Eth", "approve", [
           riggedRollContract?.address,
@@ -205,7 +205,7 @@ const DiceGame: NextPage = () => {
               />
             </div>
           </div>
-          {
+          {/* {
             <button
               onClick={() => {
                 if (!rolled) {
@@ -219,7 +219,7 @@ const DiceGame: NextPage = () => {
             >
               Rigged Roll!
             </button>
-          }
+          } */}
 
           <div className="flex mt-8">
             {rolled ? (
