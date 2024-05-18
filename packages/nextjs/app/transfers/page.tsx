@@ -12,7 +12,7 @@ const Transfers: NextPage = () => {
     watch: true,
   });
 
-  // console.log(transferEvents)
+  //console.log(transferEvents)
   if (isLoading)
     return (
       <div className="flex justify-center items-center mt-10">
@@ -51,7 +51,7 @@ const Transfers: NextPage = () => {
                   return (
                     <tr key={index}>
                       <th className="text-center">
-                        {event.args.tokenId?.toString()}
+                        {event.args.token_id?.toString()}
                       </th>
                       <td>
                         {" "}
