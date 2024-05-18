@@ -1,10 +1,16 @@
-const { deployer, deployContract } = require("./deploy-contract.ts");
-const deployScript = async (): Promise<void>  => {
+import { deployContract, resetDeploymentState } from "./deploy-contract";
 
-  const {address: exampleContractAddr }= await deployContract(null, "ExampleExternalContract");
-  await deployContract({ external_contract_address: exampleContractAddr }
-    , "Staker");
+const deployScript = async (): Promise<void> => {
+  resetDeploymentState();
 
+  const { address: exampleContractAddr } = await deployContract(
+    null,
+    "ExampleExternalContract"
+  );
+  await deployContract(
+    { external_contract_address: exampleContractAddr },
+    "Staker"
+  );
 };
 
 deployScript()
