@@ -3,14 +3,18 @@ import { Collectible } from "./MyHoldings";
 import { AddressInput } from "../scaffold-stark";
 import { Address } from "../scaffold-stark";
 import { Address as AddressType } from "@starknet-react/chains";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 export const NFTCard = ({ nft }: { nft: Collectible }) => {
   const [transferToAddress, setTransferToAddress] = useState("");
 
-  const { writeAsync: transferNFT } = useScaffoldContractWrite({
-    contractName: "YourCollectible",
-    functionName: "transfer_from",
-    args: [nft.owner, transferToAddress, BigInt(nft.id.toString())],
+  const { writeAsync: transferNFT } = useScaffoldWriteContract({
+    calls:[
+      {
+        contractName: "YourCollectible",
+        functionName: "transfer_from",
+        args: [nft.owner, transferToAddress, BigInt(nft.id.toString())],
+      }
+    ]
   });
 
   const wrapInTryCatch =

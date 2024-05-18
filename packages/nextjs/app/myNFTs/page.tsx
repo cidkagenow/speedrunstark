@@ -4,8 +4,8 @@ import type { NextPage } from "next";
 import { useAccount } from "@starknet-react/core";
 import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 import { MyHoldings } from "~~/components/SimpleNFT/MyHoldings";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 import { notification } from "~~/utils/scaffold-stark";
 import { addToIPFS } from "~~/utils/simpleNFT/ipfs-fetch";
 import nftsMetadata from "~~/utils/simpleNFT/nftsMetadata";
@@ -15,13 +15,17 @@ const MyNFTs: NextPage = () => {
   const { address: connectedAddress, isConnected, isConnecting } = useAccount();
   const [status, setStatus] = useState("Mint NFT");
 
-  const { writeAsync: mintItem } = useScaffoldContractWrite({
-    contractName: "YourCollectible",
-    functionName: "mint_item",
-    args: [connectedAddress, ""],
+  const { writeAsync: mintItem } = useScaffoldWriteContract({
+    calls:[
+      {
+        contractName: "YourCollectible",
+        functionName: "mint_item",
+        args: [connectedAddress, ""],
+      }
+    ]
   });
 
-  const { data: tokenIdCounter, refetch } = useScaffoldContractRead({
+  const { data: tokenIdCounter, refetch } = useScaffoldReadContract({
     contractName: "YourCollectible",
     functionName: "token_id_counter",
     watch: true,

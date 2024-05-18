@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { NFTCard } from "./NFTcard";
 import { useAccount } from "@starknet-react/core";
 import { useScaffoldContract } from "~~/hooks/scaffold-stark/useScaffoldContract";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { notification } from "~~/utils/scaffold-stark";
 import { getMetadataFromIPFS } from "~~/utils/simpleNFT/ipfs-fetch";
 import { NFTMetaData } from "~~/utils/simpleNFT/nftsMetadata";
@@ -29,7 +29,7 @@ export const MyHoldings = ({
     contractName: "YourCollectible",
   });
 
-  const { data: myTotalBalance } = useScaffoldContractRead({
+  const { data: myTotalBalance } = useScaffoldReadContract({
     contractName: "YourCollectible",
     functionName: "balance_of",
     args: [connectedAddress ?? ""],
