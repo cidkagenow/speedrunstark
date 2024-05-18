@@ -1,7 +1,12 @@
-import { deployContract, deployer, provider } from "./deploy-contract";
-import { RpcProvider, Account } from "starknet-dev";
+import {
+  deployContract,
+  deployer,
+  resetDeploymentState,
+} from "./deploy-contract";
 
 const deployScript = async (): Promise<void> => {
+  resetDeploymentState();
+
   const your_token = await deployContract(
     {
       name: "Gold",
