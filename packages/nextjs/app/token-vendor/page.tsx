@@ -7,6 +7,7 @@ import { AddressInput } from "~~/components/scaffold-stark/Input/AddressInput";
 import { IntegerInput } from "~~/components/scaffold-stark/Input/IntegerInput";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
+import { useScaffoldMultiWriteContract } from "~~/hooks/scaffold-stark/useScaffoldMultiWriteContract";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 import { useBalance } from "@starknet-react/core";
 import { formatEther } from "ethers";
@@ -33,13 +34,9 @@ const TokenVendor: NextPage = () => {
   });
 
   const { writeAsync: transferTokens } = useScaffoldWriteContract({
-    calls: [
-      {
-        contractName: "YourToken",
-        functionName: "transfer",
-        args: [toAddress, multiplyTo1e18(tokensToSend)],
-      },
-    ],
+    contractName: "YourToken",
+    functionName: "transfer",
+    args: [toAddress, multiplyTo1e18(tokensToSend)],
   });
 
   // // Vendor Balances
@@ -55,7 +52,7 @@ const TokenVendor: NextPage = () => {
     address: vendorContractData?.address,
   });
 
-  const { writeAsync: buy } = useScaffoldWriteContract({
+  const { writeAsync: buy } = useScaffoldMultiWriteContract({
     calls: [
       {
         contractName: "Eth",
@@ -70,7 +67,7 @@ const TokenVendor: NextPage = () => {
     ],
   });
 
-  const { writeAsync: sell } = useScaffoldWriteContract({
+  const { writeAsync: sell } = useScaffoldMultiWriteContract({
     calls: [
       {
         contractName: "YourToken",
