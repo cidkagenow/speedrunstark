@@ -3,12 +3,12 @@
 import { useAccount, useBalance } from "@starknet-react/core";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-stark";
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-stark/useScaffoldContractRead";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-stark/useScaffoldContractWrite";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 import { ETHToPrice } from "~~/components/stake/ETHToPrice";
 import { Address } from "~~/components/scaffold-stark";
 import humanizeDuration from "humanize-duration";
-import { useScaffoldMultiContractWrite } from "~~/hooks/scaffold-stark/useScaffoldMultiContractWrite";
+import { useScaffoldMultiWriteContract } from "~~/hooks/scaffold-stark/useScaffoldMultiWriteContract";
 
 function formatEther(weiValue: number) {
   const etherValue = weiValue / 1e18;
@@ -35,39 +35,39 @@ export const StakeContractInteraction = ({ address }: { address?: string }) => {
   const { targetNetwork } = useTargetNetwork();
 
   // Contract Read Actions
-  const { data: threshold } = useScaffoldContractRead({
+  const { data: threshold } = useScaffoldReadContract({
     contractName: "Staker",
     functionName: "threshold",
     watch: true,
   });
-  const { data: timeLeft } = useScaffoldContractRead({
+  const { data: timeLeft } = useScaffoldReadContract({
     contractName: "Staker",
     functionName: "time_left",
     watch: true,
   });
 
-  const { data: isStakingCompleted } = useScaffoldContractRead({
+  const { data: isStakingCompleted } = useScaffoldReadContract({
     contractName: "Staker",
     functionName: "completed",
     watch: true,
   });
-  const { data: myStake } = useScaffoldContractRead({
+  const { data: myStake } = useScaffoldReadContract({
     contractName: "Staker",
     functionName: "balances",
     args: [connectedAddress ?? ""],
     watch: true,
   });
 
-  const { writeAsync: execute } = useScaffoldContractWrite({
+  const { writeAsync: execute } = useScaffoldWriteContract({
     contractName: "Staker",
     functionName: "execute",
   });
-  const { writeAsync: withdrawETH } = useScaffoldContractWrite({
+  const { writeAsync: withdrawETH } = useScaffoldWriteContract({
     contractName: "Staker",
     functionName: "withdraw",
   });
 
-  const { writeAsync: stakeEth } = useScaffoldMultiContractWrite({
+  const { writeAsync: stakeEth } = useScaffoldMultiWriteContract({
     calls: [
       {
         contractName: "Eth",
