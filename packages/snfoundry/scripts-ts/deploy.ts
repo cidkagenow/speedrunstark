@@ -1,8 +1,6 @@
-import { deployContract, resetDeploymentState } from "./deploy-contract";
+import { deployContract, exportDeployments } from "./deploy-contract";
 
 const deployScript = async (): Promise<void> => {
-  resetDeploymentState();
-
   const { address: exampleContractAddr } = await deployContract(
     null,
     "ExampleExternalContract"
@@ -15,6 +13,7 @@ const deployScript = async (): Promise<void> => {
 
 deployScript()
   .then(() => {
+    exportDeployments();
     console.log("All Setup Done");
   })
   .catch(console.error);
