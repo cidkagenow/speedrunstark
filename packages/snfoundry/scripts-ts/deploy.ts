@@ -1,12 +1,6 @@
-import {
-  deployContract,
-  deployer,
-  resetDeploymentState,
-} from "./deploy-contract";
+import { deployContract, deployer, exportDeployments } from "./deploy-contract";
 
 const deployScript = async (): Promise<void> => {
-  resetDeploymentState();
-
   const your_token = await deployContract(
     {
       name: "Gold",
@@ -28,6 +22,7 @@ const deployScript = async (): Promise<void> => {
 
 deployScript()
   .then(() => {
+    exportDeployments();
     console.log("All Setup Done");
   })
   .catch(console.error);
