@@ -54,7 +54,6 @@ mod Staker {
     fn constructor(ref self: ContractState, external_contract_address: ContractAddress,) {
         let eth_contract: ContractAddress = ETH_CONTRACT_ADDRESS.try_into().unwrap();
         self.token.write(IERC20CamelDispatcher { contract_address: eth_contract });
-        self.deadline.write(get_block_timestamp() + 60); // 30 seconds
         self.external_contract_address.write(external_contract_address);
     }
 
@@ -63,24 +62,15 @@ mod Staker {
         fn stake(ref self: ContractState, amount: u256) {
             // Note: Sender should approve to transfer the amount to the staker contract
             self._not_completed();
-            assert(get_block_timestamp() < self.deadline.read(), 'Staking period has ended');
-            let sender = get_caller_address();
-            let sender_current_amount = self.balances.read(sender);
-            self.token.read().transferFrom(sender, get_contract_address(), amount);
-            self.balances.write(sender, sender_current_amount + amount);
-            self.emit(Stake { sender, amount });
+
+            // Implement your stake function here
+
+            // self.emit(Stake { sender, amount }); // uncomment to emit the Stake event
         }
 
         // Function to execute the transfer or allow withdrawals after the deadline
         fn execute(ref self: ContractState) {
             self._not_completed();
-            assert(get_block_timestamp() >= self.deadline.read(), 'Staking period has not ended');
-            let staked_amount = self.token.read().balanceOf(get_contract_address());
-            if (staked_amount >= THRESHOLD) {
-                self._complete_transfer(staked_amount);
-            } else {
-                self.open_for_withdraw.write(true);
-            }
         }
 
         fn withdraw(ref self: ContractState) {

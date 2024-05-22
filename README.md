@@ -62,16 +62,16 @@ yarn start
 
 ## Checkpoint 1: 🥩 Staking 💵
 
-You'll need to track individual `balances` using a mapping:
+You'll need to track individual `balances` using a LegacyMap:
 
-```solidity
-mapping ( address => uint256 ) public balances;
+```cairo
+balances: LegacyMap<ContractAddress, u256>
 ```
 
 And also track a constant `threshold` at `1 ether`
 
-```solidity
-uint256 public constant threshold = 1 ether;
+```cairo
+const THRESHOLD: u256 = 1000000000000000000;
 ```
 
 > 👩‍💻 Write your `stake()` function and test it with the `Debug Contracts` tab in the frontend.
@@ -100,10 +100,10 @@ uint256 public constant threshold = 1 ether;
 
 > ⚙️ Think of your smart contract like a _state machine_. First, there is a **stake** period. Then, if you have gathered the `threshold` worth of ETH, there is a **success** state. Or, we go into a **withdraw** state to let users withdraw their funds.
 
-Set a `deadline` of `block.timestamp + 30 seconds`
+Set a `deadline` of `block.timestamp + 30 seconds` in the `constructor`
 
-```solidity
-uint256 public deadline = block.timestamp + 30 seconds;
+```cairo
+self.deadline.write(get_block_timestamp() + 30);
 ```
 
 👨‍🏫 Smart contracts can't execute automatically, you always need to have a transaction execute to change state. Because of this, you will need to have an `execute()` function that _anyone_ can call, just once, after the `deadline` has expired.
@@ -112,7 +112,7 @@ uint256 public deadline = block.timestamp + 30 seconds;
 
 > Check the `ExampleExternalContract.sol` for the bool you can use to test if it has been completed or not. But do not edit the `ExampleExternalContract.sol` as it can slow the auto grading.
 
-If the `address(this).balance` of the contract is over the `threshold` by the `deadline`, you will want to call: `exampleExternalContract.complete{value: address(this).balance}()`
+If the `self.balances.read(sender)` of the contract is over the `threshold` by the `deadline`, you will want to call: `self._complete_transfer(staked_amount);`
 
 If the balance is less than the `threshold`, you want to set a `openForWithdraw` bool to `true` which will allow users to `withdraw()` their funds.
 
@@ -120,9 +120,9 @@ If the balance is less than the `threshold`, you want to set a `openForWithdraw`
 
 You'll have 30 seconds after deploying until the deadline is reached, you can adjust this in the contract.
 
-> 👩‍💻 Create a `timeLeft()` function including `public view returns (uint256)` that returns how much time is left.
+> 👩‍💻 Create a `time_left` function including `u64` that returns how much time is left.
 
-⚠️ Be careful! If `block.timestamp >= deadline` you want to `return 0;`
+⚠️ Be careful! If `get_block_timestamp() >= deadline` you want to `return 0;`
 
 ⏳ _"Time Left"_ will only update if a transaction occurs. You can see the time update by getting funds from the faucet button in navbar just to trigger a new block.
 
@@ -178,7 +178,7 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 ## Checkpoint 4: 💾 Deploy your contract! 🛰
 
-📡 Edit the `defaultNetwork` to [your choice of public EVM networks](https://ethereum.org/en/developers/docs/networks/) in `packages/hardhat/hardhat.config.ts`
+📡 Edit the `defaultNetwork` to your choice of public Stark networks in `packages/hardhat/hardhat.config.ts`
 
 🔐 You will need to generate a **deployer address** using `yarn generate` This creates a mnemonic and saves it locally.
 
@@ -188,9 +188,7 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 > 📝 If you plan on submitting this challenge, be sure to set your `deadline` to at least `block.timestamp + 72 hours`
 
-🚀 Run `yarn deploy` to deploy your smart contract to a public network (selected in `hardhat.config.ts`)
-
-> 💬 Hint: You can set the `defaultNetwork` in `hardhat.config.ts` to `sepolia` **OR** you can `yarn deploy --network sepolia`.
+🚀 Run `yarn deploy --network [network]` to deploy your smart contract to a public network (mainnet or sepolia).
 
 ![allStakings-blockFrom](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/04725dc8-4a8d-4089-ba82-90f9b94bfbda)
 
@@ -212,11 +210,11 @@ Your `Staker UI` tab should be almost done and working at this point.
 
 > If you want to redeploy to the same production URL you can run `yarn vercel --prod`. If you omit the `--prod` flag it will deploy it to a preview/test URL.
 
-> 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 `burner wallets` are only available on `hardhat` . You can enable them on every chain by setting `onlyLocalBurnerWallet: false` in your frontend config (`scaffold.config.ts` in `packages/nextjs/`)
+> 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 `burner wallets` are only available on `devnet` . You can enable them on every chain by setting `onlyLocalBurnerWallet: false` in your frontend config (`scaffold.config.ts` in `packages/nextjs/`)
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-By default, 🏗 Scaffold-ETH 2 provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.  
+By default, 🏗 Scaffold-Stark 2 provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.  
 This is great to complete your **SpeedRunEthereum**.
 
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
