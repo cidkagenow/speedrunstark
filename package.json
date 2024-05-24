@@ -13,6 +13,7 @@
   "scripts": {
     "chain": "yarn workspace @ss-2/snfoundry chain",
     "deploy": "yarn workspace @ss-2/snfoundry deploy",
+    "verify": "npx starkscan",
     "test": "yarn workspace @ss-2/snfoundry test",
     "compile": "yarn workspace @ss-2/snfoundry compile",
     "start": "yarn workspace @ss-2/nextjs dev",

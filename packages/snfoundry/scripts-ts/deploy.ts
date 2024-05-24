@@ -1,7 +1,7 @@
 import { deployContract, deployer, exportDeployments } from "./deploy-contract";
 
 const deployScript = async (): Promise<void> => {
-  const your_token = await deployContract(
+  await deployContract(
     {
       name: "Gold",
       symbol: "GLD",
@@ -11,13 +11,13 @@ const deployScript = async (): Promise<void> => {
     "YourToken"
   );
 
-  const ch2 = await deployContract(
-    {
-      token_address: your_token.address,
-      owner: deployer.address,
-    },
-    "Vendor"
-  );
+  // await deployContract(
+  //   {
+  //     token_address: your_token.address,
+  //     owner: deployer.address,
+  //   },
+  //   "Vendor"
+  // );
 };
 
 deployScript()

@@ -11,13 +11,13 @@ trait IVendor<T> {
 
 #[starknet::contract]
 mod Vendor {
-    use core::traits::TryInto;
-    use openzeppelin::access::ownable::interface::IOwnable;
-    use openzeppelin::access::ownable::OwnableComponent;
     use contracts::YourToken::{IYourTokenDispatcher, IYourTokenDispatcherTrait};
+    use core::traits::TryInto;
+    use openzeppelin::access::ownable::OwnableComponent;
+    use openzeppelin::access::ownable::interface::IOwnable;
     use openzeppelin::token::erc20::interface::{IERC20CamelDispatcher, IERC20CamelDispatcherTrait};
-    use super::{ContractAddress, IVendor};
     use starknet::{get_caller_address, get_contract_address};
+    use super::{ContractAddress, IVendor};
 
     component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
 
@@ -25,7 +25,6 @@ mod Vendor {
     impl OwnableImpl = OwnableComponent::OwnableImpl<ContractState>;
     impl OwnableInternalImpl = OwnableComponent::InternalImpl<ContractState>;
 
-    const TokensPerEth: u256 = 100;
     const ETH_CONTRACT_ADDRESS: felt252 =
         0x49D36570D4E46F48E99674BD3FCC84644DDD6B96F7C741B1562B82F9E004DC7;
 
@@ -95,45 +94,18 @@ mod Vendor {
                 );
         }
 
-        fn withdraw(ref self: ContractState) {
-            self.ownable.assert_only_owner();
-            let balance = self.eth_token.read().balanceOf(get_contract_address());
-            let sent = self.eth_token.read().transfer(self.ownable.owner(), balance);
-            assert(sent, 'Eth Transfer failed');
-        }
+        fn withdraw(ref self: ContractState) {}
 
-        fn sell_tokens(ref self: ContractState, amount_tokens: u256) {
-            assert(amount_tokens > 0, 'Amount must be greater than 0');
-            let eth_amount_wei = amount_tokens / TokensPerEth;
-            let contract_eth_balance = self.eth_token.read().balanceOf(get_caller_address());
-            assert(contract_eth_balance >= eth_amount_wei, 'Not Enough tokens');
-            // call fn approve() on UI 
-            let sent = self
-                .your_token
-                .read()
-                .transfer_from(get_caller_address(), get_contract_address(), amount_tokens);
-            assert(sent, 'Tokens Transfer failed');
-
-            let sent = self.eth_token.read().transfer(get_caller_address(), eth_amount_wei);
-            assert(sent, 'Eth Transfer failed');
-            self
-                .emit(
-                    SellTokens {
-                        seller: get_caller_address(),
-                        tokens_amount: amount_tokens,
-                        eth_amount: eth_amount_wei,
-                    }
-                );
-        }
+        fn sell_tokens(ref self: ContractState, amount_tokens: u256) {}
 
         fn send_tokens(ref self: ContractState, to: ContractAddress, amount_tokens: u256) {
             let sent = self.your_token.read().transfer(to, amount_tokens);
             assert(sent, 'Token Transfer failed');
         }
 
-        fn tokens_per_eth(self: @ContractState) -> u256 {
-            TokensPerEth
-        }
+        // fn tokens_per_eth(self: @ContractState) -> u256 {
+        //     TokensPerEth
+        // }
 
         fn your_token(self: @ContractState) -> ContractAddress {
             self.your_token.read().contract_address
