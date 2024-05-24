@@ -245,14 +245,4 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 ---
 
-## Checkpoint 6: 📜 Contract Verification
-
-Run the `yarn verify` command to verify your contracts on starkscan 🛰
-
-👀 You may see an address for both YouToken and Vendor. You will want the Vendor address.
-
-👉 Search this address on Starkscan to get the URL you submit to 🏃‍♀️[SpeedRunStark.com](https://www.speedrunstark.com/).
-
----
-
 > 🏃 Head to your next challenge [here](https://www.speedrunstark.com).
