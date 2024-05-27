@@ -4,7 +4,7 @@
 
 🤖 Smart contracts are kind of like "always on" _vending machines_ that **anyone** can access. Let's make a decentralized, digital currency. Then, let's build an unstoppable vending machine that will buy and sell the currency. We'll learn about the "approve" pattern for ERC20s and how contract to contract interactions work.
 
-🏵 Create `YourToken.cairo` smart contract that inherits the **ERC20** token standard from OpenZeppelin. Set your token to `_mint()` **1000** * (10^18) tokens to the `recipient`. Then create a `Vendor.cairo` contract that sells your token using a `buy_tokens()` function.
+🏵 Create `YourToken.cairo` smart contract that inherits the **ERC20** token standard from OpenZeppelin. Set your token to `_mint()` **1000** \* (10^18) tokens to the `recipient`. Then create a `Vendor.cairo` contract that sells your token using a `buy_tokens()` function.
 
 🎛 Edit the frontend that invites the user to input an amount of tokens they want to buy. We'll display a preview of the amount of ETH it will cost with a confirm button.
 
@@ -25,9 +25,10 @@ Before you begin, you need to install the following tools:
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-git clone https://github.com/Quantum3-Labs/speedrunstark.git challenge-2-token-vendor
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-2-token-vendor
 cd challenge-2-token-vendor
 git checkout token-vendor
+
 yarn install
 ```
 
@@ -111,11 +112,17 @@ Uncomment the `Buy Tokens` sections in `packages/nextjs/app/token-vendor/page.ts
 > ✏️ Then, edit `packages/snfoundry/scripts-ts/deploy.ts` to transfer 1000 tokens to vendor address.
 
 ```js
-await deployer.execute([{
-  calldata: ["sender", vendor.address || "vendor_address", uint256.bnToUint256(1000n * (10n ** 18n))],
-  contractAddress: your_token.address || "address",
-  entrypoint: "transfer_from"
-}]);
+await deployer.execute([
+  {
+    calldata: [
+      "sender",
+      vendor.address || "vendor_address",
+      uint256.bnToUint256(1000n * 10n ** 18n),
+    ],
+    contractAddress: your_token.address || "address",
+    entrypoint: "transfer_from",
+  },
+]);
 ```
 
 > 🔎 Look in `packages/nextjs/app/token-vendor/page.tsx` for code to uncomment to display the Vendor ETH and Token balances.
@@ -133,11 +140,13 @@ await deployer.execute([{
 In `packages/snfoundry/scripts-ts/deploy.ts` you will need to call `transfer_ownership()` on the `Vendor` to make _your frontend address_ the `owner`:
 
 ```js
-await deployer.execute([{
-  calldata: ["new_owner_address"],
-  contractAddress: vendor.address || "address",
-  entrypoint: "transfer_ownership"
-}]);
+await deployer.execute([
+  {
+    calldata: ["new_owner_address"],
+    contractAddress: vendor.address || "address",
+    entrypoint: "transfer_ownership",
+  },
+]);
 ```
 
 ### 🥅 Goals
@@ -186,14 +195,14 @@ await deployer.execute([{
 ### ⚔️ Side Quests
 
 - [ ] Should we disable the `owner` withdraw to keep liquidity in the `Vendor`?
-- [ ] It would be a good idea to display Sell Token Events. Create an **event** 
-`struct SellTokens {
+- [ ] It would be a good idea to display Sell Token Events. Create an **event**
+      `struct SellTokens {
   #[key]
   seller: ContractAddress,
   tokens_amount: u256,
   eth_amount: u256,
-  }` 
-and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
+  }`
+      and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
 
   ![Events](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/662c96b5-d53f-4efa-af4a-d3106bfd47f0)
 
