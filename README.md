@@ -23,9 +23,9 @@ Then download the challenge to your computer and install dependencies by running
 
 ```sh
 
-git clone https://github.com/scaffold-eth/se-2-challenges.git challenge-4-dex
-cd challenge-4-dex
-git checkout challenge-4-dex
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-4-build-a-dex
+cd challenge-4-build-a-dex
+git checkout build-a-dex
 
 yarn install
 ```
