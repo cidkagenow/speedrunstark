@@ -28,9 +28,9 @@ Then download the challenge to your computer and install dependencies by running
 
 ```sh
 
-git clone https://github.com/scaffold-eth/se-2-challenges.git challenge-3-dice-game
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-3-dice-game
 cd challenge-3-dice-game
-git checkout challenge-3-dice-game
+git checkout dice-game
 
 yarn install
 ```
