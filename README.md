@@ -28,7 +28,6 @@ Then download the challenge to your computer and install dependencies by running
 git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-2-token-vendor
 cd challenge-2-token-vendor
 git checkout token-vendor
-
 yarn install
 ```
 
@@ -197,11 +196,11 @@ await deployer.execute([
 - [ ] Should we disable the `owner` withdraw to keep liquidity in the `Vendor`?
 - [ ] It would be a good idea to display Sell Token Events. Create an **event**
       `struct SellTokens {
-  #[key]
-  seller: ContractAddress,
-  tokens_amount: u256,
-  eth_amount: u256,
-  }`
+#[key]
+seller: ContractAddress,
+tokens_amount: u256,
+eth_amount: u256,
+}`
       and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
 
   ![Events](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/662c96b5-d53f-4efa-af4a-d3106bfd47f0)

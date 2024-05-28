@@ -47,7 +47,7 @@ mod YourToken {
         symbol: ByteArray,
         fixed_supply: u256,
         recipient: ContractAddress
-    ) {//self.erc20.initializer(name, symbol);
+    ) { //self.erc20.initializer(name, symbol);
     //self.erc20._mint(recipient, fixed_supply);
     }
 
