@@ -5,7 +5,7 @@ trait IVendor<T> {
     fn withdraw(ref self: T);
     fn sell_tokens(ref self: T, amount_tokens: u256);
     fn send_tokens(ref self: T, to: ContractAddress, amount_tokens: u256);
-    fn tokens_per_eth(self: @T) -> u256;
+    //fn tokens_per_eth(self: @T) -> u256;
     fn your_token(self: @T) -> ContractAddress;
 }
 
@@ -67,32 +67,12 @@ mod Vendor {
         let eth_contract: ContractAddress = ETH_CONTRACT_ADDRESS.try_into().unwrap();
         self.eth_token.write(IERC20CamelDispatcher { contract_address: eth_contract });
         self.your_token.write(IYourTokenDispatcher { contract_address: token_address });
-        self.ownable.initializer(owner);
+    // ToDo: Initialize owner
     }
 
     #[abi(embed_v0)]
     impl VendorImpl of IVendor<ContractState> {
-        fn buy_tokens(ref self: ContractState, eth_amount_wei: u256) {
-            assert(eth_amount_wei > 0, 'Amount must be greater than 0');
-            let tokens_to_buy = eth_amount_wei * TokensPerEth;
-            let vendor_token_balance = self.your_token.read().balance_of(get_contract_address());
-            assert(vendor_token_balance >= tokens_to_buy, 'Not Enough tokens');
-            //call fn approve() on UI 
-            self
-                .eth_token
-                .read()
-                .transferFrom(get_caller_address(), get_contract_address(), eth_amount_wei);
-            let sent = self.your_token.read().transfer(get_caller_address(), tokens_to_buy);
-            assert(sent, 'Token Transfer failed');
-            self
-                .emit(
-                    BuyTokens {
-                        buyer: get_caller_address(),
-                        eth_amount: eth_amount_wei,
-                        tokens_amount: tokens_to_buy,
-                    }
-                );
-        }
+        fn buy_tokens(ref self: ContractState, eth_amount_wei: u256) {}
 
         fn withdraw(ref self: ContractState) {}
 
