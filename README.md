@@ -25,9 +25,9 @@ Before you begin, you need to install the following tools:
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-git clone https://github.com/scaffold-eth/se-2-challenges.git challenge-1-decentralized-stakings
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-1-decentralized-stakings
 cd challenge-1-decentralized-stakings
-git checkout challenge-1-decentralized-stakings
+git checkout decentralized-staking
 
 yarn install
 ```
