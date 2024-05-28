@@ -62,10 +62,9 @@ mod Staker {
         fn stake(ref self: ContractState, amount: u256) {
             // Note: Sender should approve to transfer the amount to the staker contract
             self._not_completed();
+        // Implement your stake function here
 
-            // Implement your stake function here
-
-            // self.emit(Stake { sender, amount }); // uncomment to emit the Stake event
+        // self.emit(Stake { sender, amount }); // uncomment to emit the Stake event
         }
 
         // Function to execute the transfer or allow withdrawals after the deadline
