@@ -5,8 +5,8 @@ const deployScript = async (): Promise<void> => {
     {
       name: "Gold",
       symbol: "GLD",
-      fixed_supply: 2_000_000_000_000_000_000_000n, //2000 * 10^18
-      recipient: deployer.address,
+      // fixed_supply: 2_000_000_000_000_000_000_000n, //2000 * 10^18
+      // recipient: deployer.address,
     },
     "YourToken"
   );
