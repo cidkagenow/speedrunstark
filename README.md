@@ -2,15 +2,15 @@
 
 ![readme-1](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/7e7be92753ffa1f18f50976e97fdb0052ca9414a/packages/nextjs/public/banner-decentralized-staking.svg)
 
-🦸 A superpower of Ethereum is allowing you, the builder, to create a simple set of rules that an adversarial group of players can use to work together. In this challenge, you create a decentralized application where users can coordinate a group funding effort. If the users cooperate, the money is collected in a second smart contract. If they defect, the worst that can happen is everyone gets their money back. The users only have to trust the code.
+🦸 A superpower of Starknet is allowing you, the builder, to create a simple set of rules that an adversarial group of players can use to work together. In this challenge, you create a decentralized application where users can coordinate a group funding effort. If the users cooperate, the money is collected in a second smart contract. If they defect, the worst that can happen is everyone gets their money back. The users only have to trust the code.
 
-🏦 Build a `Staker.sol` contract that collects **ETH** from numerous addresses using a payable `stake()` function and keeps track of `balances`. After some `deadline` if it has at least some `threshold` of ETH, it sends it to an `ExampleExternalContract` and triggers the `complete()` action sending the full balance. If not enough **ETH** is collected, allow users to `withdraw()`.
+🏦 Build a Staker.cairo contract that collects *ETH* from numerous addresses using a payable stake() function and keeps track of balances. After some deadline if it has at least some threshold of ETH, it sends it to an ExampleExternalContract and triggers the complete() action sending the full balance. If not enough *ETH* is collected, allow users to withdraw().
 
-🎛 Building the frontend to display the information and UI is just as important as writing the contract. The goal is to deploy the contract and the app to allow anyone to stake using your app. Use a `Stake(address,uint256)` event to list all stakes.
+🎛 Building the frontend to display the information and UI is just as important as writing the contract. The goal is to deploy the contract and the app to allow anyone to stake using your app. Use a Stake(address,uint256) event to list all stakes.
 
-🌟 The final deliverable is deploying a Dapp that lets users send ether to a contract and stake if the conditions are met, then `yarn vercel` your app to a public webserver. Submit the url on [SpeedRunEthereum.com](https://speedrunethereum.com)!
+🌟 The final deliverable is deploying a Dapp that lets users send ether to a contract and stake if the conditions are met, then yarn vercel your app to a public webserver. Submit the url on [SpeedRunStark.com](https://www.speedrunstark.com/)!
 
-> 💬 Meet other builders working on this challenge and get help in the [Challenge 1 Telegram](https://t.me/joinchat/E6r91UFt4oMJlt01)!
+> 💬 Meet other builders working on this challenge and get help in the [Challenge 1 Telegram](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ---
 
@@ -24,71 +24,71 @@ Before you begin, you need to install the following tools:
 
 Then download the challenge to your computer and install dependencies by running:
 
-```sh
+sh
 git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-1-decentralized-stakings
 cd challenge-1-decentralized-stakings
 git checkout decentralized-staking
 
 yarn install
-```
+
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-```sh
+sh
 yarn chain
-```
+
 
 > in a second terminal window, 🛰 deploy your contract (locally):
 
-```sh
+sh
 cd challenge-1-decentralized-stakings
 yarn deploy
-```
+
 
 > in a third terminal window, start your 📱 frontend:
 
-```sh
+sh
 cd challenge-1-decentralized-stakings
 yarn start
-```
+
 
 📱 Open http://localhost:3000 to see the app.
 
-> 👩‍💻 Rerun `yarn deploy` whenever you want to deploy new contracts to the frontend. If you haven't made any contract changes, you can run `yarn deploy --reset` for a completely fresh deploy.
+> 👩‍💻 Rerun yarn deploy whenever you want to deploy new contracts to the frontend. If you haven't made any contract changes, you can run yarn deploy --reset for a completely fresh deploy.
 
-🔏 Now you are ready to edit your smart contract `Staker.sol` in `packages/hardhat/contracts`
+🔏 Now you are ready to edit your smart contract Staker.cairo in packages/sfoundry/contracts
 
 ---
 
 ## Checkpoint 1: 🥩 Staking 💵
 
-You'll need to track individual `balances` using a LegacyMap:
+You'll need to track individual balances using a LegacyMap:
 
-```cairo
+cairo
 balances: LegacyMap<ContractAddress, u256>
-```
 
-And also track a constant `threshold` at `1 ether`
 
-```cairo
+And also track a constant threshold at 1 ether
+
+cairo
 const THRESHOLD: u256 = 1000000000000000000;
-```
 
-> 👩‍💻 Write your `stake()` function and test it with the `Debug Contracts` tab in the frontend.
+
+> 👩‍💻 Write your stake() function and test it with the Debug Contracts tab in the frontend.
 
 ![debugContracts](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/1a888e31-a79b-49ef-9848-357c5cee445a)
 
-> 💸 Need more funds from the faucet? Click on _"Grab funds from faucet"_, or use the Faucet feature at the bottom left of the page to get as much as you need!
+> 💸 Need more funds from the faucet? Click on "Grab funds from faucet", or use the Faucet feature at the bottom left of the page to get as much as you need!
 
 ![Faucet](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e82e3100-20fb-4886-a6bf-4113c3729f53)
 
-> ✏ Need to troubleshoot your code? If you import `hardhat/console.sol` to your contract, you can call `console.log()` right in your Solidity code. The output will appear in your `yarn chain` terminal.
+> ✏ Need to troubleshoot your code? If you import snfoundry/console.cairo to your contract, you can call console.log() right in your Cairo code. The output will appear in your yarn chain terminal.
 
 ### 🥅 Goals
 
-- [ ] Do you see the balance of the `Staker` contract go up when you `stake()`?
-- [ ] Is your `balance` correctly tracked?
-- [ ] Do you see the events in the `Stake Events` tab?
+- [ ] Do you see the balance of the Staker contract go up when you stake()?
+- [ ] Is your balance correctly tracked?
+- [ ] Do you see the events in the Stake Events tab?
 
   ![allStakings](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/80bcc843-034c-4547-8535-129ed494a204)
 
@@ -98,130 +98,130 @@ const THRESHOLD: u256 = 1000000000000000000;
 
 ### State Machine
 
-> ⚙️ Think of your smart contract like a _state machine_. First, there is a **stake** period. Then, if you have gathered the `threshold` worth of ETH, there is a **success** state. Or, we go into a **withdraw** state to let users withdraw their funds.
+> ⚙️ Think of your smart contract like a state machine. First, there is a *stake* period. Then, if you have gathered the threshold worth of ETH, there is a *success* state. Or, we go into a *withdraw* state to let users withdraw their funds.
 
-Set a `deadline` of `block.timestamp + 30 seconds` in the `constructor`
+Set a deadline of block.timestamp + 30 seconds in the constructor
 
-```cairo
+cairo
 self.deadline.write(get_block_timestamp() + 30);
-```
 
-👨‍🏫 Smart contracts can't execute automatically, you always need to have a transaction execute to change state. Because of this, you will need to have an `execute()` function that _anyone_ can call, just once, after the `deadline` has expired.
 
-> 👩‍💻 Write your `execute()` function and test it with the `Debug Contracts` tab
+👨‍🏫 Smart contracts can't execute automatically, you always need to have a transaction execute to change state. Because of this, you will need to have an execute() function that anyone can call, just once, after the deadline has expired.
 
-> Check the `ExampleExternalContract.sol` for the bool you can use to test if it has been completed or not. But do not edit the `ExampleExternalContract.sol` as it can slow the auto grading.
+> 👩‍💻 Write your execute() function and test it with the Debug Contracts tab
 
-If the `self.balances.read(sender)` of the contract is over the `threshold` by the `deadline`, you will want to call: `self._complete_transfer(staked_amount);`
+> Check the ExampleExternalContract.cairo for the bool you can use to test if it has been completed or not. But do not edit the ExampleExternalContract.cairo as it can slow the auto grading.
 
-If the balance is less than the `threshold`, you want to set a `openForWithdraw` bool to `true` which will allow users to `withdraw()` their funds.
+If the self.balances.read(sender) of the contract is over the threshold by the deadline, you will want to call: self._complete_transfer(staked_amount);
+
+If the balance is less than the threshold, you want to set a openForWithdraw bool to true which will allow users to withdraw() their funds.
 
 ### Timing
 
 You'll have 30 seconds after deploying until the deadline is reached, you can adjust this in the contract.
 
-> 👩‍💻 Create a `time_left` function including `u64` that returns how much time is left.
+> 👩‍💻 Create a time_left function including u64 that returns how much time is left.
 
-⚠️ Be careful! If `get_block_timestamp() >= deadline` you want to `return 0;`
+⚠️ Be careful! If get_block_timestamp() >= deadline you want to return 0;
 
-⏳ _"Time Left"_ will only update if a transaction occurs. You can see the time update by getting funds from the faucet button in navbar just to trigger a new block.
+⏳ "Time Left" will only update if a transaction occurs. You can see the time update by getting funds from the faucet button in navbar just to trigger a new block.
 
 ![stakerUI](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/7d85badb-3ea3-4f3c-b5f8-43d5b64f6714)
 
-> 👩‍💻 You can call `yarn deploy --reset` any time you want a fresh contract, it will get re-deployed even if there are no changes on it.  
-> You may need it when you want to reload the _"Time Left"_ of your tests.
+> 👩‍💻 You can call yarn deploy --reset any time you want a fresh contract, it will get re-deployed even if there are no changes on it.  
+> You may need it when you want to reload the "Time Left" of your tests.
 
-Your `Staker UI` tab should be almost done and working at this point.
+Your Staker UI tab should be almost done and working at this point.
 
 ---
 
 ### 🥅 Goals
 
-- [ ] Can you see `timeLeft` counting down in the `Staker UI` tab when you trigger a transaction with the faucet button?
-- [ ] If enough ETH is staked by the deadline, does your `execute()` function correctly call `complete()` and stake the ETH?
-- [ ] If the threshold isn't met by the deadline, are you able to `withdraw()` your funds?
+- [ ] Can you see timeLeft counting down in the Staker UI tab when you trigger a transaction with the faucet button?
+- [ ] If enough ETH is staked by the deadline, does your execute() function correctly call complete() and stake the ETH?
+- [ ] If the threshold isn't met by the deadline, are you able to withdraw() your funds?
 
 ---
 
 ## Checkpoint 3: 💵 Receive Function / UX 🙎
 
-🎀 To improve the user experience, set your contract up so it accepts ETH sent to it and calls `stake()`. You will use what is called the `receive()` function.
+🎀 To improve the user experience, set your contract up so it accepts ETH sent to it and calls stake(). You will use what is called the receive() function.
 
-> Use the [receive()](https://docs.soliditylang.org/en/v0.8.9/contracts.html?highlight=receive#receive-ether-function) function in solidity to "catch" ETH sent to the contract and call `stake()` to update `balances`.
+> Use the [receive()](https://docs.soliditylang.org/en/v0.8.9/contracts.html?highlight=receive#receive-ether-function) function in solidity to "catch" ETH sent to the contract and call stake() to update balances.
 
 ---
 
 ### 🥅 Goals
 
-- [ ] If you send ETH directly to the contract address does it update your `balance` and the `balance` of the contract?
+- [ ] If you send ETH directly to the contract address does it update your balance and the balance of the contract?
 
 ---
 
 ### ⚔️ Side Quests
 
-- [ ] Can `execute()` get called more than once, and is that okay?
-- [ ] Can you stake and withdraw freely after the `deadline`, and is that okay?
-- [ ] What are other implications of _anyone_ being able to withdraw for someone?
+- [ ] Can execute() get called more than once, and is that okay?
+- [ ] Can you stake and withdraw freely after the deadline, and is that okay?
+- [ ] What are other implications of anyone being able to withdraw for someone?
 
 ---
 
 ### 🐸 It's a trap!
 
-- [ ] Make sure funds can't get trapped in the contract! **Try sending funds after you have executed! What happens?**
-- [ ] Try to create a [modifier](https://solidity-by-example.org/function-modifier/) called `notCompleted`. It will check that `ExampleExternalContract` is not completed yet. Use it to protect your `execute` and `withdraw` functions.
+- [ ] Make sure funds can't get trapped in the contract! *Try sending funds after you have executed! What happens?*
+- [ ] Try to create a [modifier]() called notCompleted. It will check that ExampleExternalContract is not completed yet. Use it to protect your execute and withdraw functions.
 
 ### ⚠️ Test it!
 
-- Now is a good time to run `yarn test` to run the automated testing function. It will test that you hit the core checkpoints. You are looking for all green checkmarks and passing tests!
+- Now is a good time to run yarn test to run the automated testing function. It will test that you hit the core checkpoints. You are looking for all green checkmarks and passing tests!
 
 ---
 
 ## Checkpoint 4: 💾 Deploy your contract! 🛰
 
-📡 Edit the `defaultNetwork` to your choice of public Stark networks in `packages/hardhat/hardhat.config.ts`
+📡 Edit the defaultNetwork to your choice of public Stark networks in packages/nextjs/scaffold.config.ts
 
-🔐 You will need to generate a **deployer address** using `yarn generate` This creates a mnemonic and saves it locally.
+🔐 You will need to generate a *deployer address* using yarn generate This creates a mnemonic and saves it locally.
 
-👩‍🚀 Use `yarn account` to view your deployer account balances.
+👩‍🚀 Use yarn account to view your deployer account balances.
 
 ⛽️ You will need to send ETH to your deployer address with your wallet, or get it from a public faucet of your chosen network.
 
-> 📝 If you plan on submitting this challenge, be sure to set your `deadline` to at least `block.timestamp + 72 hours`
+> 📝 If you plan on submitting this challenge, be sure to set your deadline to at least block.timestamp + 72 hours
 
-🚀 Run `yarn deploy --network [network]` to deploy your smart contract to a public network (mainnet or sepolia).
+🚀 Run yarn deploy --network [network] to deploy your smart contract to a public network (mainnet or sepolia).
 
 ![allStakings-blockFrom](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/04725dc8-4a8d-4089-ba82-90f9b94bfbda)
 
-> 💬 Hint: For faster loading of your _"Stake Events"_ page, consider updating the `fromBlock` passed to `useScaffoldEventHistory` in [`packages/nextjs/app/stakings/page.tsx`](https://github.com/scaffold-eth/se-2-challenges/blob/challenge-1-decentralized-staking/packages/nextjs/app/stakings/page.tsx) to `blocknumber - 10` at which your contract was deployed. Example: `fromBlock: 3750241n` (where `n` represents its a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)). To find this blocknumber, search your contract's address on Etherscan and find the `Contract Creation` transaction line.
+> 💬 Hint: For faster loading of your "Stake Events" page, consider updating the fromBlock passed to useScaffoldEventHistory in [packages/nextjs/app/stakings/page.tsx](https://github.com/scaffold-eth/se-2-challenges/blob/challenge-1-decentralized-staking/packages/nextjs/app/stakings/page.tsx) to blocknumber - 10 at which your contract was deployed. Example: fromBlock: 3750241n (where n represents its a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)). To find this blocknumber, search your contract's address on Etherscan and find the Contract Creation transaction line.
 
 ---
 
 ## Checkpoint 5: 🚢 Ship your frontend! 🚁
 
-✏️ Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork` to `chains.sepolia` or any other public network.
+✏️ Edit your frontend config in packages/nextjs/scaffold.config.ts to change the targetNetwork to chains.sepolia or any other public network.
 
 💻 View your frontend at http://localhost:3000/stakerUI and verify you see the correct network.
 
 📡 When you are ready to ship the frontend app...
 
-📦 Run `yarn vercel` to package up your frontend and deploy.
+📦 Run yarn vercel to package up your frontend and deploy.
 
 > Follow the steps to deploy to Vercel. Once you log in (email, github, etc), the default options should work. It'll give you a public URL.
 
-> If you want to redeploy to the same production URL you can run `yarn vercel --prod`. If you omit the `--prod` flag it will deploy it to a preview/test URL.
+> If you want to redeploy to the same production URL you can run yarn vercel --prod. If you omit the --prod flag it will deploy it to a preview/test URL.
 
-> 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 `burner wallets` are only available on `devnet` . You can enable them on every chain by setting `onlyLocalBurnerWallet: false` in your frontend config (`scaffold.config.ts` in `packages/nextjs/`)
+> 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own or use a burner wallet. By default 🔥 burner wallets are only available on devnet . You can enable them on every chain by setting onlyLocalBurnerWallet: false in your frontend config (scaffold.config.ts in packages/nextjs/)
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
 By default, 🏗 Scaffold-Stark 2 provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.  
-This is great to complete your **SpeedRunEthereum**.
+This is great to complete your *SpeedRunStarknet*.
 
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
 
-- 🔷`ALCHEMY_API_KEY` variable in `packages/hardhat/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
+- 🔷ALCHEMY_API_KEY variable in packages/snfoundry/.env and packages/nextjs/.env.local. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
 
-- 📃`ETHERSCAN_API_KEY` variable in `packages/hardhat/.env` with your generated API key. You can get your key [here](https://etherscan.io/myapikey).
+- 📃ETHERSCAN_API_KEY variable in packages/snfoundry/.env with your generated API key. You can get your key [here](https://etherscan.io/myapikey).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
@@ -229,12 +229,12 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 ## Checkpoint 6: 📜 Contract Verification
 
-Run the `yarn verify --network your_network` command to verify your contracts on etherscan 🛰
+Run the yarn verify --network your_network command to verify your contracts on etherscan 🛰
 
-👉 Search this address on Etherscan to get the URL you submit to 🏃‍♀️[SpeedRunEthereum.com](https://speedrunethereum.com).
+👉 Search this address on Etherscan to get the URL you submit to 🏃‍♀️[SpeedRunStark.com](https://www.speedrunstark.com/).
 
 ---
 
-> 🏃 Head to your next challenge [here](https://speedrunethereum.com).
+> 🏃 Head to your next challenge [here](https://www.speedrunstark.com/).
 
-> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-eth developers chat](https://t.me/joinchat/F7nCRK3kI93PoCOk)
+> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-s2 developers chat](https://t.me/+wO3PtlRAreo4MDI9 )
