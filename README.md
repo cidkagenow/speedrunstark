@@ -6,7 +6,7 @@
 
 🌟 The final deliverable is an app that lets users purchase and transfer NFTs. Deploy your contracts to a testnet, then build and upload your app to a public web server. Submit the url on [Speedrunstark.com](https://speedrunstark.com/)!
 
-💬 Meet other builders working on this challenge and get help in the [Challenge 0 Telegram]()!
+💬 Meet other builders working on this challenge and get help in the [Challenge 0 Telegram](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ## Checkpoint 0: 📦 Environment 📚
 # 🏗 Scaffold-Stark 2
@@ -21,12 +21,12 @@
 ⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry and Typescript.
 
 - ✅ **Contract Fast Reload**: Your frontend auto-adapts to your smart contracts as you deploy them.
-- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](): Collection of common web3 components to quickly build your frontend.
+- 🪝 **Custom hooks**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
+- 🧱 **Components**: Collection of common web3 components to quickly build your frontend.
 - 🔥 **Burner Wallet & Prefunded Account**: Quickly test your application with a burner wallet and prefunded accounts.
 - 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network.
 
-![Debug Contracts tab](./assests/debug-contracts.png)
+![Debug Contracts tab](./assets/debug-contracts.png)
 
 ## Requirements
 
@@ -48,7 +48,7 @@ yarn install
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-```sh
+
 2. Prepare your environment variables.
 
 Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
@@ -78,6 +78,7 @@ yarn deploy
 
 ```sh
 cd challenge-0-simple-nft
+```
 This command starts a local Starknet network using Devnet. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `scaffold.config.ts`.
 
 4. On a second terminal, deploy the sample contract:
@@ -149,7 +150,7 @@ cp packages/snfoundry/.env.example packages/snfoundry/.env
 
 ⛽️ You will need to send ETH or STRK to your deployer Contract Addres with your wallet, or get it from a public faucet of your chosen network.
 
-> Some popular faucets are [https://starknet-faucet.vercel.app/](https://starknet-faucet.vercel.app/) and [https://blastapi.io/faucets/starknet-sepolia-eth](https://blastapi.io/faucets/starknet-sepolia-eth)
+> Some popular faucets are [Starknet Faucet](https://starknet-faucet.vercel.app/) and [Blastapi Starknet Sepolia Eth](https://blastapi.io/faucets/starknet-sepolia-eth)
 
 🚀 Deploy your NFT smart contract with `yarn deploy`.
 
@@ -200,4 +201,4 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 > 🏃 Head to your next challenge [here](https://github.com/Quantum3-Labs/speedrunstark/tree/decentralized-staking).
 
-> 💭 Problems, questions, comments on the stack? Post them to the [🏗 Scaffold-Stark developers chat]()
+> 💭 Problems, questions, comments on the stack? Post them to the [🏗 Scaffold-Stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
