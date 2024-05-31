@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "@starknet-react/core";
