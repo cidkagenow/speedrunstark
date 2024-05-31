@@ -17,6 +17,26 @@
 ---
 
 ## Checkpoint 0: 📦 Environment 📚
+# 🏗 Scaffold-Stark 2
+
+<h4 align="center">
+  <a href="https://www.docs.scaffoldstark.com/">Documentation</a> |
+  <a href="https://www.scaffoldstark.com/">Website</a>
+</h4>
+
+🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+
+⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry and Typescript.
+
+- ✅ **Contract Fast Reload**: Your frontend auto-adapts to your smart contracts as you deploy them.
+- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
+- 🧱 [**Components**](): Collection of common web3 components to quickly build your frontend.
+- 🔥 **Burner Wallet & Prefunded Account**: Quickly test your application with a burner wallet and prefunded accounts.
+- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network.
+
+![Debug Contracts tab](./assests/debug-contracts.png)
+
+## Requirements
 
 Before you begin, you need to install the following tools:
 
@@ -38,6 +58,21 @@ yarn install
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
 ```sh
+2. Prepare your environment variables.
+
+Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
+
+**Note:** In case you want to deploy on Sepolia, you need to fill the envs related to sepolia testnet with your own contract address and private key.
+
+```bash
+cp packages/snfoundry/.env.example packages/snfoundry/.env
+```
+
+3. Run a local network in the first terminal.
+
+**Note:** You can skip this step if you want to use Sepolia Testnet.
+
+```bash
 yarn chain
 ```
 
