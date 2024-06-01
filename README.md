@@ -1,4 +1,4 @@
-# 🚩 Challenge 2: 🏵 Token Vendor 🤖
+# 🚩 Challenge #2: 🏵 Token Vendor 🤖
 
 ![readme-2](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/hero2.png)
 
@@ -258,14 +258,16 @@ eth_amount: u256,
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure the provider by modifying `NEXT_PUBLIC_PROVIDER_URL`, you can an APY key from the following providers:
+By default, 🏗 Scaffold-Stark provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
+This is great to complete your SpeedRunEthereum.
 
-- Alchemy.
-- Infura
-- QuickNode
+For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
+
+🔷 `RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
 ---
 
-> 🏃 Head to your next challenge [here](https://www.speedrunstark.com).
+> 🏃 Head to your next challenge [here](https://github.com/Quantum3-Labs/speedrunstark/tree/dice-game).
+> 💭 Problems, questions, comments on the stack? Post them to the [🏗 Scaffold-Stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
