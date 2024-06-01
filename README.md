@@ -15,26 +15,6 @@
 ---
 
 ## Checkpoint 0: 📦 Environment 📚
-# 🏗 Scaffold-Stark 2
-
-<h4 align="center">
-  <a href="https://www.docs.scaffoldstark.com/">Documentation</a> |
-  <a href="https://www.scaffoldstark.com/">Website</a>
-</h4>
-
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
-
-⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry and Typescript.
-
-- ✅ **Contract Fast Reload**: Your frontend auto-adapts to your smart contracts as you deploy them.
-- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Prefunded Account**: Quickly test your application with a burner wallet and prefunded accounts.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network.
-
-![Debug Contracts tab](./assests/debug-contracts.png)
-
-## Requirements
 
 Before you begin, you need to install the following tools:
 
@@ -54,7 +34,6 @@ yarn install
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-```sh
 2. Prepare your environment variables.
 
 Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
@@ -76,14 +55,14 @@ yarn chain
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-1-decentralized-stakings
+cd decentralized-stakings
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-1-decentralized-stakings
+cd decentralized-stakings
 yarn start
 ```
 
@@ -111,13 +90,8 @@ const THRESHOLD: u256 = 1000000000000000000;
 
 > 👩‍💻 Write your `stake()` function and test it with the Debug Contracts tab in the frontend.
 
-![debugContracts](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/1a888e31-a79b-49ef-9848-357c5cee445a)
+![debugContracts](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/decentralized-staking/packages/nextjs/public/debug-stake.png)
 
-> 💸 Need more funds from the faucet? Click on "Grab funds from faucet", or use the Faucet feature at the bottom left of the page to get as much as you need!
-
-![Faucet](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e82e3100-20fb-4886-a6bf-4113c3729f53)
-
-> ✏ Need to troubleshoot your code? If you import `snfoundry/console.cairo` to your contract, you can call `console.log()` right in your Cairo code. The output will appear in your yarn chain terminal.
 
 ### 🥅 Goals
 
@@ -125,7 +99,7 @@ const THRESHOLD: u256 = 1000000000000000000;
 - [ ] Is your balance correctly tracked?
 - [ ] Do you see the events in the Stake Events tab?
 
-  ![allStakings](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/80bcc843-034c-4547-8535-129ed494a204)
+  ![allStakings](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/87dae08f476eadb05ea377247885aad16713599f/packages/nextjs/public/events.png)
 
 ---
 
@@ -159,9 +133,7 @@ You'll have 30 seconds after deploying until the deadline is reached, you can ad
 
 ⚠️ Be careful! If `get_block_timestamp() >= deadline` you want to return 0;
 
-⏳ "Time Left" will only update if a transaction occurs. You can see the time update by getting funds from the faucet button in navbar just to trigger a new block.
-
-![stakerUI](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/7d85badb-3ea3-4f3c-b5f8-43d5b64f6714)
+![stakerUI](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/87dae08f476eadb05ea377247885aad16713599f/packages/nextjs/public/stake.png)
 
 > 👩‍💻 You can call `yarn deploy --reset` any time you want a fresh contract, it will get re-deployed even if there are no changes on it.  
 > You may need it when you want to reload the "Time Left" of your tests.
@@ -223,10 +195,9 @@ Your Staker UI tab should be almost done and working at this point.
 
 🚀 Run yarn deploy --network [network] to deploy your smart contract to a public network (mainnet or sepolia).
 
-![allStakings-blockFrom](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/04725dc8-4a8d-4089-ba82-90f9b94bfbda)
+![allStakings-blockFrom](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/87dae08f476eadb05ea377247885aad16713599f/packages/nextjs/public/events.png)
 
-> 💬 Hint: For faster loading of your "Stake Events" page, consider updating the fromBlock passed to useScaffoldEventHistory in [packages/nextjs/app/stakings/page.tsx](https://github.com/scaffold-eth/se-2-challenges/blob/challenge-1-decentralized-staking/packages/nextjs/app/stakings/page.tsx) to blocknumber - 10 at which your contract was deployed. Example: fromBlock: 3750241n (where n represents its a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)). To find this blocknumber, search your contract's address on Etherscan and find the Contract Creation transaction line.
-
+> 💬 Hint: For faster loading of your "Stake Events" page, consider updating the fromBlock passed to useScaffoldEventHistory in [packages/nextjs/app/stakings/page.tsx](https://github.com/scaffold-eth/se-2-challenges/blob/challenge-1-decentralized-staking/packages/nextjs/app/stakings/page.tsx) to blocknumber - 10 at which your contract was deployed. Example: fromBlock: 3750241n (where n represents its a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)).
 ---
 
 ## Checkpoint 5: 🚢 Ship your frontend! 🚁
@@ -254,14 +225,6 @@ For production-grade applications, it's recommended to obtain your own API keys 
 🔷 `RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
-
----
-
-## Checkpoint 6: 📜 Contract Verification
-
-Run the `yarn verify --network your_network` command to verify your contracts on etherscan 🛰
-
-👉 Search this address on Etherscan to get the URL you submit to 🏃‍♀️[SpeedRunStark.com](https://www.speedrunstark.com/).
 
 ---
 
