@@ -15,26 +15,6 @@
 ---
 
 ## Checkpoint 0: 📦 Environment 📚
-# 🏗 Scaffold-Stark 2
-
-<h4 align="center">
-  <a href="https://www.docs.scaffoldstark.com/">Documentation</a> |
-  <a href="https://www.scaffoldstark.com/">Website</a>
-</h4>
-
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
-
-⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry and Typescript.
-
-- ✅ **Contract Fast Reload**: Your frontend auto-adapts to your smart contracts as you deploy them.
-- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Prefunded Account**: Quickly test your application with a burner wallet and prefunded accounts.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network.
-
-![Debug Contracts tab](./assests/debug-contracts.png)
-
-## Requirements
 
 Before you begin, you need to install the following tools:
 
@@ -107,7 +87,7 @@ yarn start
 - [ ] Can you check the `balance_of()` your frontend address in the `Debug Contracts` tab? (**YourToken** contract)
 - [ ] Can you `transfer()` your token to another account and check _that_ account's `balance_of`?
 
-![debugContractsYourToken](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/5fb4daeb-5d05-4522-96b3-76f052a68418)
+![debugContractsYourToken](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/ch2-YourToken.png)
 
 > 💬 Hint: Use an incognito window to create a new address and try sending to that new address. Can use the `transfer()` function in the `Debug Contracts` tab.
 
@@ -163,7 +143,7 @@ await deployer.execute([
 
 > You can `yarn deploy --reset` to deploy your contract until you get it right.
 
-![TokenVendorBuy](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/7669cc68-e942-4630-95c8-91cd21af5ba0)
+![TokenVendorBuy](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/ch2-TokenVendorBalance.png)
 
 ### 🥅 Goals
 
@@ -219,7 +199,7 @@ await deployer.execute([
 
 🔍 Look in the `packages/nextjs/app/token-vendor/page.tsx` for the extra approve/sell UI to uncomment!
 
-![VendorBuyBack](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/99063aaa-368d-4156-997d-08dff99af11b)
+![VendorBuyBack](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/ch2-VendorBuySell.png)
 
 ### 🥅 Goal
 
