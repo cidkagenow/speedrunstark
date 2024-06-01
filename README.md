@@ -59,10 +59,10 @@ yarn deploy
 ```sh
 cd simple-nft-example
 yarn start
+```
 This command starts a local Starknet network using Devnet. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `scaffold.config.ts`.
 
 4. On a second terminal, deploy the sample contract:
-
 ```
 yarn deploy --network {NETWORK_NAME} // when NETWORK_NAME is not specified, it defaults to "devnet"
 ```
