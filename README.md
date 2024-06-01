@@ -4,8 +4,6 @@
 
 > 🎰 Randomness is tricky on a public deterministic blockchain. The block hash is an easy to use, but very weak form of randomness. This challenge will give you an example of a contract using block hash to create random numbers. This randomness is exploitable. Other, stronger forms of randomness include commit/reveal schemes, oracles, or VRF from Chainlink.
 
-> 👍 One day soon, randomness will be built into the Ethereum protocol!
-
 > 💬 Dice Game is a contract that allows users to roll the dice to try and win the prize. If players roll either a 0, 1, 2, 3, 4 or 5 they will win the current prize amount. The initial prize is 10% of the contract's balance, which starts out at .05 Eth.
 
 > 🧤 Every time a player rolls the dice, they are required to send .002 Eth. 40 percent of this value is added to the current prize amount while the other 60 percent stays in the contract to fund future prizes. Once a prize is won, the new prize amount is set to 10% of the total balance of the DiceGame contract.
@@ -17,26 +15,6 @@
 ---
 
 ## Checkpoint 0: 📦 Environment 📚
-# 🏗 Scaffold-Stark 2
-
-<h4 align="center">
-  <a href="https://www.docs.scaffoldstark.com/">Documentation</a> |
-  <a href="https://www.scaffoldstark.com/">Website</a>
-</h4>
-
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
-
-⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry and Typescript.
-
-- ✅ **Contract Fast Reload**: Your frontend auto-adapts to your smart contracts as you deploy them.
-- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Prefunded Account**: Quickly test your application with a burner wallet and prefunded accounts.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network.
-
-![Debug Contracts tab](./assests/debug-contracts.png)
-
-## Requirements
 
 Before you begin, you need to install the following tools:
 
@@ -48,8 +26,8 @@ Then download the challenge to your computer and install dependencies by running
 
 ```sh
 
-git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-3-dice-game
-cd challenge-3-dice-game
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules dice-game
+cd dice-game
 git checkout dice-game
 
 yarn install
@@ -57,7 +35,6 @@ yarn install
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-```sh
 2. Prepare your environment variables.
 
 Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
@@ -79,14 +56,14 @@ yarn chain
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-3-dice-game
+cd dice-game
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-3-dice-game
+cd dice-game
 yarn start
 ```
 
