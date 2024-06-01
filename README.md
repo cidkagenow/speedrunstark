@@ -79,10 +79,6 @@ yarn start
 
 🔒 You will not be changing any code in the `DiceGame.cairo` contract in this challenge. You will write your own contract to predict the outcome, then only roll the dice when it is favourable.
 
-💸 Grab some funds from the faucet and roll the dice a few times. Watch the balance of the DiceGame contract in the Debug tab. It increases on a failed roll and decreases by the prize amount on a successful roll.
-
-![Faucet](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e82e3100-20fb-4886-a6bf-4113c3729f53)
-
 ### 🥅 Goals
 
 - [ ] Track the solidity code to find out how the DiceGame contract is generating random numbers.
@@ -112,7 +108,7 @@ Next add a `riggedRoll()` function. This function should predict the randomness 
 - [ ] Uncomment the code in `packages/nextjs/app/dice/page.tsx` to show a riggedRoll button and contract balance on the main UI tab. Now you can test your function without switching tabs.
 - [ ] Does your riggedRoll function only call `rollTheDice()` when it's going to be a winning roll? What happens when it does call `rollTheDice()`?
 
-![RiggedLosingRoll](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/b6c8d7b4-139b-4f54-a62c-a0c77b3692a3)
+![RiggedLosingRoll](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/663143e24ecab9a71c2550ac5fe2d8fa5d23ee2c/packages/nextjs/public/rolldice.png)
 
 ---
 
@@ -120,7 +116,7 @@ Next add a `riggedRoll()` function. This function should predict the randomness 
 
 You have beaten the game, but where is your money? Since the RiggedRoll contract is the one calling `rollTheDice()`, that is where the prize money is being sent.
 
-![RiggedRollAddress](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e9b9d164-2fb1-416a-9c5e-198d15bca0c6)
+![RiggedRollAddress](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/663143e24ecab9a71c2550ac5fe2d8fa5d23ee2c/packages/nextjs/public/riggedroll.png)
 
 📥 Create a `withdraw(address _addr, uint256 _amount)` function to allow you to send Eth from RiggedRoll to another address.
 
@@ -133,7 +129,7 @@ You have beaten the game, but where is your money? Since the RiggedRoll contract
 
 - [ ] Lock the withdraw function so it can only be called by the owner.
 
-![WithdrawOnlyOwner](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/e8397b1e-a077-4009-b518-30a6d8deb6e7)
+![WithdrawOnlyOwner](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/663143e24ecab9a71c2550ac5fe2d8fa5d23ee2c/packages/nextjs/public/debug.png)
 
 > ⚠️ But wait, I am not the owner! You will want to set your front end address as the owner in `deploy_riggedRoll.ts`. This will allow your front end address to call the withdraw function.
 
@@ -181,14 +177,6 @@ For production-grade applications, it's recommended to obtain your own API keys 
 - 📃`ETHERSCAN_API_KEY` variable in `packages/hardhat/.env` with your generated API key. You can get your key [here](https://etherscan.io/myapikey).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
-
----
-
-## Checkpoint 6: 📜 Contract Verification
-
-Run the `yarn verify --network your_network` command to verify your contracts on etherscan 🛰
-
-👉 Search this address on Etherscan to get the URL you submit to 🏃‍♀️[SpeedRunStark.com](https://speedrunstark.com/).
 
 ---
 
