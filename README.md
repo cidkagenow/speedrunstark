@@ -9,26 +9,6 @@
 💬 Meet other builders working on this challenge and get help in the [Challenge 0 Telegram]()!
 
 ## Checkpoint 0: 📦 Environment 📚
-# 🏗 Scaffold-Stark 2
-
-<h4 align="center">
-  <a href="https://www.docs.scaffoldstark.com/">Documentation</a> |
-  <a href="https://www.scaffoldstark.com/">Website</a>
-</h4>
-
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
-
-⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry and Typescript.
-
-- ✅ **Contract Fast Reload**: Your frontend auto-adapts to your smart contracts as you deploy them.
-- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Prefunded Account**: Quickly test your application with a burner wallet and prefunded accounts.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network.
-
-![Debug Contracts tab](./assests/debug-contracts.png)
-
-## Requirements
 
 Before you begin, you need to install the following tools:
 
@@ -39,8 +19,8 @@ Before you begin, you need to install the following tools:
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-0-simple-nft
-cd challenge-0-simple-nft
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules simple-nft-example
+cd simple-nft-example
 git checkout simple-nft-example
 
 yarn install
@@ -70,14 +50,15 @@ yarn chain
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-0-simple-nft
+cd simple-nft-example
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-0-simple-nft
+cd simple-nft-example
+yarn start
 This command starts a local Starknet network using Devnet. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `scaffold.config.ts`.
 
 4. On a second terminal, deploy the sample contract:
@@ -104,7 +85,9 @@ yarn start
 
 > 🔥 We'll use burner wallets on localhost.
 
-> 👛 Explore how burner wallets work in 🏗 Scaffold-Stark. You will notice the `Connect Wallet` button on the top right corner. After click it, you can choose the `Burner Wallet` option. You will get a default prefounded account.
+> 👛 Explore how burner wallets work in 🏗 Scaffold-Stark. You will notice the `Connect Wallet` button on the top right corner. After click it, you can choose the `Burner Wallet` option. You will get a default prefunded account. 
+
+![wallet](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-walletconnect.png)
 ---
 
 ## Checkpoint 2: 🖨 Minting
@@ -125,7 +108,7 @@ yarn start
 
 🕵🏻‍♂️ Inspect the `Debug Contracts` tab to figure out what address is the owner of YourCollectible?
 
-🔏 You can also check out your smart contract `Challenge0.cairo` in `packages/snfoundry/contracts`.
+🔏 You can also check out your smart contract `YourCollectible.cairo` in `packages/snfoundry/contracts`.
 
 💼 Take a quick look at your deploy script `deploy.ts` in `packages/snfoundry/script-ts`.
 
@@ -182,6 +165,12 @@ yarn vercel
 > Follow the steps to deploy to Vercel. Once you log in (email, github, etc), the default options should work. It'll give you a public URL.
 
 > If you want to redeploy to the same production URL you can run `yarn vercel --prod`. If you omit the `--prod` flag it will deploy it to a preview/test URL.
+
+⚠️ Run the automated testing function to make sure your app passes
+
+```shell
+yarn test
+```
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
