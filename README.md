@@ -25,15 +25,14 @@ Before you begin, you need to install the following tools:
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-2-token-vendor
-cd challenge-2-token-vendor
-git checkout token-vendor
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules token-vendor
+cd token-vendor
+git token-vendor
 yarn install
 ```
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-```sh
 2. Prepare your environment variables.
 
 Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
@@ -55,14 +54,14 @@ yarn chain
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-2-token-vendor
+cd token-vendor
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-2-token-vendor
+cd token-vendor
 yarn start
 ```
 
@@ -218,7 +217,7 @@ eth_amount: u256,
 }`
       and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
 
-  ![Events](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/662c96b5-d53f-4efa-af4a-d3106bfd47f0)
+  ![Events](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/2812ab21de5d261ef670b0ef5a211fdfbae3b8d8/packages/nextjs/public/events.png)
 
 ### ⚠️ Test it!
 
