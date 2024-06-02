@@ -36,7 +36,7 @@ yarn install
 
 2. Prepare your environment variables.
 
-Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
+By defauly Scaffold-Stark 2 takes the first prefunded account from `starknet-devnet` as a deployer address, thus **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any other predeployed contract address and private key from starknet-devnet.
 
 **Note:** In case you want to deploy on Sepolia, you need to fill the envs related to sepolia testnet with your own contract address and private key.
 
@@ -184,6 +184,8 @@ Your Staker UI tab should be almost done and working at this point.
 ## Checkpoint 4: 💾 Deploy your contract! 🛰
 
 📡 Edit the `defaultNetwork` to your choice of public Stark networks in `packages/nextjs/scaffold.config.ts`
+
+  ![network](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-scaffold-config.png)
 
 🔐 You will need to generate a *deployer address* using `yarn generate` This creates a mnemonic and saves it locally.
 
