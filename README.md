@@ -28,7 +28,6 @@ yarn install
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-
 2. Prepare your environment variables.
 
 Since we are using localhost(devnet), **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any predeployed contract address and private key from starknet-devnet.
@@ -60,9 +59,11 @@ yarn deploy
 cd simple-nft-example
 yarn start
 ```
+
 This command starts a local Starknet network using Devnet. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `scaffold.config.ts`.
 
 4. On a second terminal, deploy the sample contract:
+
 ```
 yarn deploy --network {NETWORK_NAME} // when NETWORK_NAME is not specified, it defaults to "devnet"
 ```
@@ -85,10 +86,9 @@ yarn start
 
 > 🔥 We'll use burner wallets on localhost.
 
-> 👛 Explore how burner wallets work in 🏗 Scaffold-Stark. You will notice the `Connect Wallet` button on the top right corner. After click it, you can choose the `Burner Wallet` option. You will get a default prefunded account. 
+> 👛 Explore how burner wallets work in 🏗 Scaffold-Stark. You will notice the `Connect Wallet` button on the top right corner. After click it, you can choose the `Burner Wallet` option. You will get a default prefunded account.
 
-![wallet](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-walletconnect.png)
----
+## ![wallet](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-walletconnect.png)
 
 ## Checkpoint 2: 🖨 Minting
 
@@ -122,7 +122,9 @@ yarn start
 
 > Change the defaultNetwork in `packages/nextjs/scaffold.config.ts` to `sepolia`.
 
-> Prepare your environment variables. 
+![chall-0-scaffold-config](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-scaffold-config.png)
+
+> Prepare your environment variables.
 
 ```shell
 cp packages/snfoundry/.env.example packages/snfoundry/.env
@@ -141,10 +143,6 @@ cp packages/snfoundry/.env.example packages/snfoundry/.env
 ---
 
 ## Checkpoint 4: 🚢 Ship your frontend! 🚁
-
-> ✏️ Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork` to `chains.sepolia` :
-
-![chall-0-scaffold-config](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-scaffold-config.png)
 
 > 🦊 Since we have deployed to a public testnet, you will now need to connect using a wallet you own(Argent X or Braavos).
 
@@ -181,9 +179,7 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 - 🔷`RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
 
-
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
-
 
 ---
 
