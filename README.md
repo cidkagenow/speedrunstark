@@ -6,7 +6,7 @@
 
 🌟 The final deliverable is an app that lets users purchase and transfer NFTs. Deploy your contracts to a testnet, then build and upload your app to a public web server.
 
-💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
+> 💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ## Checkpoint 0: 📦 Environment 📚
 
@@ -37,7 +37,7 @@ git checkout simple-nft-example
 yarn install
 ```
 
-> in the same terminal, start your local network (a blockchain  in your computer):
+> in the same terminal, start your local network (a blockchain in your computer):
 
 2. Prepare your environment variables.
 
