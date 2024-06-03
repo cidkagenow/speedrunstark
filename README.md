@@ -4,9 +4,9 @@
 
 🎫 Create a simple NFT to learn basics of 🏗 Scaffold-Stark. You'll use [Scarb](https://docs.swmansion.com/scarb/) to compile and [Starknet.js](https://www.starknetjs.com/) to deploy smart contracts. Then, you'll use a template React app full of important Starknet components and hooks. Finally, you'll deploy an NFT to a public network to share with friends! 🚀
 
-🌟 The final deliverable is an app that lets users purchase and transfer NFTs. Deploy your contracts to a testnet, then build and upload your app to a public web server. Submit the url on [Speedrunstark.com](https://speedrunstark.com/)!
+🌟 The final deliverable is an app that lets users purchase and transfer NFTs. Deploy your contracts to a testnet, then build and upload your app to a public web server.
 
-💬 Meet other builders working on this challenge and get help in the [Challenge 0 Telegram](https://t.me/+wO3PtlRAreo4MDI9)!
+💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ## Checkpoint 0: 📦 Environment 📚
 
@@ -15,6 +15,17 @@ Before you begin, you need to install the following tools:
 - [Node (>= v18.17)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
+
+### Compatible versions
+
+- scarb - v2.5.4
+- cairo - v2.5.4
+- starknet - v2.5.4
+- snforge - v0.23.0 // starknet foundry
+- sierra - v1.4.0
+- rpc - v0.5.1
+
+Make sure you have the compatible versions otherwise refer to [Scaffold-Stark Requirements](https://github.com/Quantum3-Labs/scaffold-stark-2?.tab=readme-ov-file#requirements)
 
 Then download the challenge to your computer and install dependencies by running:
 
@@ -26,7 +37,7 @@ git checkout simple-nft-example
 yarn install
 ```
 
-> in the same terminal, start your local network (a blockchain emulator in your computer):
+> in the same terminal, start your local network (a blockchain  in your computer):
 
 2. Prepare your environment variables.
 
@@ -172,8 +183,8 @@ yarn test
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-By default, 🏗 Scaffold-Stark provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.  
-This is great to complete your **SpeedRunEthereum**.
+By default, 🏗 Scaffold-Stark provides predefined API keys for services such as Infura. This allows you to begin developing and testing your applications more easily, avoiding the need to register for services. 
+This is great to complete your **SpeedRunStark**.
 
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
 
@@ -183,6 +194,6 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 ---
 
-> 🏃 Head to your next challenge [here](https://github.com/Quantum3-Labs/speedrunstark/tree/decentralized-staking).
+> 🏃 Head to your next challenge [here](https://www.speedrunstark.com/challenge/decentralized-staking).
 
 > 💭 Problems, questions, comments on the stack? Post them to the [🏗 Scaffold-Stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
