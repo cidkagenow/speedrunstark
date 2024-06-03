@@ -38,7 +38,7 @@ Then download the challenge to your computer and install dependencies by running
 ```sh
 git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules token-vendor
 cd token-vendor
-git token-vendor
+git checkout token-vendor
 yarn install
 ```
 
@@ -235,7 +235,7 @@ await deployer.execute([
 
   > > > > > > > dd0c131c980a69271916f445c51e132bdf840dfe
 
-          and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
+            and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
 
   ![Events](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/2812ab21de5d261ef670b0ef5a211fdfbae3b8d8/packages/nextjs/public/events.png)
 
