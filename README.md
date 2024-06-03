@@ -221,21 +221,12 @@ await deployer.execute([
 - [ ] Should we disable the `owner` withdraw to keep liquidity in the `Vendor`?
 - [ ] It would be a good idea to display Sell Token Events. Create an **event**
       `struct SellTokens {
-<<<<<<< HEAD
-  #[key]
-  seller: ContractAddress,
-  tokens_amount: u256,
-  eth_amount: u256,
-  }`
-      ======= #[key]
-      seller: ContractAddress,
-      tokens_amount: u256,
-      eth_amount: u256,
-      }`
-
-  > > > > > > > dd0c131c980a69271916f445c51e132bdf840dfe
-
-            and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
+#[key]
+seller: ContractAddress,
+tokens_amount: u256,
+eth_amount: u256,
+}`
+      and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
 
   ![Events](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/2812ab21de5d261ef670b0ef5a211fdfbae3b8d8/packages/nextjs/public/events.png)
 
