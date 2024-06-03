@@ -183,12 +183,12 @@ yarn test
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-By default, 🏗 Scaffold-Stark provides predefined API keys for services such as Infura. This allows you to begin developing and testing your applications more easily, avoiding the need to register for services. 
-This is great to complete your **SpeedRunStark**.
+By default, 🏗 Scaffold-Stark provides predefined API keys for some services such as Infura. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
+This is great to complete your SpeedRunStark.
 
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
 
-- 🔷`RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
+🔷 `RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Infura dashboard](https://www.infura.io/).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
