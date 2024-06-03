@@ -1,4 +1,4 @@
-# 🚩 Challenge 2: 🏵 Token Vendor 🤖
+# 🚩 Challenge #2: 🏵 Token Vendor 🤖
 
 ![readme-2](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/hero2.png)
 
@@ -10,7 +10,9 @@
 
 🔍 It will be important to verify your token's source code in the block explorer after you deploy. Supporters will want to be sure that it has a fixed supply, and you can't just mint more.
 
-🌟 The final deliverable is an app that lets users purchase your ERC20 token, transfer it, and sell it back to the vendor. Deploy your contracts on your public chain of choice and then `yarn vercel` your app to a public web server. Submit the url on [SpeedRunStark.com](https://www.speedrunstark.com/)!
+🌟 The final deliverable is an app that lets users purchase your ERC20 token, transfer it, and sell it back to the vendor. Deploy your contracts on your public chain of choice and then `yarn vercel` your app to a public web server.
+
+> 💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ---
 
@@ -22,33 +24,55 @@ Before you begin, you need to install the following tools:
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
+### Compatible versions
+
+- scarb - v2.5.4
+- cairo - v2.5.4
+- starknet - v2.5.4
+- snforge - v0.23.0 // starknet foundry
+- sierra - v1.4.0
+- rpc - v0.5.1
+
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-2-token-vendor
-cd challenge-2-token-vendor
-git checkout token-vendor
-
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules token-vendor
+cd token-vendor
+git token-vendor
 yarn install
 ```
 
 > in the same terminal, start your local network (a blockchain emulator in your computer):
 
-```sh
+2. Prepare your environment variables.
+
+By defauly Scaffold-Stark 2 takes the first prefunded account from `starknet-devnet` as a deployer address, thus **you can skip this step!**. But if you want use the .env file anyway, you can fill the envs related to devnet with any other predeployed contract address and private key from starknet-devnet.
+
+**Note:** In case you want to deploy on Sepolia, you need to fill the envs related to sepolia testnet with your own contract address and private key.
+
+```bash
+cp packages/snfoundry/.env.example packages/snfoundry/.env
+```
+
+3. Run a local network in the first terminal.
+
+**Note:** You can skip this step if you want to use Sepolia Testnet.
+
+```bash
 yarn chain
 ```
 
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-2-token-vendor
+cd token-vendor
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-2-token-vendor
+cd token-vendor
 yarn start
 ```
 
@@ -73,7 +97,7 @@ yarn start
 - [ ] Can you check the `balance_of()` your frontend address in the `Debug Contracts` tab? (**YourToken** contract)
 - [ ] Can you `transfer()` your token to another account and check _that_ account's `balance_of`?
 
-![debugContractsYourToken](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/5fb4daeb-5d05-4522-96b3-76f052a68418)
+![debugContractsYourToken](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/ch2-YourToken.png)
 
 > 💬 Hint: Use an incognito window to create a new address and try sending to that new address. Can use the `transfer()` function in the `Debug Contracts` tab.
 
@@ -129,7 +153,7 @@ await deployer.execute([
 
 > You can `yarn deploy --reset` to deploy your contract until you get it right.
 
-![TokenVendorBuy](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/7669cc68-e942-4630-95c8-91cd21af5ba0)
+![TokenVendorBuy](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/ch2-TokenVendorBalance.png)
 
 ### 🥅 Goals
 
@@ -185,7 +209,7 @@ await deployer.execute([
 
 🔍 Look in the `packages/nextjs/app/token-vendor/page.tsx` for the extra approve/sell UI to uncomment!
 
-![VendorBuyBack](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/99063aaa-368d-4156-997d-08dff99af11b)
+![VendorBuyBack](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/token-vendor/packages/nextjs/public/ch2-VendorBuySell.png)
 
 ### 🥅 Goal
 
@@ -197,14 +221,23 @@ await deployer.execute([
 - [ ] Should we disable the `owner` withdraw to keep liquidity in the `Vendor`?
 - [ ] It would be a good idea to display Sell Token Events. Create an **event**
       `struct SellTokens {
+<<<<<<< HEAD
   #[key]
   seller: ContractAddress,
   tokens_amount: u256,
   eth_amount: u256,
   }`
-      and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
+      ======= #[key]
+      seller: ContractAddress,
+      tokens_amount: u256,
+      eth_amount: u256,
+      }`
 
-  ![Events](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/662c96b5-d53f-4efa-af4a-d3106bfd47f0)
+  > > > > > > > dd0c131c980a69271916f445c51e132bdf840dfe
+
+          and `emit` it in your `Vendor.sol` and uncomment `SellTokens Events` section in your `packages/nextjs/app/events/page.tsx` to update your frontend.
+
+  ![Events](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/2812ab21de5d261ef670b0ef5a211fdfbae3b8d8/packages/nextjs/public/events.png)
 
 ### ⚠️ Test it!
 
@@ -244,14 +277,16 @@ await deployer.execute([
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure the provider by modifying `NEXT_PUBLIC_PROVIDER_URL`, you can an APY key from the following providers:
+By default, 🏗 Scaffold-Stark provides predefined API keys for some services such as Infura. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
+This is great to complete your SpeedRunStark.
 
-- Alchemy.
-- Infura
-- QuickNode
+For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
+
+🔷 `RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Infura dashboard](https://www.infura.io/).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
 ---
 
-> 🏃 Head to your next challenge [here](https://www.speedrunstark.com).
+> 🏃 Head to your next challenge [here](https://github.com/Quantum3-Labs/speedrunstark/tree/dice-game).
+> 💭 Problems, questions, comments on the stack? Post them to the [🏗 Scaffold-Stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
