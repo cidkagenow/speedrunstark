@@ -178,4 +178,4 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 > 🏃 Head to your next challenge [here](https://speedrunstark.com/).
 
-> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-eth developers chat](https://t.me/+wO3PtlRAreo4MDI9)
+> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
