@@ -10,7 +10,7 @@
 
 > 🧨 Your job is to attack the Dice Game contract! You will create a new contract that will predict the randomness ahead of time and only roll the dice when you're guaranteed to be a winner!
 
-> 💬 Meet other builders working on this challenge and get help in the [Challenge 3 telegram](https://t.me/+wO3PtlRAreo4MDI9)!
+💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ---
 
@@ -135,17 +135,15 @@ You have beaten the game, but where is your money? Since the RiggedRoll contract
 
 ## Checkpoint 4: 💾 Deploy your contracts! 🛰
 
-📡 Edit the `defaultNetwork` to [your choice of public EVM networks](https://ethereum.org/en/developers/docs/networks/) in `packages/nextjs/scaffold.config.ts`
+📡 Edit the `defaultNetwork` to your choice of public Starknet networks in `packages/nextjs/scaffold.config.ts`
 
-🔐 You will need to generate a **deployer address** using `yarn generate` This creates a mnemonic and saves it locally.
+🔐 You will need to generate a *deployer address* using Argent or Braavos, get your private key and put in `packages/snfoundry/.env`
 
-👩‍🚀 Use `yarn account` to view your deployer account balances.
+⛽️ You will need to send ETH to your deployer address with your wallet, or get it from a public faucet of your chosen network.
 
-⛽️ You will need to send ETH to your **deployer address** with your wallet, or get it from a public faucet of your chosen network.
+🚀 Run `yarn deploy --{DESIRED NETWORK}` , we support sepolia, mainnet and devnet
 
-🚀 Run `yarn deploy` to deploy your smart contract to a public network (selected in `hardhat.config.ts`)
-
-> 💬 Hint: You can set the `defaultNetwork` in `hardhat.config.ts` to `sepolia` **OR** you can `yarn deploy --network sepolia`.
+> 💬 Hint: you can `yarn deploy --network sepolia`.
 
 ---
 
@@ -167,14 +165,12 @@ You have beaten the game, but where is your money? Since the RiggedRoll contract
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-By default, 🏗 Scaffold-ETH 2 provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.  
-This is great to complete your **SpeedRunEthereum**.
+By default, 🏗 Scaffold-Stark provides predefined API keys for some services such as Infura. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
+This is great to complete your SpeedRunStark.
 
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
 
-- 🔷`ALCHEMY_API_KEY` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Alchemy dashboard](https://dashboard.alchemy.com/).
-
-- 📃`ETHERSCAN_API_KEY` variable in `packages/hardhat/.env` with your generated API key. You can get your key [here](https://etherscan.io/myapikey).
+🔷 `RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Infura dashboard](https://www.infura.io/).
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
