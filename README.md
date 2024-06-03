@@ -2,15 +2,15 @@
 
 ![readme-1](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/7e7be92753ffa1f18f50976e97fdb0052ca9414a/packages/nextjs/public/banner-decentralized-staking.svg)
 
-🦸 A superpower of Starknet is allowing you, the builder, to create a simple set of rules that an adversarial group of players can use to work together. In this challenge, you create a decentralized application where users can coordinate a group funding effort. If the users cooperate, the money is collected in a second smart contract. If they defect, the worst that can happen is everyone gets their money back. The users only have to trust the code.
+🦸 A superpower of Smart contracts is allowing you, the builder, to create a simple set of rules that an adversarial group of players can use to work together. In this challenge, you create a decentralized application where users can coordinate a group funding effort. If the users cooperate, the money is collected in a second smart contract. If they defect, the worst that can happen is everyone gets their money back. The users only have to trust the code.
 
-🏦 Build a `Staker.cairo` contract that collects *ETH* from numerous addresses using a payable `stake()` function and keeps track of balances. After some deadline if it has at least some threshold of ETH, it sends it to an `ExampleExternalContract` and triggers the `complete()` action sending the full balance. If not enough *ETH* is collected, allow users to withdraw().
+🏦 Build a `Staker.cairo` contract that collects *ETH* from numerous addresses using a function `stake()` function and keeps track of balances. After some deadline if it has at least some threshold of ETH, it sends it to an `ExampleExternalContract` and triggers the `complete()` action sending the full balance. If not enough *ETH* is collected, allows users to withdraw().
 
 🎛 Building the frontend to display the information and UI is just as important as writing the contract. The goal is to deploy the contract and the app to allow anyone to stake using your app. Use a `Stake(address,uint256)` event to list all stakes.
 
-🌟 The final deliverable is deploying a Dapp that lets users send ether to a contract and stake if the conditions are met, then yarn vercel your app to a public webserver. Submit the url on [SpeedRunStark.com](https://www.speedrunstark.com/)!
+🌟 The final deliverable is deploying a Dapp that lets users send ether to a contract and stake if the conditions are met, then `yarn vercel` your app to a public webserver. Submit the url on [SpeedRunStark.com](https://www.speedrunstark.com/)!
 
-> 💬 Meet other builders working on this challenge and get help in the [Challenge 1 Telegram](https://t.me/+wO3PtlRAreo4MDI9)!
+💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ---
 
@@ -22,11 +22,22 @@ Before you begin, you need to install the following tools:
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
+### Compatible versions
+
+- scarb - v2.5.4
+- cairo - v2.5.4
+- starknet - v2.5.4
+- snforge - v0.23.0 // starknet foundry
+- sierra - v1.4.0
+- rpc - v0.5.1
+
+Make sure you have the compatible versions otherwise refer to [Scaffold-Stark Requirements](https://github.com/Quantum3-Labs/scaffold-stark-2?.tab=readme-ov-file#requirements)
+
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
-git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-1-decentralized-stakings
-cd challenge-1-decentralized-stakings
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-1-decentralized-staking
+cd challenge-1-decentralized-staking
 git checkout decentralized-staking
 
 yarn install
@@ -135,7 +146,7 @@ You'll have 30 seconds after deploying until the deadline is reached, you can ad
 
 ![stakerUI](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/87dae08f476eadb05ea377247885aad16713599f/packages/nextjs/public/stake.png)
 
-> 👩‍💻 You can call `yarn deploy --reset` any time you want a fresh contract, it will get re-deployed even if there are no changes on it.  
+> 👩‍💻 You can call `yarn deploy` again any time you want a fresh contract.
 > You may need it when you want to reload the "Time Left" of your tests.
 
 Your Staker UI tab should be almost done and working at this point.
@@ -150,17 +161,7 @@ Your Staker UI tab should be almost done and working at this point.
 
 ---
 
-## Checkpoint 3: 💵 Receive Function / UX 🙎
-
-🎀 To improve the user experience, set your contract up so it accepts ETH sent to it and calls `stake()`. You will use what is called the `receive()` function.
-
----
-
-### 🥅 Goals
-
-- [ ] If you send ETH directly to the contract address does it update your balance and the balance of the contract?
-
----
+## Checkpoint 3: 💵 UX 🙎
 
 ### ⚔️ Side Quests
 
@@ -183,13 +184,11 @@ Your Staker UI tab should be almost done and working at this point.
 
 ## Checkpoint 4: 💾 Deploy your contract! 🛰
 
-📡 Edit the `defaultNetwork` to your choice of public Stark networks in `packages/nextjs/scaffold.config.ts`
+📡 Edit the `defaultNetwork` to your choice of public Starknet networks in `packages/nextjs/scaffold.config.ts`
 
   ![network](https://raw.githubusercontent.com/Quantum3-Labs/speedrunstark/simple-nft-example/packages/nextjs/public/ch0-scaffold-config.png)
 
-🔐 You will need to generate a *deployer address* using `yarn generate` This creates a mnemonic and saves it locally.
-
-👩‍🚀 Use yarn account to view your deployer account balances.
+🔐 You will need to generate a *deployer address* using Argent or Braavos, get your private key and put in `packages/snfoundry/.env`
 
 ⛽️ You will need to send ETH to your deployer address with your wallet, or get it from a public faucet of your chosen network.
 
@@ -220,7 +219,7 @@ Your Staker UI tab should be almost done and working at this point.
 
 #### Configuration of Third-Party Services for Production-Grade Apps.
 
-By default, 🏗 Scaffold-Stark provides predefined API keys for popular services such as Alchemy and Etherscan. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
+By default, 🏗 Scaffold-Stark provides predefined API keys for services such as Infura. This allows you to begin developing and testing your applications more easily, avoiding the need to register for these services.
 
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
 
@@ -232,4 +231,4 @@ For production-grade applications, it's recommended to obtain your own API keys 
 
 > 🏃 Head to your next challenge [here](https://github.com/Quantum3-Labs/speedrunstark/tree/token-vendor).
 
-> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-s2 developers chat](https://t.me/+wO3PtlRAreo4MDI9 )
+> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
