@@ -5,11 +5,11 @@
 This challenge will help you build/understand a simple decentralized exchange, with one token-pair (ERC20 BALLOONS ($BAL) and ETH). This repo is an updated version of the [original tutorial](https://medium.com/@austin_48503/%EF%B8%8F-minimum-viable-exchange-d84f30bd0c90) and challenge repos before it. Please read the intro for a background on what we are building first!
 
 🌟 The final deliverable is an app that allows users to seamlessly trade ERC20 BALLOONS ($BAL) with ETH in a decentralized manner. Users will be able to connect their wallets, view their token balances, and buy or sell their tokens according to a price formula!
-Deploy your contracts to a testnet then build and upload your app to a public web server. Submit the url on [SpeedRunEthereum.com](https://speedrunethereum.com)!
+Deploy your contracts to a testnet then build and upload your app to a public web server.
 
 There is also a 🎥 [Youtube video](https://www.youtube.com/watch?v=eP5w6Ger1EQ) that may help you understand the concepts covered within this challenge too:
 
-💬 Meet other builders working on this challenge and get help in the [Challenge 4 Telegram](https://t.me/+_NeUIJ664Tc1MzIx)
+> 💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ## Checkpoint 0: 📦 Environment 📚
 
@@ -23,10 +23,9 @@ Then download the challenge to your computer and install dependencies by running
 
 ```sh
 
-git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules challenge-4-build-a-dex
-cd challenge-4-build-a-dex
+git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules build-a-dex
+cd build-a-dex
 git checkout build-a-dex
-
 yarn install
 ```
 
@@ -39,14 +38,14 @@ yarn chain
 > in a second terminal window, 🛰 deploy your contract (locally):
 
 ```sh
-cd challenge-4-dex
+cd build-a-dex
 yarn deploy
 ```
 
 > in a third terminal window, start your 📱 frontend:
 
 ```sh
-cd challenge-4-dex
+cd build-a-dex
 yarn start
 ```
 
@@ -58,13 +57,13 @@ yarn start
 
 Navigate to the `Debug Contracts` tab, you should see two smart contracts displayed called `DEX` and `Balloons`.
 
-`packages/hardhat/contracts/Balloons.sol` is just an example ERC20 contract that mints 1000 $BAL to whatever address deploys it.
+`packages/snfoundry/contracts/Balloons.sol` is just an example ERC20 contract that mints 1000 $BAL to whatever address deploys it.
 
-`packages/hardhat/contracts/DEX.sol` is what we will build in this challenge and you can see it starts instantiating a token (ERC20 interface) that we set in the constructor (on deploy).
+`packages/snfoundry/contracts/DEX.sol` is what we will build in this challenge and you can see it starts instantiating a token (ERC20 interface) that we set in the constructor (on deploy).
 
 > Below is what your front-end will look like with no implementation code within your smart contracts yet. The buttons will likely break because there are no functions tied to them yet!
 
-![ch-4-main](https://github.com/scaffold-eth/se-2-challenges/assets/59885513/930ec64c-d185-4a33-8941-43f44a611231)
+![ch-4-main](./packages/nextjs/public/cha-4-main.png)
 
 > 🎉 You've made it this far in Scaffold-Eth Challenges 👏🏼 . As things get more complex, it might be good to review the design requirements of the challenge first!  
 > Check out the empty `DEX.sol` file to see aspects of each function. If you can explain how each function will work with one another, that's great! 😎
@@ -97,8 +96,10 @@ After thinking through the guiding questions, have a look at the solution code!
 <details markdown='1'><summary>👩🏽‍🏫 Solution Code</summary>
 
 ```
-uint256 public totalLiquidity;
-mapping (address => uint256) public liquidity;
+struct Storage {
+        liquidity: LegacyMap::<address, u256>,
+        totalLiquidity: u256,
+    }
 ```
 
 </details>
@@ -744,7 +745,6 @@ This is great to complete your SpeedRunStark.
 For production-grade applications, it's recommended to obtain your own API keys (to prevent rate limiting issues). You can configure these at:
 
 🔷 `RPC_URL_SEPOLIA` variable in `packages/snfoundry/.env` and `packages/nextjs/.env.local`. You can create API keys from the [Infura dashboard](https://www.infura.io/).
-
 
 > 💬 Hint: It's recommended to store env's for nextjs in Vercel/system env config for live apps and use .env.local for local testing.
 
