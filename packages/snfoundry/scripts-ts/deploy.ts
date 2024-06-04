@@ -9,6 +9,7 @@ const deployScript = async (): Promise<void> => {
     { external_contract_address: exampleContractAddr },
     "Staker"
   );
+  
 };
 
 deployScript()

@@ -55,16 +55,27 @@ mod Staker {
         let eth_contract: ContractAddress = ETH_CONTRACT_ADDRESS.try_into().unwrap();
         self.token.write(IERC20CamelDispatcher { contract_address: eth_contract });
         self.external_contract_address.write(external_contract_address);
+        self.deadline.write(get_block_timestamp() + 30);
     }
 
     #[abi(embed_v0)]
     impl StakerImpl of IStaker<ContractState> {
-        fn stake(
-            ref self: ContractState, amount: u256
-        ) { // Note: Sender should approve to transfer the amount to the staker contract
-        // Implement your stake function here
+        fn stake(ref self: ContractState, amount: u256) {
+       
+            let caller = get_caller_address();
 
-        // self.emit(Stake { sender, amount }); // uncomment to emit the Stake event
+            let token = self.token.read();
+            let allowance = token.allowance(caller, get_contract_address());
+            assert!(allowance >= amount, "Insufficient allowance");
+
+            let success = token.transferFrom(caller, get_contract_address(), amount);
+            assert!(success, "Token transfer failed");
+
+            let current_balance = self.balances.read(caller);
+            let new_balance = current_balance + amount;
+            self.balances.write(caller, new_balance);
+
+            self.emit(Stake { sender: caller, amount });
         }
 
         // Function to execute the transfer or allow withdrawals after the deadline
