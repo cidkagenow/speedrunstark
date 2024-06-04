@@ -170,7 +170,7 @@ The front end should show you that you have balloon tokens. We can’t just call
 
 First, we have to call `approve()` on the Balloons contract, approving the DEX contract address to take some amount of tokens.
 
-![balloons-dex-tab](https://github.com/scaffold-eth/se-2-challenges/assets/55535804/710f5c9a-d898-4012-9014-4c46f1de015f)
+![balloons-dex-tab](./packages/nextjs/public/ballons.png)
 
 > 🤓 Copy and paste the DEX address to the _Address Spender_ and then set the amount to 5.  
 > You can confirm this worked using the `allowance()` function in `Debug Contracts` tab using your local account address as the owner and the DEX contract address as the spender.
