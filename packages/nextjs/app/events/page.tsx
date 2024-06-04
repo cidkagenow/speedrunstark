@@ -36,9 +36,9 @@ const Events: NextPage = () => {
             <table className="table table-zebra w-full">
               <thead>
                 <tr>
-                  <th className="bg-primary text-white">Buyer</th>
-                  <th className="bg-primary text-white">Amount of Tokens</th>
-                  <th className="bg-primary text-white">Amount of ETH</th>
+                  <th className="bg-secondary text-white">Buyer</th>
+                  <th className="bg-secondary text-white">Amount of ETH</th>
+                  <th className="bg-secondary text-white">Amount of Tokens</th>
                 </tr>
               </thead>
               <tbody>
@@ -82,9 +82,9 @@ const Events: NextPage = () => {
             <table className="table table-zebra w-full">
               <thead>
                 <tr>
-                  <th className="bg-primary text-white">Seller</th>
-                  <th className="bg-primary text-white">Amount of Tokens</th>
-                  <th className="bg-primary text-white">Amount of ETH</th>
+                  <th className="bg-secondary text-white">Seller</th>
+                  <th className="bg-secondary text-white">Amount of ETH</th>
+                  <th className="bg-secondary text-white">Amount of Tokens</th>
                 </tr>
               </thead>
               <tbody>
