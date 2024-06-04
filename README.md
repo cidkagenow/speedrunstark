@@ -764,4 +764,4 @@ Run the `yarn verify --network your_network` command to verify your contracts on
 
 > 🏃 Head to your next challenge [here](https://speedrunstark.com).
 
-> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-eth developers chat](https://t.me/joinchat/F7nCRK3kI93PoCOk)
+> 💬 Problems, questions, comments on the stack? Post them to the [🏗 scaffold-stark developers chat](https://t.me/+wO3PtlRAreo4MDI9)
