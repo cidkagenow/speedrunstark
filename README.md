@@ -22,6 +22,12 @@ Before you begin, you need to install the following tools:
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
+### Compatible versions
+
+- Scarb - v2.5.4
+- Snforge - v0.23
+- Cairo - v2.5.41
+
 Then download the challenge to your computer and install dependencies by running:
 
 ```sh
