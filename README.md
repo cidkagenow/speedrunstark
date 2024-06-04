@@ -12,7 +12,7 @@
 
 🌟 The final deliverable is an app that lets users purchase your ERC20 token, transfer it, and sell it back to the vendor. Deploy your contracts on your public chain of choice and then `yarn vercel` your app to a public web server.
 
-💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
+> 💬 Submit this challenge, meet other builders working on this challenge or get help in the [Builders telegram chat](https://t.me/+wO3PtlRAreo4MDI9)!
 
 ---
 
@@ -38,7 +38,7 @@ Then download the challenge to your computer and install dependencies by running
 ```sh
 git clone https://github.com/Quantum3-Labs/speedrunstark.git --recurse-submodules token-vendor
 cd token-vendor
-git token-vendor
+git checkout token-vendor
 yarn install
 ```
 
