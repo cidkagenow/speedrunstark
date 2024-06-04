@@ -18,12 +18,9 @@ Before you begin, you need to install the following tools:
 
 ### Compatible versions
 
-- scarb - v2.5.4
-- cairo - v2.5.4
-- starknet - v2.5.4
-- snforge - v0.23.0 // starknet foundry
-- sierra - v1.4.0
-- rpc - v0.5.1
+Scarb - v2.5.4
+Snforge - v0.23
+Cairo - v2.5.4
 
 Make sure you have the compatible versions otherwise refer to [Scaffold-Stark Requirements](https://github.com/Quantum3-Labs/scaffold-stark-2?.tab=readme-ov-file#requirements)
 
