@@ -16,18 +16,23 @@ pub trait IERC721Enumerable<T> {
     fn total_supply(self: @T) -> u256;
 }
 
+#[starknet::interface]
+pub trait IERC721<T> {
+    fn balance_of(self: @T, account: ContractAddress) -> u256;
+}
+
 #[starknet::contract]
 mod YourCollectible {
-    use core::traits::TryInto;
-    use core::traits::Into;
-    use super::{IYourCollectible, ContractAddress, IERC721Enumerable, ICounter};
     use core::num::traits::zero::Zero;
+    use core::traits::Into;
+    use core::traits::TryInto;
+    use openzeppelin::access::ownable::OwnableComponent;
     use openzeppelin::introspection::src5::SRC5Component;
     use openzeppelin::token::erc721::ERC721Component;
-    use openzeppelin::access::ownable::OwnableComponent;
-    use openzeppelin::token::erc721::interface::IERC721Metadata;
     use openzeppelin::token::erc721::interface::IERC721;
+    use openzeppelin::token::erc721::interface::IERC721Metadata;
     use starknet::get_caller_address;
+    use super::{IYourCollectible, ContractAddress, IERC721Enumerable, ICounter};
 
     component!(path: ERC721Component, storage: erc721, event: ERC721Event);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
