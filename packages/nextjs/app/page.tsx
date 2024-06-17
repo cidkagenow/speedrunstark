@@ -26,7 +26,7 @@ const Home: NextPage = () => {
           />
           <div className="max-w-3xl ">
             <p className="text-center text-lg mt-8 text-primary">
-              🦸 A superpower of Ethereum is allowing you, the builder, to
+              🦸 A superpower of Starknet is allowing you, the builder, to
               create a simple set of rules that an adversarial group of players
               can use to work together. In this challenge, you create a
               decentralized application where users can coordinate a group
