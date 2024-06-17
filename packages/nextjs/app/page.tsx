@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -53,7 +54,7 @@ const Home: NextPage = () => {
               💬 Meet other builders working on this challenge and get help in
               the{" "}
               <a
-                href="https://t.me/+3StA0aBSArFjNjUx"
+                href="https://t.me/+wO3PtlRAreo4MDI9"
                 target="_blank"
                 rel="noreferrer"
                 className="underline"
