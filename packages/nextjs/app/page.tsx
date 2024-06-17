@@ -32,11 +32,10 @@ const Home: NextPage = () => {
               This challenge will give you an example of a contract using block
               hash to create random numbers. This randomness is exploitable.
               Other, stronger forms of randomness include commit/reveal schemes,
-              oracles, or VRF from Chainlink. the Ethereum protocol!
+              oracles, or VRF from Chainlink. 
             </p>
             <p className="text-lg mt-2">
-              👍 One day soon, randomness will be built into the Ethereum
-              protocol!
+              👍 One day soon, randomness will be built into the Starknet!
             </p>
             <p className="text-lg mt-2">
               🧤 Every time a player rolls the dice, they are required to send
