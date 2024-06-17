@@ -5,7 +5,6 @@ import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 const Home: NextPage = () => {
-  
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
