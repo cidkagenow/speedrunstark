@@ -3,11 +3,9 @@
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useAccount } from "@starknet-react/core";
-// import { Address } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
-  const connectedAddress = useAccount();
+  
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -28,15 +26,15 @@ const Home: NextPage = () => {
             />
             <div className="max-w-3xl">
               <p className="text-center text-lg mt-8">
-                🎫 Create a simple NFT to learn basics of 🏗️ Scaffold-ETH 2.
+                🎫 Create a simple NFT to learn basics of 🏗️ Scaffold-Stark 2.
                 You&apos;ll use 👷‍♀️
                 <a
-                  href="https://hardhat.org/getting-started/"
+                  href="https://github.com/foundry-rs/starknet-foundry"
                   target="_blank"
                   rel="noreferrer"
                   className="underline"
                 >
-                  HardHat
+                  Starknet Foundry
                 </a>{" "}
                 to compile and deploy smart contracts. Then, you&apos;ll use a
                 template React app full of important Ethereum components and
@@ -48,12 +46,12 @@ const Home: NextPage = () => {
                 transfer NFTs. Deploy your contracts to a testnet then build and
                 upload your app to a public web server. Submit the url on{" "}
                 <a
-                  href="https://speedrunethereum.com/"
+                  href="https://www.scaffoldstark.com/"
                   target="_blank"
                   rel="noreferrer"
                   className="underline"
                 >
-                  SpeedRunEthereum.com
+                  Scaffoldstark.com
                 </a>{" "}
                 !
               </p>
