@@ -87,20 +87,20 @@ yarn start
 
 ### 🥅 Goals
 
-- [ ] Track the solidity code to find out how the DiceGame contract is generating random numbers.
+- [ ] Track the cairo code to find out how the DiceGame contract is generating random numbers.
 - [ ] Is it possible to predict the random number for any given roll?
 
 ---
 
 ## Checkpoint 2: 🔑 Rigged Contract
 
-Start by creating a `receive()` function in the `RiggedRoll.cairo` contract to allow it to receive Eth. This will allow us to fund the RiggedRoll contract from the faucet which is required for our contract to call the `rollTheDice()` function.
+Start by adding the ETh token address in the `RiggedRoll.cairo` contract to allow it to receive Eth. This will allow us to fund the RiggedRoll contract from the faucet which is required for our contract to call the `rollTheDice()` function.
 
 Next add a `riggedRoll()` function. This function should predict the randomness of a roll, and if the outcome will be a winner, call `rollTheDice()` on the DiceGame contract.
 
 🃏 Predict the outcome by generating your random numbers in the exact same way as the DiceGame contract.
 
-> 📣 Reminder! Calling `rollTheDice()` will fail unless you send a message value of at least .002 Eth! [Here is one example of how to send value with a function call.](https://ethereum.stackexchange.com/questions/6665/call-contract-and-send-value-from-solidity)
+> 📣 Reminder! Calling `rollTheDice()` will fail unless you transfer a value of at least .002 Eth!.
 
 🚀 To deploy your RiggedRoll contract, uncomment the appropriate lines in the `deploy_riggedRoll.ts` file in `packages/snfoundry/deployments`
 
